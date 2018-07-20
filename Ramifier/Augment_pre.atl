@@ -1,0 +1,20 @@
+-- @nsURI ECore=http://www.eclipse.org/emf/2002/Ecore
+module Augment_pre;
+
+create OUT : ECore  refining IN : ECore;
+
+rule Pre_Class {
+	from c : ECore!EClass
+	to c_pre : ECore!EClass (
+		name <- 'MTpre__'+c.name
+	)
+}
+
+-- This rule changes attributes to EString to allow filling them with constraints
+--rule Post_Attribute {
+--	from a : ECore!EAttribute
+--	to post_a : ECore!EAttribute (
+--		eType <- ECore!EClassifier.allInstancesFrom('IN')->select(c | c.name = 'EString').first()
+--		
+--	)
+--}

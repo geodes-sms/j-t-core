@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Friends:Classroom
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:Friends="Friends"
+    xsi:schemaLocation="Friends friends.ecore"
+    id="3">
+  <person xsi:type="Friends:Man"
+      name="Bob"
+      friend_with="//@person.1"/>
+  <person xsi:type="Friends:Woman"
+      name="Fifi"
+      friend_with="//@person.2"/>
+  <person xsi:type="Friends:Man"
+      name="Prof"
+      teacher_of="/"/>
+</Friends:Classroom>

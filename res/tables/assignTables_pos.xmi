@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ramRoot:MTpos__Restaurant
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ramRoot="RamRoot"
+    xsi:schemaLocation="RamRoot tables_ramified.ecore"
+    MT__label="3">
+  <waitress
+      MT__label="2"
+      MTpos__name="result=getAttr()">
+    <tables
+        MT__label="1"
+        MTpos__id="result=getAttr()"
+        MTpos__isReserved="result=getAttr()"/>
+  </waitress>
+</ramRoot:MTpos__Restaurant>

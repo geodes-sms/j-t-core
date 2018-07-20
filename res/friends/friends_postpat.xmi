@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ramRoot:MTpos__Classroom
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ramRoot="RamRoot"
+    xsi:schemaLocation="RamRoot friends_ramified.ecore"
+    MT__label="1"
+    id="result='6'">
+  <person xsi:type="ramRoot:MTpos__Man"
+      MT__label="2"
+      name="result=getAttr()"
+      teacher_of="/"
+      friend_with="//@person.1"/>
+  <person xsi:type="ramRoot:MTpos__Man"
+      MT__label="4"
+      name="result='Jean'"/>
+</ramRoot:MTpos__Classroom>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<launchConfiguration type="org.atl.eclipse.adt.launching.atlTransformation">
+		<mapAttribute key="Model Handler">
+			<mapEntry key="OUT" value=""/>
+			<mapEntry key="MOF" value="EMF"/>
+			<mapEntry key="KM3" value="EMF"/>
+			<mapEntry key="IN" value=""/>
+		</mapAttribute>
+	<stringAttribute key="ATL File Name" value="/KM32EMF/KM32EMF.atl"/>
+	<mapAttribute key="Libs"/>
+	<booleanAttribute key="Mode Debug" value="false"/>
+	<mapAttribute key="ModelType">
+		<mapEntry key="OUT" value="MODELOUTPUT"/>
+		<mapEntry key="MOF" value="METAMODELOUTPUT"/>
+		<mapEntry key="KM3" value="METAMODELINPUT"/>
+		<mapEntry key="IN" value="MODELINPUT"/>
+	</mapAttribute>
+	<mapAttribute key="Path">
+		<mapEntry key="OUT" value="/KM32EMF/Sample.ecore"/>
+		<mapEntry key="MOF" value="#EMF"/>
+		<mapEntry key="KM3" value="uri:http://www.eclipse.org/gmt/2005/KM3"/>
+		<mapEntry key="IN" value="/KM32EMF/Sample-KM3.ecore"/>
+	</mapAttribute>
+	<stringAttribute key="Project Name" value="KM32EMF"/>
+	<mapAttribute key="Output">
+		<mapEntry key="OUT" value="MOF"/>
+	</mapAttribute>
+	<mapAttribute key="Input">
+		<mapEntry key="IN" value="KM3"/>
+	</mapAttribute>
+	<booleanAttribute key="AllowInterModelReferences" value="false"/>
+</launchConfiguration>

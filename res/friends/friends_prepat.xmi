@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ramRoot:MTpre__Classroom
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ramRoot="RamRoot"
+    xsi:schemaLocation="RamRoot friends_ramified.ecore"
+    MT__label="1"
+    id="result='true'">
+  <person xsi:type="ramRoot:MTpre__Man"
+      MT__label="2"
+      name="result='true'"/>
+  <person xsi:type="ramRoot:MTpre__Woman"
+      MT__label="3"
+      name="result='true'"/>
+</ramRoot:MTpre__Classroom>

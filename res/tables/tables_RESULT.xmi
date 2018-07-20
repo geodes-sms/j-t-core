@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tables:Restaurant xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tables="tables" xsi:schemaLocation="tables res/tables/tables.ecore">
+  <waitress name="Monique" tables="//@tables.0 //@tables.2"/>
+  <waitress name="Chantale" tables="//@tables.1"/>
+  <tables>
+    <chairs/>
+    <chairs order="1"/>
+  </tables>
+  <tables id="1">
+    <chairs/>
+  </tables>
+  <tables id="2" isReserved="true">
+    <chairs/>
+  </tables>
+</tables:Restaurant>

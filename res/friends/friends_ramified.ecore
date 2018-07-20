@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ramRoot" nsURI="RamRoot" nsPrefix="ramRoot">
+  <eClassifiers xsi:type="ecore:EClass" name="MT__Element" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MT__isProcessed" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MT__label" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpos__Element" abstract="true" eSuperTypes="#//MT__Element"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpre__Element" abstract="true" eSuperTypes="#//MT__Element">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="MT__matchSubtype" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GenericNode" eSuperTypes="#//MT__Element">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="GenericLink" upperBound="-1"
+        eType="#//MT__Element"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpos__Person" eSuperTypes="#//MTpos__Element">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="teacher_of" eType="#//MTpos__Classroom"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="friend_with" upperBound="-1"
+        eType="#//MTpos__Person"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpos__Man" eSuperTypes="#//MTpos__Person"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpos__Woman" eSuperTypes="#//MTpos__Person"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpos__Classroom" eSuperTypes="#//MTpos__Element">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="person" upperBound="-1"
+        eType="#//MTpos__Person" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpre__Person" eSuperTypes="#//MTpre__Element">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="teacher_of" eType="#//MTpre__Classroom"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="friend_with" upperBound="-1"
+        eType="#//MTpre__Person"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpre__Man" eSuperTypes="#//MTpre__Person"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpre__Woman" eSuperTypes="#//MTpre__Person"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MTpre__Classroom" eSuperTypes="#//MTpre__Element">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="person" upperBound="-1"
+        eType="#//MTpre__Person" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

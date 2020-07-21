@@ -1,0 +1,161 @@
+-- @nsURI ECore=http://www.eclipse.org/emf/2002/Ecore
+
+module Augment_compo;
+create OUT : ECore  from IN_PRE : ECore, IN_POST : ECore;
+
+
+rule Start  {
+	from c : ECore!EPackage in IN_PRE(c.eSuperPackage.oclIsUndefined() and c.name <> 'PrimitiveTypes' )
+	to root : ECore!EPackage (
+		name <- 'ramRoot',
+		nsPrefix <- 'ramRoot',
+		nsURI <- 'RamRoot',
+		eClassifiers <- Set{
+			ECore!EClassifier.allInstancesFrom('OUT')
+		}
+	),
+	elt_MT : ECore!EClass (
+		name <- 'MT__Element',
+		"abstract" <- true,
+		eAttributes <- Set{
+			label_attr,
+--			pivot_attr, 
+			isProcessed_attr
+		}
+	),
+	label_attr : ECore!EAttribute (
+		name <- 'MT__label',
+		eType <- ECore!EClassifier.allInstances()->select(ccc | ccc.name = 'EString').first()
+	),
+--	pivot_attr : ECore!EAttribute (
+--		name <- 'MT_pivot',
+--		eType <- ECore!EClassifier.allInstances()->select(ccc | ccc.name = 'MT_Element').first()
+--	),
+	isProcessed_attr : ECore!EAttribute (
+		name <- 'MT__isProcessed',
+		eType <- ECore!EClassifier.allInstances()->select(ccc | ccc.name = 'EBoolean').first()
+	),
+	post_elt : ECore!EClass (
+		name <- 'MTpos__Element',
+		"abstract" <- true,
+		eSuperTypes <- elt_MT
+	),
+	pre_elt : ECore!EClass (
+		name <- 'MTpre__Element',
+		"abstract" <- true,
+		eSuperTypes <- elt_MT,
+		eAttributes <- Set{
+			matchSubtype_attr	
+		}
+	),
+	matchSubtype_attr : ECore!EAttribute (
+		name <- 'MT__matchSubtype',
+		eType <- ECore!EClassifier.allInstances()->select(ccc | ccc.name = 'EBoolean').first()
+	),
+	
+	genericNode : ECore!EClass (
+		name <- 'GenericNode',
+		eSuperTypes <- elt_MT,
+		eReferences <- Set{genericLink}
+	),
+	genericLink : ECore!EReference (
+		name <- 'GenericLink',
+		lowerBound <- 0,
+		upperBound <- -1,
+		eType <- elt_MT)
+--	, -- Si on veut utiliser des class plutot que le standard "String" pour les parametres pre et post.
+--	actionClass : ECore!EClass (
+--		name <- 'action'
+--	),
+--	constraintClass : ECore!EClass (
+--		name <- 'constraint'
+--	)
+}
+
+
+rule Ref {
+	from r : ECore!EReference in IN_PRE, IN_POST
+	to rr : ECore!EReference (
+		eType <- r.eType,
+		name <- r.name,
+		changeable <- r.changeable,
+		--container <- r.container,-- ECore relaxed
+		containment <- r.containment,
+		defaultValue <- r.defaultValue,
+		defaultValueLiteral <- r.defaultValueLiteral,
+		derived <- r.derived,
+		eAnnotations <- r.eAnnotations,
+		--eContainingClass <- r.eContainingClass,-- ECore relaxed
+		--eGenericType <- r.eGenericType,-- ECore relaxed
+		eKeys <- r.eKeys,
+		eOpposite <- r.eOpposite,
+		--eReferenceType <- r.eReferenceType,-- ECore relaxed
+		lowerBound <- r.lowerBound,
+		--many <- r.many,-- ECore relaxed
+		ordered <- r.ordered,
+		--required <- r.required,-- ECore relaxed
+		resolveProxies <- r.resolveProxies,
+		transient <- r.transient,
+		unique <- r.unique,
+		unsettable <- r.unsettable,
+		upperBound <- r.upperBound,
+		volatile <- r.volatile
+	)
+}
+
+
+helper context ECore!EClass def : hasSuperMT() : 
+	Boolean =
+		self.eSuperTypes->exists(child | 
+			child.hasSuperMT() or child.name.startsWith('MTpre__') or child.name.startsWith('MTpos__') or true
+		);
+
+
+rule JoinPost {
+	from c : ECore!EClass in IN_POST
+	to cc : ECore!EClass (
+		name <- c.name,
+		eSuperTypes <-
+			if (not c.hasSuperMT() ) then
+				c.eSuperTypes.append(ECore!EClass.allInstances()->select(ccc | ccc.name = 'MTpos__Element'))
+			else
+				c.eSuperTypes
+			endif
+		,
+		abstract <- c.abstract,
+		defaultValue <- c.defaultValue,
+		eAnnotations <- c.eAnnotations,
+		eAttributes <- c.eAttributes,
+--		eGenericSuperTypes <- c.eGenericSuperTypes,
+		eIDAttribute <- c.eIDAttribute,
+		eOperations <- c.eOperations,
+--		ePackage <- c.ePackage,
+		eReferences <- c.eReferences,
+		eStructuralFeatures <- c.eStructuralFeatures,
+		eTypeParameters <- c.eTypeParameters
+	)
+}
+rule JoinPre {
+	from c : ECore!EClass in IN_PRE
+	to cc : ECore!EClass (
+		name <- c.name ,
+		eSuperTypes <-
+			if (not c.hasSuperMT() ) then
+				c.eSuperTypes.append(ECore!EClass.allInstances()->select(ccc | ccc.name = 'MTpre__Element'))
+			else
+				c.eSuperTypes
+			endif
+		,
+		abstract <- c.abstract,
+		defaultValue <- c.defaultValue,
+		eAnnotations <- c.eAnnotations,
+		eAttributes <- c.eAttributes,
+--		eGenericSuperTypes <- c.eGenericSuperTypes,
+		eIDAttribute <- c.eIDAttribute,
+		eOperations <- c.eOperations,
+--		ePackage <- c.ePackage,
+		eReferences <- c.eReferences,
+		eStructuralFeatures <- c.eStructuralFeatures,
+		eTypeParameters <- c.eTypeParameters
+	)
+}

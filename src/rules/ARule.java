@@ -2,6 +2,7 @@ package rules;
 
 import tcore.*;
 import tcore.messages.Packet;
+import tcore.strategy.Matcher;
 
 /**
  * Applies the transformation on a single match.
@@ -23,6 +24,8 @@ public class ARule extends BasicRule {
     @Override
     public Packet packetIn(Packet p) {
 
+    	// set match algo in the test class with the factory
+    	
         p = matcher.packetIn(p);
         if (checkModuleForFailure(matcher)) return p;
 

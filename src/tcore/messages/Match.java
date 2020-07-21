@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.jetbrains.annotations.Nullable;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.HashMap;
 
@@ -56,7 +57,6 @@ public class Match {
             dirtyMap.put(o, match.dirtyMap.getOrDefault(o, false));
         }
     }
-
 
     public void setNodeToDirty(EObject node) {
         dirtyMap.put(node, true);
@@ -122,7 +122,23 @@ public class Match {
 
         Match match = (Match) o;
 
-        return labelMappings != null ? labelMappings.equals(match.labelMappings) : match.labelMappings == null;
+        //unique e core id for comparison
+        //for loop on the keys of label Mapping
+        //  if k not in o.labelmapping
+        //    return false
+        //  else if labelmapping.get(k).id != o.labelmapping.get(k).id
+        //    return false
+        //return true
+        
+        for (String k : match.labelMappings.keySet()) {
+            EObject o2 = this.labelMappings.get(k);
+            if (!this.labelMappings.containsKey(k))
+            	return false;
+            if (EcoreUtil.getID(o2) != EcoreUtil.getID(match.labelMappings.get(k))) //compare eObject IDs
+            	return false;  	
+        }
+        
+        return true;
     }
 
     /**

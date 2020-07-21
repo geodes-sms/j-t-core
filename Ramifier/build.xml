@@ -18,14 +18,14 @@
 		</am3.atl>
 			
 		<am3.atl path="Augment_compo.atl" allowInterModelReferences="true">
-			<inModel name="IN_PRE" metaModel="Augment_pre"/>
+			<inModel name="IN_PRE" metaModel="Augment_pre"/>	
 			<inModel name="IN_POS" metaModel="Augment_post"/>
 			<outModel name="OUT" metaModel="Augmented"/>
 		</am3.atl>
 	</target>
 	
 	<target name="load">
-		<am3.loadModel modelHandler="EMF" name="InModel"		metamodel="MOF" path="flesh/Klaper.ecore" />
+		<am3.loadModel modelHandler="EMF" name="InModel"		metamodel="MOF" path="flesh/Klaper.ecore"/>
 		<am3.loadModel modelHandler="EMF" name="Relaxed" 		metamodel="MOF" path="out/relaxed.ecore"/>
 		<am3.loadModel modelHandler="EMF" name="Augment_pre" 	metamodel="MOF" path="out/augment_pre.ecore"/>
 		<am3.loadModel modelHandler="EMF" name="Augment_post" 	metamodel="MOF" path="out/augment_post.ecore"/>

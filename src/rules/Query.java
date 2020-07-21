@@ -2,8 +2,8 @@ package rules;
 
 import tcore.Composer;
 import tcore.LHS;
-import tcore.Matcher;
 import tcore.messages.Packet;
+import tcore.strategy.Matcher;
 
 /**
  * Finds a match for the LHS.

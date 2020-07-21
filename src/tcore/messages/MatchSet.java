@@ -39,6 +39,25 @@ public class MatchSet {
         this.matches = matches;
     }
 
+    
+    @Override
+	public boolean equals(Object o) {
+    	if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        
+        MatchSet matchSet = (MatchSet) o;
+    	
+    	//foreach i,m in this.match : isequal &= m.equals(others.match[i]);
+    	
+    	for(int i=0; i<this.matches.size(); i++) {
+    		if (!this.matches.get(i).equals(matchSet.matches.get(i))) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
+
     /**
      * Copy constructor.
      *

@@ -6,6 +6,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import utils.EcoreSerializable;
 import utils.Utils;
@@ -24,7 +25,8 @@ public class Model implements EcoreSerializable {
     public Model(String name, String modelPath, MetaModel metaModel) {
         this.name = name;
         this.metaModel = metaModel;
-        resource = Utils.getResourceSet().getResource(URI.createFileURI(modelPath), true);
+//        resource = Utils.getResourceSet().getResource(URI.createFileURI(modelPath), true);
+        resource = new ResourceSetImpl().getResource(URI.createFileURI(modelPath), true);
 
         //Registering model root package
         rootObject = resource.getContents().get(0);

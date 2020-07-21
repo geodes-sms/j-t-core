@@ -34,7 +34,7 @@ public class MainTest {
         Packet p = new Packet(tables);
 
         p = fireMimi.packetIn(p);
-        if (!fireMimi.isSuccess()) throw fireMimi.getException();
+        if (fireMimi.isSuccess()) throw fireMimi.getException();
 
         assignTables.packetIn(p);
         if (!assignTables.isSuccess()) throw assignTables.getException();

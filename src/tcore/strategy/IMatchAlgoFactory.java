@@ -1,0 +1,15 @@
+package tcore.strategy;
+
+import tcore.LHS;
+import tcore.Model;
+
+/**
+ * Interface defining the methods in the MatchAlgo Factory strategy
+ *
+ * @author Sebastien EHouan
+ * @since 2020-04-25
+ */
+
+public interface IMatchAlgoFactory {
+    public IMatchAlgo createMatchAlgo(LHS lhs, int max, Model model);
+}

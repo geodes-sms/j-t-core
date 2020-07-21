@@ -1,6 +1,7 @@
 package rules;
 
 import tcore.*;
+import tcore.strategy.Matcher;
 
 /**
  * @author Pierre-Olivier Talbot

@@ -1,4 +1,4 @@
-package tcore;
+package tcore.strategy;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EAttribute;
@@ -6,6 +6,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.jetbrains.annotations.NotNull;
+
+import tcore.LHS;
+import tcore.Model;
+import tcore.Pattern;
+import tcore.RulePrimitive;
 import tcore.messages.Match;
 import tcore.messages.MatchSet;
 import tcore.messages.Packet;
@@ -20,10 +25,11 @@ import java.util.HashMap;
  * T-Core primitive meant for matching a {@link LHS} with a given {@link Model}.
  *
  * @author Pierre-Olivier Talbot
+ * @author Sebastien EHouan
  * @since 2017-12-01
  */
-public class Matcher extends RulePrimitive {
 
+public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
     /**
      * Maximum number of matches authorized.
      */
@@ -35,7 +41,7 @@ public class Matcher extends RulePrimitive {
     private LHS lhs;
 
     /**
-     * The model in which to ffind a match.
+     * The model in which to find a match.
      */
     private Model model;
 
@@ -44,46 +50,16 @@ public class Matcher extends RulePrimitive {
      */
     private EStructuralFeature label;
 
-    public Matcher(LHS lhs, int max) {
+    public SimpleMatch(LHS lhs, int max, Model model) {
         super();
         if (max <= 0) {
             throw new IllegalArgumentException("Matcher's maximum number of iterations must be greater than 0.");
         }
         this.max = max;
         this.lhs = lhs;
+        this.model = model;
     }
 
-    /**
-     * Receives and processes a packet for matching procedure.
-     *
-     * @param p The packet.
-     * @return The resulting packet.
-     */
-    @Override
-    public Packet packetIn(Packet p) {
-        isSuccess = false;
-        if (p.getModel() == null) {
-            throw new IllegalArgumentException("The packet sent to the Matcher must contain a valid model.");
-        }
-
-        EObject patternRoot = lhs.getPreconditionPattern().getRootObject();
-        model = p.getModel();
-
-        label = patternRoot.eClass().getEStructuralFeature(Utils.MT_LABEL);
-
-        ArrayList<Match> allMatches = match();
-        ArrayList<Match> chosenMatches = new ArrayList<>();
-        for (int i = 0; i < allMatches.size() && i < max; i++) {
-            chosenMatches.add(allMatches.get(i));
-        }
-        MatchSet ms = new MatchSet(chosenMatches, lhs);
-        p.setCurrentMatchSet(ms);
-        p.setLhs(lhs);
-        isSuccess = true;
-        exception = null;
-
-        return p;
-    }
 
     /**
      * Tries to match the {@link LHS} to the {@link Model}.
@@ -91,7 +67,9 @@ public class Matcher extends RulePrimitive {
      *
      * @return A list of matches.
      */
-    private ArrayList<Match> match() {
+    @Override
+	public ArrayList<Match> match() {
+
         Pattern pattern = lhs.getPreconditionPattern();
         ArrayList<Pattern> nacs = (lhs.getNacs() == null) ? new ArrayList<>() : lhs.getNacs();
 
@@ -104,6 +82,7 @@ public class Matcher extends RulePrimitive {
 
         ArrayList<EObject> modelObjects = model.getObjects();
         EObject patternRoot = pattern.getRootObject();
+        label = patternRoot.eClass().getEStructuralFeature(Utils.MT_LABEL);
 
         for (EObject o : modelObjects) {
             if (objectEquals(o, patternRoot)) {
@@ -189,7 +168,7 @@ public class Matcher extends RulePrimitive {
      * @param match         The actual match containing the current label mappings so far
      * @return A list of matches containing the given submatch.
      */
-    private ArrayList<Match> extendMatch(@NotNull EObject patternObject, String lastLabel, Match match) {
+    ArrayList<Match> extendMatch(@NotNull EObject patternObject, String lastLabel, Match match) {
         ArrayList<Match> currentMatches = new ArrayList<>();
         currentMatches.add(match);
         // Finds the links from the current pattern object to their children
@@ -262,18 +241,10 @@ public class Matcher extends RulePrimitive {
         }
         return currentMatches;
     }
-
-
-    /**
-     * Checks if a model {@link EObject} and a pattern {@link EObject} are considered equal. <br>
-     * In order to be equal, they need to have compatible class types (when disregarding pattern prefix).
-     * They also need to fulfill attribute constraints on the objects.
-     *
-     * @param mObject The model object.
-     * @param pObject The pattern object.
-     * @return true if the objects are equal, false otherwise.
-     */
-    private boolean objectEquals(@NotNull EObject mObject, @NotNull EObject pObject) {
+    
+    
+//  Matcher Algorithm
+    public boolean objectEquals(@NotNull EObject mObject, @NotNull EObject pObject) {
         ScriptEngine js = Utils.js;
         EStructuralFeature matchSubtypes = pObject.eClass().getEStructuralFeature(Utils.MT_MATCHSUBTYPE);
 
@@ -318,5 +289,36 @@ public class Matcher extends RulePrimitive {
         return true;
     }
 
-}
+	@Override
+	public ArrayList<Match> match_iter(LHS lhs, int max, Model model) {
+		
+		return null;
+	}
 
+
+	@Override
+	public Packet packetIn(Packet p) {
+		isSuccess = false;
+        if (p.getModel() == null) {
+            throw new IllegalArgumentException("The packet sent to the Matcher must contain a valid model.");
+        }
+
+        EObject patternRoot = lhs.getPreconditionPattern().getRootObject();
+        model = p.getModel();
+
+        label = patternRoot.eClass().getEStructuralFeature(Utils.MT_LABEL);
+
+        ArrayList<Match> allMatches = match(); 										//this.matchAlgorithm.match();
+        ArrayList<Match> chosenMatches = new ArrayList<>();
+        for (int i = 0; i < allMatches.size() && i < max; i++) {
+            chosenMatches.add(allMatches.get(i));
+        }
+        MatchSet ms = new MatchSet(chosenMatches, lhs);
+        p.setCurrentMatchSet(ms);
+        p.setLhs(lhs);
+        isSuccess = true;
+        exception = null;
+
+        return p;
+	}
+}

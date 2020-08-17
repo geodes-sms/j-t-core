@@ -76,8 +76,7 @@ public class Matcher extends RulePrimitive {
     /**
      * Tries to match the {@link LHS} to the {@link Model}.
      * 
-     * @return A list of matches.
-     * @throws FileNotFoundException 
+     * @return A list of matches. 
      */
     public ArrayList<Match> match() { //call matchingalogrithm.match()
 

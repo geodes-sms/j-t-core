@@ -12,6 +12,7 @@ import java.util.HashMap;
  * A match between a {@link tcore.Model} and a {@link tcore.LHS}.
  *
  * @author Pierre-Olivier Talbot
+ * @author Sebastien Ehouan
  * @version 0.5
  * @since 2017-12-08
  */
@@ -114,7 +115,11 @@ public class Match {
         }
         return res.toString();
     }
-
+    
+    
+    /**
+     * Overriden equal function.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,6 +127,9 @@ public class Match {
 
         Match match = (Match) o;
 
+        /**
+         * Pseudo-code for the comparison.
+         */
         //unique e core id for comparison
         //for loop on the keys of label Mapping
         //  if k not in o.labelmapping
@@ -134,7 +142,7 @@ public class Match {
             EObject o2 = this.labelMappings.get(k);
             if (!this.labelMappings.containsKey(k))
             	return false;
-            if (EcoreUtil.getID(o2) != EcoreUtil.getID(match.labelMappings.get(k))) //compare eObject IDs
+            if (!EcoreUtil.getID(o2).equals(EcoreUtil.getID(match.labelMappings.get(k)))) //comparing eObject IDs
             	return false;  	
         }
         

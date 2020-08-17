@@ -27,13 +27,13 @@ class MatcherNACSBound {
 		utils.Utils.initialize();
 
         // Imports
-		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/Ramifier_atl/Model/Oracle.ecore"); //Oracle MetaModel
-        MetaModel Oracle_augmented = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/Ramifier_atl/Model/Oracle_augmented.ecore"); //Ramified Oracle
+		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
+        MetaModel Oracle_augmented = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
         Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/res/Instance1.xmi", OracleMM); //Dynamic Instance from Oracle
         
-        Pattern pre_A = new Pattern("pre_A", "/Users/sebastien.ehouan/eclipse-workspace2/Ramifier_atl/Model/pre_A.xmi", Oracle_augmented); //
-        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "/Users/sebastien.ehouan/eclipse-workspace2/Ramifier_atl/Model/MTpre__C-Instance_NACS_Bound_1.xmi", Oracle_augmented);
+        Pattern pre_A = new Pattern("pre_A", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/pre_A.xmi", Oracle_augmented); //
+        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Instance_NACS_Bound_1.xmi", Oracle_augmented);
         ArrayList<Pattern> oracle_NACS = new ArrayList<>();
         oracle_NACS.add(Oracle_NAC);
 
@@ -49,19 +49,22 @@ class MatcherNACSBound {
 		
 		for(EObject o : oracle.getObjects()){
 			switch(EcoreUtil.getID(o)) {	
-				case "2" : expectedMatch.addMapping("2", o);      //NAC Bound case
+				case "1" : expectedMatch.addMapping("1", o);      //NAC Bound case
 					break;
-					
+				case "2" : expectedMatch.addMapping("2", o);      //NAC Bound case
+					break;	
 				default: break;	
 			}
 		}
 		
+		//Array of matches expected to be found
 		ArrayList<Match> expectedMatchArray = new ArrayList<Match>();
 		expectedMatchArray.add(expectedMatch);
-        
+		
+		//Expected MatchSet to find
         MatchSet ms = new MatchSet(expectedMatchArray,lhs);
-
-        //Asserting Equality of Matchsets
+        
+        assertTrue(tester.isSuccess(),"Matcher failed");
         assertTrue(ms.equals(p.getCurrentMatchSet()),"Wrong match found");
 	}
 }

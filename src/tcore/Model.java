@@ -25,8 +25,9 @@ public class Model implements EcoreSerializable {
     public Model(String name, String modelPath, MetaModel metaModel) {
         this.name = name;
         this.metaModel = metaModel;
-//        resource = Utils.getResourceSet().getResource(URI.createFileURI(modelPath), true);
-        resource = new ResourceSetImpl().getResource(URI.createFileURI(modelPath), true);
+        
+        resource = Utils.getResourceSet().getResource(URI.createFileURI(modelPath), true);
+//      resource = new ResourceSetImpl().getResource(URI.createFileURI(modelPath), true);
 
         //Registering model root package
         rootObject = resource.getContents().get(0);
@@ -82,11 +83,11 @@ public class Model implements EcoreSerializable {
      * NOTE: Format follows this structure.
      * <code>
      * [Number of nodes]
-     * <p>
+     * <br>
      * N_[Node URI] [Class name] [Number of attributes]
      * [Attribute name] [Attribute type] [Attribute value]
      * ...
-     * <p>
+     * <br>
      * E_[Starting Node URI] [Number of edges]
      * [Ending Node URI] [Edge label]
      * ...

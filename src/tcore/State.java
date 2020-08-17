@@ -180,8 +180,8 @@ public class State {
 	
 	/**
 	 * Remove the match of (targetNodeIndex, queryNodeIndex) for backtrack
-	 * @param targetNodeIndex
-	 * @param queryNodeIndex
+	 * @param targetNodeIndex Index of the node in target graph.
+	 * @param queryNodeIndex Index of the node in query graph.
 	 */
 	public void backtrack(int targetNodeIndex, int queryNodeIndex) {
 		
@@ -236,6 +236,7 @@ public class State {
 	
 	/**
 	 * Write state to file
+	 * @param writer PrintWriter value.
 	 */
 	public void writeMapping(PrintWriter writer){
 		for (int i = 0 ; i < core_2.length ; i++) {

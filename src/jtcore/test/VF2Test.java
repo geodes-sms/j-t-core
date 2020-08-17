@@ -1,6 +1,9 @@
 package jtcore.test;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.junit.jupiter.api.Test;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -28,25 +31,41 @@ public class VF2Test {
 		utils.Utils.initialize();
 		
 		// Imports
-        MetaModel tablesMM = new MetaModel("tables", "res/tables/tables.ecore");
-        MetaModel tables_ramified = new MetaModel("RamRoot", "res/tables/tables_ramified.ecore");
-
-        Model tables = new Model("tables", "res/tables/tables.xmi", tablesMM);
-
-        Pattern fireMimi_pre = new Pattern("fireMimi_pre", "res/tables/fireMimi_pre.xmi", tables_ramified);
-        LHS lhs = new LHS(fireMimi_pre, null);
+		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
+        MetaModel Oracle_augmented = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
-        Packet p = new Packet(tables);
+        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/res/Instance1.xmi", OracleMM); //Dynamic Instance from Oracle
+        
+        Pattern pre_A = new Pattern("pre_A", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/pre_A.xmi", Oracle_augmented); //
+
+        Packet p = new Packet(oracle);
+        LHS lhs = new LHS(pre_A, null);
 
 		VF2 vf2Test = new VF2();
 		
 		ArrayList<Match> result = vf2Test.match();
-		ArrayList<Match> chosenMatches = new ArrayList<>();
+		
+		Match expectedMatch = new Match();
+		
+		for(EObject o : oracle.getObjects()){
+			switch(EcoreUtil.getID(o)) {
+			case "0" : expectedMatch.addMapping("1", o);
+				break;	
+			case "2" : expectedMatch.addMapping("2", o);
+				break;
+				
+			default: break;	
+			}
+		}
+		
+		//Array of matches expected to be found
+		ArrayList<Match> expectedMatchArray = new ArrayList<Match>();
+		expectedMatchArray.add(expectedMatch);
+		
+		//Expected MatchSet to find
+        MatchSet ms = new MatchSet(expectedMatchArray,lhs);
   		
 //      assertTrue(vf2Test.isSuccess(),"Matcher failed");
-        
-        MatchSet ms = new MatchSet(chosenMatches,lhs);
-
         assertTrue(ms.equals(p.getCurrentMatchSet()),"Wrong match found");
 		
 	}

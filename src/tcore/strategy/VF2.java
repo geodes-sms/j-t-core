@@ -43,11 +43,10 @@ public class VF2 implements IMatchAlgo {
 	 * 
 	 * @param targetGraph	Big Graph
 	 * @param queryGraph	Small Graph
-	 * @param state			The state to store the result mapping
 	 * @return				Match or not
 	 */
 	public State matchGraphPair(Graph targetGraph, Graph queryGraph) {
-		State state = new State(targetGraph, queryGraph);
+		State state = new State(targetGraph, queryGraph);  //The state to store the result mapping
 		
 		matchRecursive(state, targetGraph, queryGraph);
 		

@@ -26,6 +26,10 @@ public class Resolver extends RulePrimitive {
     private boolean externalMatchesOnly;
     private Method customResolution;
 
+    /**
+     * @param externalMatchesOnly
+     * @param customResolution
+     */
     public Resolver(boolean externalMatchesOnly, Method customResolution) {
         this.externalMatchesOnly = externalMatchesOnly;
         this.customResolution = customResolution;

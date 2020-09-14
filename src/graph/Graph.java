@@ -2,28 +2,56 @@ package graph;
 
 import java.util.ArrayList;
 
+/**
+ * @author sebastien.ehouan
+ *
+ */
 public class Graph {
-	public String name; //name of the graph
+	/**
+	 *  Name of the graph
+	 */
+	public String name;
+	
+	@SuppressWarnings("javadoc")
 	public ArrayList<Node> nodes = new ArrayList<Node>();
+	
+	@SuppressWarnings("javadoc")
 	public ArrayList<Edge> edges = new ArrayList<Edge>();
 	
 	private int[][] adjacencyMatrix; //stores graph structure as adjacency matrix (-1: not adjacent, >=0: the edge label)
 	private boolean adjacencyMatrixUpdateNeeded = true; //indicates if the adjacency matrix needs an update
 	
+	/**
+	 * @param name
+	 */
 	public Graph(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * @param id
+	 * @param label
+	 */
 	public void addNode(int id, int label) {
 		nodes.add(new Node(this, id, label));
 		this.adjacencyMatrixUpdateNeeded = true;
 	}
 	
+	/**
+	 * @param source
+	 * @param target
+	 * @param label
+	 */
 	public void addEdge(Node source, Node target, int label) {
 		edges.add(new Edge(this, source, target, label));
 		this.adjacencyMatrixUpdateNeeded = true;
 	}
 	
+	/**
+	 * @param sourceId
+	 * @param targetId
+	 * @param label
+	 */
 	public void addEdge(int sourceId, int targetId, int label) {
 		this.addEdge(this.nodes.get(sourceId), this.nodes.get(targetId), label);
 	}
@@ -52,7 +80,9 @@ public class Graph {
 		return this.adjacencyMatrix;
 	}
 	
-	// prints adjacency matrix to console
+	/**
+	 *  Prints adjacency matrix to console
+	 */
 	public void printGraph() {
 		int[][] a = this.getAdjacencyMatrix();
 		int k = a.length;

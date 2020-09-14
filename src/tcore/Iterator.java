@@ -25,6 +25,9 @@ public class Iterator extends RulePrimitive {
      */
     private int iteration = 0;
 
+    /**
+     * @param maxIterations
+     */
     public Iterator(int maxIterations) {
         super();
         this.maxIterations = maxIterations;
@@ -90,7 +93,8 @@ public class Iterator extends RulePrimitive {
     }
 
     // TODO: 2017-12-08 What is this supposed to do?
-    private void globalizePivots(Packet p) {
+    @SuppressWarnings("unused")
+	private void globalizePivots(Packet p) {
 
     }
 }

@@ -22,23 +22,39 @@ public class LHS {
      */
     private ArrayList<Pattern> nacs;
 
+    /**
+     * @param preconditionPattern
+     * @param nacs
+     */
     public LHS(Pattern preconditionPattern, ArrayList<Pattern> nacs) {
         this.preconditionPattern = preconditionPattern;
         this.nacs = nacs;
     }
 
+    /**
+     * @return
+     */
     public Pattern getPreconditionPattern() {
         return preconditionPattern;
     }
 
+    /**
+     * @param preconditionPattern
+     */
     public void setPreconditionPattern(Pattern preconditionPattern) {
         this.preconditionPattern = preconditionPattern;
     }
 
+    /**
+     * @return
+     */
     public ArrayList<Pattern> getNacs() {
         return nacs;
     }
 
+    /**
+     * @param nacs
+     */
     public void setNacs(ArrayList<Pattern> nacs) {
         this.nacs = nacs;
     }

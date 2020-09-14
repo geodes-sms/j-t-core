@@ -5,6 +5,9 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ramRoot="RamRoot"
     xsi:schemaLocation="RamRoot Oracle_augmented.ecore"
-    MT__label="2"
-    name="ZeroMatch"
-    id="2"/>
+    MT__label="1"
+    name="result=true"
+    id="">
+  <cb MT__label="4"
+      id="result=id.length"/>
+</ramRoot:MTpre__C>

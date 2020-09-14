@@ -1,9 +1,6 @@
 package tcore.strategy;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-//import org.omg.CORBA.INTERNAL;
 import graph.Edge;
 import graph.Graph;
 import graph.Node;
@@ -143,7 +140,7 @@ public class VF2 implements IMatchAlgo {
 	}
 		
 	/**
-	 * Check the (syntactic and semantic) feasibility of adding this match based on the formulas below
+	 * Verify the (syntactic and semantic) feasibility of adding this match based on the formulas below
 	 * 
 	 * F(s,n,m) = F_sync(s,n,m) ∧ F_sem(s,n,m)
 	 * 

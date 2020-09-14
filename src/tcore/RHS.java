@@ -30,6 +30,12 @@ public class RHS {
     private ArrayList<String> updateLabels;
     private ArrayList<String> deleteLabels;
 
+    /**
+     * RHS 
+     * 
+     * @param lhs
+     * @param postconditionPattern
+     */
     public RHS(LHS lhs, Pattern postconditionPattern) {
         this.lhs = lhs;
         this.postconditionPattern = postconditionPattern;
@@ -48,22 +54,46 @@ public class RHS {
         deleteLabels.removeAll(postconditionPattern.getLabels());
     }
 
+    /**
+     * Get LHS.
+     * 
+     * @return
+     */
     public LHS getLhs() {
         return lhs;
     }
 
+    /**
+     * Set LHS.
+     * 
+     * @param lhs
+     */
     public void setLhs(LHS lhs) {
         this.lhs = lhs;
     }
 
+    /**
+     * Get Post condition pattern.
+     * 
+     * @return
+     */
     public Model getPostconditionPattern() {
         return postconditionPattern;
     }
 
+    /**
+     * Set Post condition pattern.
+     * 
+     * @param postconditionPattern
+     */
     public void setPostconditionPattern(Pattern postconditionPattern) {
         this.postconditionPattern = postconditionPattern;
     }
 
+    /**
+     * @param matchToRewrite
+     * @throws Exception
+     */
     public void execute(Match matchToRewrite) throws Exception {
 
         for (String deleteLabel : deleteLabels) {
@@ -93,7 +123,8 @@ public class RHS {
 
     }
 
-    private void createNode(EObject modelObjectParent, EObject patternObject, EReference containmentFeature, Match match) {
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	private void createNode(EObject modelObjectParent, EObject patternObject, EReference containmentFeature, Match match) {
         EStructuralFeature label = patternObject.eClass().getEStructuralFeature(Utils.MT_LABEL);
 
         String className = Utils.getOriginalName(patternObject.eClass().getName(), Utils.POST_);
@@ -123,7 +154,7 @@ public class RHS {
     }
 
     // FIXME: Barf...
-    private static Object toObject(Class c, String s) {
+    private static Object toObject(@SuppressWarnings("rawtypes") Class c, String s) {
         if (Boolean.class.isAssignableFrom(c)) return Boolean.parseBoolean(s);
         if (Byte.class.isAssignableFrom(c)) return Byte.parseByte(s);
         if (Short.class.isAssignableFrom(c)) return Short.parseShort(s);
@@ -164,7 +195,8 @@ public class RHS {
         return s;
     }
 
-    private void updateNode(EObject modelObject, EObject patternObject, Match match) {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	private void updateNode(EObject modelObject, EObject patternObject, Match match) {
         EStructuralFeature label = patternObject.eClass().getEStructuralFeature(Utils.MT_LABEL);
 
         EList<EAttribute> attributes = patternObject.eClass().getEAllAttributes();

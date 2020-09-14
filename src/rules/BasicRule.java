@@ -18,14 +18,29 @@ public abstract class BasicRule extends Composer {
     protected Rewriter rewriter;
     protected Resolver resolver;
 
+    /**
+     * Get name.
+     * 
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get LHS.
+     * 
+     * @return
+     */
     public LHS getLhs() {
         return lhs;
     }
 
+    /**
+     * Get RHS.
+     * 
+     * @return
+     */
     public RHS getRhs() {
         return rhs;
     }

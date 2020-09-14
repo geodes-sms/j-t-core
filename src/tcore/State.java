@@ -15,27 +15,54 @@ import java.util.HashSet;
  */
 
 public class State {
+	@SuppressWarnings("javadoc")
 	public int[] core_1;
+	@SuppressWarnings("javadoc")
 	public int[] core_2;
 	
+	@SuppressWarnings("javadoc")
 	public int[] in_1;
+	@SuppressWarnings("javadoc")
 	public int[] in_2;
+	@SuppressWarnings("javadoc")
 	public int[] out_1;
+	@SuppressWarnings("javadoc")
 	public int[] out_2;
 	 
+	@SuppressWarnings("javadoc")
 	public HashSet<Integer> T1in;
+	@SuppressWarnings("javadoc")
 	public HashSet<Integer> T1out;
+	@SuppressWarnings("javadoc")
 	public HashSet<Integer> T2in;
+	@SuppressWarnings("javadoc")
 	public HashSet<Integer> T2out;
 	
-	public HashSet<Integer> unmapped1;	// unmapped nodes in target graph
-	public HashSet<Integer> unmapped2;	// unmapped nodes in query graph
+	/**
+	 * Unmapped nodes in target graph.
+	 */
+	public HashSet<Integer> unmapped1;
 	
-	public int depth = 0; //current depth of the search tree
+	/**
+	 * Unmapped nodes in query graph.
+	 */
+	public HashSet<Integer> unmapped2;
 	
+	/**
+	 * Current depth of the search tree.
+	 */
+	public int depth = 0;
+	
+	@SuppressWarnings("javadoc")
 	public boolean matched = false;
 	
+	/**
+	 * 
+	 */
 	public Graph targetGraph;
+	/**
+	 * 
+	 */
 	public Graph queryGraph;
 	
 	/**
@@ -83,42 +110,82 @@ public class State {
 		}
 	}
 		
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inM1(int nodeId) {
 		return (core_1[nodeId] > -1);
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inM2(int nodeId) {
 		return (core_2[nodeId] > -1);
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inT1in(int nodeId) {
 		return ((core_1[nodeId] == -1) && (in_1[nodeId] > -1));
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inT2in(int nodeId) {
 		return ((core_2[nodeId] == -1) && (in_2[nodeId] > -1));
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inT1out(int nodeId) {
 		return ((core_1[nodeId] == -1) && (out_1[nodeId] > -1));
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inT2out(int nodeId) {
 		return ((core_2[nodeId] == -1) && (out_2[nodeId] > -1));
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inT1(int nodeId) {
 		return (this.inT1in(nodeId) || this.inT1out(nodeId));
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inT2(int nodeId) {
 		return (this.inT2in(nodeId) || this.inT2out(nodeId));
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inN1Tilde(int nodeId) {
 		return ((core_1[nodeId] == -1) && (in_1[nodeId] == -1) && (out_1[nodeId] == -1));
 	}
 	
+	/**
+	 * @param nodeId
+	 * @return
+	 */
 	public Boolean inN2Tilde(int nodeId) {
 		return ((core_2[nodeId] == -1) && (in_2[nodeId] == -1) && (out_2[nodeId] == -1));
 	}

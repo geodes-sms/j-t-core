@@ -1,1 +1,9 @@
+unnamed package
+graph
+jtcore.test
+rules
+tcore
 tcore.messages
+tcore.messages.exceptions
+tcore.strategy
+utils

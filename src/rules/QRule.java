@@ -8,14 +8,18 @@ import tcore.strategy.Matcher;
 /**
  * Finds a match for the LHS.
  *
+ *
+ * Class name Query changed to QRule.
+ *
  * @author Pierre-Olivier Talbot
+ * @author Sebastien Ehouan
  */
-public class Query extends Composer {
+public class QRule extends Composer {
 
     private String name;
     private Matcher matcher;
 
-    Query(String name, LHS lhs) {
+    QRule(String name, LHS lhs) {
         this.matcher = new Matcher(lhs, Integer.MAX_VALUE);
         this.name = name;
     }
@@ -42,6 +46,11 @@ public class Query extends Composer {
         return packetIn(p);
     }
 
+    /**
+     * Get name.
+     * 
+     * @return
+     */
     public String getName() {
         return name;
     }

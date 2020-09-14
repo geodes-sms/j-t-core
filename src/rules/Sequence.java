@@ -12,7 +12,8 @@ import java.util.ArrayList;
  */
 public class Sequence extends Composer {
 
-    private String name;
+    @SuppressWarnings("unused")
+	private String name;
     private ArrayList<Composer> rules;
 
     Sequence(String name, ArrayList<Composer> rules) {

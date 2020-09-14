@@ -2,9 +2,6 @@ package jtcore.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
-
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import tcore.LHS;
@@ -15,6 +12,13 @@ import tcore.messages.MatchSet;
 import tcore.messages.Packet;
 import tcore.strategy.Matcher;
 import tcore.messages.Match;
+
+/**
+ * Unit test for a case with no matches found.
+ *
+ * @author Sebastien EHouan
+ * @since 2020-07-30
+ */
 
 class MatcherZeroMatchTest {
 	
@@ -40,22 +44,14 @@ class MatcherZeroMatchTest {
         //Testing
         Matcher tester = new Matcher(lhs, 5);  //max=1
         
+		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
 		
+		@SuppressWarnings("unused")
 		Match expectedMatch = new Match();
-		
-//		for(EObject o : oracle.getObjects()){
-//			switch(EcoreUtil.getID(o)) {	
-////				case "2" : expectedMatch.addMapping("3", o);      //Zero match case
-////					break;
-//				
-//				default: break;	
-//			}
-//		}
 		
 		//Array of matches expected to be found
 		ArrayList<Match> expectedMatchArray = new ArrayList<Match>();
-//		expectedMatchArray.add(expectedMatch);
 		
 		//Expected MatchSet to find
         MatchSet ms = new MatchSet(expectedMatchArray,lhs);

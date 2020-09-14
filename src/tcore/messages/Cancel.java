@@ -14,8 +14,12 @@ import java.util.ArrayList;
 public class Cancel {
 
     // TODO: 2017-12-08 Comprehend and implement.
-    public ArrayList<LHS> exclusions;
+    @SuppressWarnings("javadoc")
+	public ArrayList<LHS> exclusions;
 
+    /**
+     * @param exclusions
+     */
     public Cancel(ArrayList<LHS> exclusions) {
         this.exclusions = exclusions;
     }

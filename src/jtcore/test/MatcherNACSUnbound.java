@@ -16,6 +16,13 @@ import tcore.messages.Packet;
 import tcore.strategy.Matcher;
 import tcore.messages.Match;
 
+/**
+ * Unit test for a case with Unbound NACs.
+ *
+ * @author Sebastien EHouan
+ * @since 2020-07-30
+ */
+
 class MatcherNACSUnbound {
 	
 	@Before
@@ -28,12 +35,12 @@ class MatcherNACSUnbound {
 
         // Imports
 		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
-        MetaModel Oracle_augmented = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
+        MetaModel Oracle_ramified = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
-        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/res/Instance1.xmi", OracleMM); //Dynamic Instance from Oracle
-        
-        Pattern pre_A = new Pattern("pre_A", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/pre_A.xmi", Oracle_augmented); //
-        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Instance_NACS_Unbound_1.xmi", Oracle_augmented);
+        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
+     
+        Pattern pre_A = new Pattern("pre_A", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatch_pre2.xmi", Oracle_ramified); //
+        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/NACSUnbound_pre.xmi", Oracle_ramified);
         ArrayList<Pattern> oracle_NACS = new ArrayList<>();
         oracle_NACS.add(Oracle_NAC);
 
@@ -41,8 +48,9 @@ class MatcherNACSUnbound {
         LHS lhs = new LHS(pre_A, oracle_NACS);
         
         //Testing
-        Matcher tester = new Matcher(lhs, 1);  //max=1
+        Matcher tester = new Matcher(lhs, 5);  //max=1
         
+		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
 		
 		Match expectedMatch = new Match();
@@ -51,7 +59,7 @@ class MatcherNACSUnbound {
 			switch(EcoreUtil.getID(o)) {	
 				case "1" : expectedMatch.addMapping("1", o);      //NAC Unbound case
 					break;
-				case "2" : expectedMatch.addMapping("2", o);      //NAC Unbound case
+				case "4" : expectedMatch.addMapping("4", o);      //NAC Unbound case
 					break;	
 				default: break;	
 			}

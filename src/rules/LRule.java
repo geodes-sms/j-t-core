@@ -1,9 +1,7 @@
 package rules;
 
 import tcore.Composer;
-import tcore.Iterator;
 import tcore.LHS;
-import tcore.messages.Match;
 import tcore.messages.Packet;
 import tcore.strategy.Matcher;
 
@@ -44,6 +42,11 @@ public class LRule extends Composer {
         return null;
     }
 
+    /**
+     * Get name.
+     * 
+     * @return
+     */
     public String getName() {
         return name;
     }

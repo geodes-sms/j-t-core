@@ -5,5 +5,7 @@ package tcore.messages.exceptions;
  * @version 0.5
  * @since 2017-12-09
  */
+
+@SuppressWarnings("serial")
 public class EmptyControlPrimitiveException extends TCoreException {
 }

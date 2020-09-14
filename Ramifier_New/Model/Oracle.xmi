@@ -5,4 +5,8 @@
     xmlns:or="jtcore.oracle.org"
     xsi:schemaLocation="jtcore.oracle.org Oracle.ecore"
     id="1"
-    name=""/>
+    name="">
+  <b id="3"/>
+  <c id="2"
+      cb="3"/>
+</or:A>

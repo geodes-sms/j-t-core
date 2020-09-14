@@ -15,15 +15,24 @@ import java.util.Random;
  */
 public class Selector extends ControlPrimitive {
 
-    public ArrayList<LHS> exclusions;
+    @SuppressWarnings("javadoc")
+	public ArrayList<LHS> exclusions;
     private Random r;
 
+    /**
+     * @param exclusions
+     */
     public Selector(ArrayList<LHS> exclusions) {
         super();
         this.exclusions = exclusions;
         r = new Random();
     }
 
+    /**
+     * Select.
+     * 
+     * @return
+     */
     public synchronized Packet select() {
         exception = null;
         if (successList.isEmpty()) {
@@ -41,6 +50,11 @@ public class Selector extends ControlPrimitive {
         }
     }
 
+    /**
+     * Cancel.
+     * 
+     * @return
+     */
     public synchronized Cancel cancel() {
         isSuccess = false;
         exception = null;

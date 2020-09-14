@@ -4,9 +4,15 @@ import tcore.messages.Packet;
 
 import java.util.ArrayList;
 
+/**
+ * @author Pierre-Olivier Talbot
+ * Basic test for defining rules
+ *
+ */
 public class MainTest {
 
-    public static void main(String[] args) throws Exception {
+    @SuppressWarnings("javadoc")
+	public static void main(String[] args) throws Exception {
         utils.Utils.initialize();
 
         // Imports

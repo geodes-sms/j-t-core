@@ -1,6 +1,6 @@
 package jtcore.test;
-import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
@@ -14,6 +14,13 @@ import tcore.messages.MatchSet;
 import tcore.messages.Packet;
 import tcore.strategy.Matcher;
 import tcore.messages.Match;
+
+/**
+ * Unit test for cases with a single match.
+ *
+ * @author Sebastien EHouan
+ * @since 2020-07-30
+ */
 
 class MatcherTest {
 	@Before
@@ -38,6 +45,7 @@ class MatcherTest {
         //Testing
         Matcher tester = new Matcher(lhs, 5);  //max=1
         
+		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
 		
 		Match expectedMatch = new Match();
@@ -74,9 +82,9 @@ class MatcherTest {
 		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
         MetaModel Oracle_ramified = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
-        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatchModel_3.xmi", OracleMM); //Dynamic Instance from Oracle
+        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
         
-        Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatch_pre3.xmi", Oracle_ramified); //
+        Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatch_pre2.xmi", Oracle_ramified); //
 
         Packet p = new Packet(oracle);
         LHS lhs = new LHS(SingleMatch_pre, null);
@@ -84,6 +92,7 @@ class MatcherTest {
         //Testing
         Matcher tester = new Matcher(lhs, 5);  //max=1
         
+		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
 		
 		Match expectedMatch = new Match();
@@ -92,7 +101,7 @@ class MatcherTest {
 			switch(EcoreUtil.getID(o)) {
 				case "1" : expectedMatch.addMapping("1", o);
 					break;
-				case "2" : expectedMatch.addMapping("3", o);
+				case "2" : expectedMatch.addMapping("2", o);
 					break;
 				
 			default: break;	

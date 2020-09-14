@@ -29,6 +29,9 @@ public class Match {
     private HashMap<EObject, Boolean> dirtyMap;
 
 
+    /**
+     * Initializing labelMappings, dirtyMap.
+     */
     public Match() {
         labelMappings = new HashMap<>();
         dirtyMap = new HashMap<>();
@@ -59,14 +62,28 @@ public class Match {
         }
     }
 
+    /**
+     * Set node to dirty.
+     * 
+     * @param node
+     */
     public void setNodeToDirty(EObject node) {
         dirtyMap.put(node, true);
     }
 
+    /**
+     * Check if the node is dirty.
+     * 
+     * @param node
+     * @return
+     */
     public boolean checkIfDirty(EObject node) {
         return dirtyMap.getOrDefault(node, false);
     }
 
+    /**
+     * @return
+     */
     public boolean hasDirtyNodes() {
         return dirtyMap.values().contains(true);
     }
@@ -93,6 +110,11 @@ public class Match {
     }
 
 
+    /**
+     * Get the label mappings.
+     * 
+     * @return
+     */
     public HashMap<String, EObject> getLabelMappings() {
         return labelMappings;
     }

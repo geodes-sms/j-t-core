@@ -50,6 +50,11 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
      */
     private EStructuralFeature label;
 
+    /**
+     * @param lhs
+     * @param max
+     * @param model
+     */
     public SimpleMatch(LHS lhs, int max, Model model) {
         super();
         if (max <= 0) {
@@ -72,11 +77,6 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
 
         Pattern pattern = lhs.getPreconditionPattern();
         ArrayList<Pattern> nacs = (lhs.getNacs() == null) ? new ArrayList<>() : lhs.getNacs();
-
-
-        // TODO: 2017-12-08 Add unbound NAC processing.
-        //
-        ////////////////////////////////////////////////
 
         ArrayList<Match> results = new ArrayList<>();
 
@@ -168,7 +168,8 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
      * @param match         The actual match containing the current label mappings so far
      * @return A list of matches containing the given submatch.
      */
-    ArrayList<Match> extendMatch(@NotNull EObject patternObject, String lastLabel, Match match) {
+    @SuppressWarnings("rawtypes")
+	ArrayList<Match> extendMatch(@NotNull EObject patternObject, String lastLabel, Match match) {
         ArrayList<Match> currentMatches = new ArrayList<>();
         currentMatches.add(match);
         // Finds the links from the current pattern object to their children
@@ -242,8 +243,13 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
         return currentMatches;
     }
     
-    
-//  Matcher Algorithm
+    /**
+     * Matcher Algorithm
+     * 
+     * @param mObject
+     * @param pObject
+     * @return
+     */
     public boolean objectEquals(@NotNull EObject mObject, @NotNull EObject pObject) {
         ScriptEngine js = Utils.js;
         EStructuralFeature matchSubtypes = pObject.eClass().getEStructuralFeature(Utils.MT_MATCHSUBTYPE);
@@ -308,7 +314,7 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
 
         label = patternRoot.eClass().getEStructuralFeature(Utils.MT_LABEL);
 
-        ArrayList<Match> allMatches = match(); 										//this.matchAlgorithm.match();
+        ArrayList<Match> allMatches = match();
         ArrayList<Match> chosenMatches = new ArrayList<>();
         for (int i = 0; i < allMatches.size() && i < max; i++) {
             chosenMatches.add(allMatches.get(i));

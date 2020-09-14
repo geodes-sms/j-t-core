@@ -14,9 +14,15 @@ import java.util.Stack;
 public class Rollbacker extends RulePrimitive {
 
     private int maxIterations;
-    private int iterationsCounter;
+    
+    @SuppressWarnings("unused")
+	private int iterationsCounter;
+    
     private Stack<Packet> packetStack;
 
+    /**
+     * @param maxIterations
+     */
     public Rollbacker(int maxIterations) {
         if (maxIterations <= 0) {
             throw new IllegalArgumentException("The number of itarations must be greater than 0");
@@ -37,6 +43,9 @@ public class Rollbacker extends RulePrimitive {
         return p;
     }
 
+    /**
+     * @return
+     */
     public Packet nextIn() {
         // TODO: 2017-12-13 Understand and implement this.
         return null;
@@ -46,6 +55,9 @@ public class Rollbacker extends RulePrimitive {
         packetStack.push(p);
     }
 
+    /**
+     * @return
+     */
     public Packet restore() {
         return packetStack.pop();
     }

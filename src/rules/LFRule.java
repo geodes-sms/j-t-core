@@ -10,9 +10,14 @@ import tcore.*;
  */
 class LFRule extends LRule {
 
-    private boolean outerFirst;
-    private Iterator iterator;
-    private Rewriter rewriter;
+    @SuppressWarnings("unused")
+	private boolean outerFirst;
+    
+    @SuppressWarnings("unused")
+	private Iterator iterator;
+    
+    @SuppressWarnings("unused")
+	private Rewriter rewriter;
 
     public LFRule(String name, Composer innerRule, LHS lhs, RHS rhs, boolean outerFirst) {
         super(name, innerRule, lhs);

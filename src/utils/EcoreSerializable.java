@@ -7,5 +7,6 @@ package utils;
  */
 public interface EcoreSerializable {
 
-    String serialize();
+    @SuppressWarnings("javadoc")
+	String serialize();
 }

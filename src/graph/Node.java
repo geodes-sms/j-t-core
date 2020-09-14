@@ -2,18 +2,44 @@ package graph;
 
 import java.util.ArrayList;
 
+/**
+ * @author sebastien.ehouan
+ *
+ */
 public class Node {
-	public Graph graph; //graph to which the node belongs
+	/**
+	 * Graph to which the node belongs
+	 */
+	public Graph graph;
 		
-		public int id; //a unique id - running number
-		public int label; //for semantic feasibility checks
-		
-		public ArrayList<Edge> outEdges = new ArrayList<Edge>(); //edges of which this node is the origin
-		public ArrayList<Edge> inEdges = new ArrayList<Edge>(); //edges of which this node is the destination
-		
-		public Node(Graph g, int id, int label) {
-			this.graph = g;
-			this.id = id;
-			this.label = label;
-		}	
+	/**
+	 * A unique id - running number
+	 */
+	public int id;
+	
+	/**
+	 * For semantic feasibility checks
+	 */
+	public int label;
+	
+	/**
+	 * Edges of which this node is the origin
+	 */
+	public ArrayList<Edge> outEdges = new ArrayList<Edge>();
+	
+	/**
+	 * Edges of which this node is the destination
+	 */
+	public ArrayList<Edge> inEdges = new ArrayList<Edge>();
+	
+	/**
+	 * @param g
+	 * @param id
+	 * @param label
+	 */
+	public Node(Graph g, int id, int label) {
+		this.graph = g;
+		this.id = id;
+		this.label = label;
+	}	
 }

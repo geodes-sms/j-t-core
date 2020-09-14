@@ -6,13 +6,13 @@ import tcore.RulePrimitive;
 import tcore.messages.Match;
 import tcore.messages.MatchSet;
 import tcore.messages.Packet;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 /**
  * T-Core primitive meant for matching a {@link LHS} with a given {@link Model}.
  *
  * @author Pierre-Olivier Talbot
+ * @author Sebastien Ehouan
  * @since 2017-12-01
  */
 
@@ -34,6 +34,10 @@ public class Matcher extends RulePrimitive {
      */
     private Model model;
 
+    /**
+     * @param lhs
+     * @param max
+     */
     public Matcher(LHS lhs, int max) {
         super();
         if (max <= 0) {
@@ -132,10 +136,10 @@ public class Matcher extends RulePrimitive {
 //        except: raise
 //        finally: lhsMatcher.reset_recursion_limit()
 
-//		@NotNull IMatchAlgo lhsMatcher = matchAlgoFactory.createIMatchAlgo(lhs, max, "VF2");
-//		
-//		//Using lhsMatcher to implement the VF2 matching algorithm
-//		lhsMatcher.match();
+//		@NotNull IMatchAlgo lhsMatcher2 = matchAlgoFactory.createMatchAlgo(lhs, max, model);
+		
+		//Using lhsMatcher to implement the VF2 matching algorithm
+//		lhsMatcher2.match();
         
         return results;
 		

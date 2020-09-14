@@ -14,10 +14,16 @@ public abstract class Primitive {
     // TODO: 2017-12-08 Implement this.
     //public void cancelIn(Cancel c);
 
+    /**
+     * @return
+     */
     public boolean isSuccess() {
         return isSuccess;
     }
 
+    /**
+     * @return
+     */
     public Exception getException() {
         return exception;
     }

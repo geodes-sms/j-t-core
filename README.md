@@ -19,7 +19,7 @@ Here is a typical workflow:
 6. Save model changes
 
 ## Unit Tests
-Several Unit tests are provided in `j-t-core/src/unit.tests`.
+Several Unit tests are provided in `j-t-core/src/unit/tests`.
 
 To run them, you need:
 - A metamodel

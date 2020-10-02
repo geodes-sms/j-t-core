@@ -9,5 +9,6 @@
     name="result=true"
     id="">
   <cb MT__label="4"
-      id="result=id.length"/>
+      name="result=(getAttr()=='B')"
+      id=""/>
 </ramRoot:MTpre__C>

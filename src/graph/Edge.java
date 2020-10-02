@@ -1,7 +1,11 @@
 package graph;
 
 /**
+ * Class initializing the edges
+ * 
  * @author sebastien.ehouan
+ *
+ * VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
  *
  */
 public class Edge {

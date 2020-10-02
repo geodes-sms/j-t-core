@@ -8,8 +8,10 @@ import java.util.ArrayList;
  * @author Pierre-Olivier Talbot
  * Basic test for defining rules
  *
+ * Currently unstable with the new algorithm selection strategy 
  */
 public class MainTest {
+	 
 
     @SuppressWarnings("javadoc")
 	public static void main(String[] args) throws Exception {

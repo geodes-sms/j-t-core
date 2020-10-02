@@ -244,7 +244,7 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
     }
     
     /**
-     * Matcher Algorithm
+     * Method to compare class names and check constraints on attributes
      * 
      * @param mObject
      * @param pObject
@@ -295,6 +295,7 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
         return true;
     }
 
+    // TODO: Add support for match_iter
 	@Override
 	public ArrayList<Match> match_iter(LHS lhs, int max, Model model) {
 		

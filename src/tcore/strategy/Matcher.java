@@ -45,7 +45,8 @@ public class Matcher extends RulePrimitive {
         }
         this.max = max;
         this.lhs = lhs;
-        this.matchAlgoFactory = new SimpleMatchFactory();
+        this.matchAlgoFactory = new SimpleMatchFactory();   //To access the SimpleMatcher algorithm
+//      this.matchAlgoFactory = new VF2MatchAlgoFactory();  //To access the VF2 algorithm
     }
 
     /**
@@ -82,12 +83,16 @@ public class Matcher extends RulePrimitive {
      * 
      * @return A list of matches. 
      */
-    public ArrayList<Match> match() { //call matchingalogrithm.match()
+    public ArrayList<Match> match() { 
 
         IMatchAlgo lhsMatcher = matchAlgoFactory.createMatchAlgo(lhs, max, model);
 		
         ArrayList<Match> results = lhsMatcher.match();
-//        
+        
+        /**
+         * Code implementation from the Python version for reference 
+         */ 
+        
 //        # Either there are no NACs, or there were only unbound NACs that do not match, so match the LHS now
 //        bound_NACs.sort(key=lambda nac: nac.bridge.vcount(), reverse=True)
 //        if not bound_NACs:
@@ -135,11 +140,14 @@ public class Matcher extends RulePrimitive {
 //                        yield mapping
 //        except: raise
 //        finally: lhsMatcher.reset_recursion_limit()
-
-//		@NotNull IMatchAlgo lhsMatcher2 = matchAlgoFactory.createMatchAlgo(lhs, max, model);
+        /** END */
 		
+        
+        
 		//Using lhsMatcher to implement the VF2 matching algorithm
-//		lhsMatcher2.match();
+        /** YET TO FINALIZE -- DO NOT USE */
+//      IMatchAlgo lhsMatcher = matchAlgoFactory.createMatchAlgo(lhs, max, model);
+//		ArrayList<Match> results = lhsMatcher.match();
         
         return results;
 		

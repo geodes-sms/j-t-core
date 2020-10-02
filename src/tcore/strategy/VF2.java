@@ -1,14 +1,25 @@
 package tcore.strategy;
 
+import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
+
 import graph.Edge;
 import graph.Graph;
 import graph.Node;
 import tcore.*;
 import tcore.messages.Match;
+import tcore.strategy.VF2Adapter;
+import utils.Utils;
 
 /**
  * VF2 Algorithm implementation based on (sub)graph isomorphism 
+ * 
+ * YET TO BE FINALIZED -- DO NOT USE
  *
  * @author Sebastien EHouan
  * @since 2020-04-25
@@ -175,7 +186,22 @@ public class VF2 implements IMatchAlgo {
 		if (!checkNew(state, targetNodeIndex, queryNodeIndex)){
 			return false;
 		}
-				
+		
+		//Adding support for checking constraints on attributes
+//		try {
+//			ScriptEngine js = Utils.js; 
+//			Object value, constraint;
+//			String script = constraint.toString().replaceAll("getAttr\\(\\)", "\"" + (value == null ? "" : value).toString() + "\"");
+//			js.eval(script);
+//			if (js.get("result").toString().equals("false")) {
+//				return false;
+//            }
+//			
+//		} catch (ScriptException e) {
+//            e.printStackTrace();
+//            return false;
+//		}
+		
 		return true; 
 	}
 	
@@ -366,13 +392,68 @@ public class VF2 implements IMatchAlgo {
 
 	@Override
 	public ArrayList<Match> match() {
-		// TODO Auto-generated method stub
-		return null;
+		
+//		Path graphPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "mygraphdb.data");
+//		Path queryPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "Q4.my");
+//		Path outPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "results_Q4.my");
+//		
+//		System.out.println("Target Graph Path: " + graphPath.toString());
+//		System.out.println("Query Graph Path: " + queryPath.toString());
+//		System.out.println("Output Path: " + outPath.toString());
+//		System.out.println();
+//		
+//		
+//		long startMilli = System.currentTimeMillis();
+//	
+//		PrintWriter writer = new PrintWriter(outPath.toFile());
+//
+//		ArrayList<Graph> graphSet = loadGraphSetFromFile(graphPath, "Graph ");
+//		ArrayList<Graph> querySet = loadGraphSetFromFile(queryPath, "Query ");
+//
+//		VF2 vf2= new VF2();
+//		
+//		System.out.println("Loading Done!");
+//		printTimeFlapse(startMilli);
+//		startMilli = System.currentTimeMillis();
+//		System.out.println();
+//		
+//		int queryCnt = 0;
+//		for (Graph queryGraph : querySet){
+//			queryCnt++;
+//			ArrayList<State> stateSet = vf2.matchGraphSetWithQuery(graphSet, queryGraph);
+//			if (stateSet.isEmpty()){
+//				System.out.println("Cannot find a match for: " + queryGraph.name);
+//				printTimeFlapse(startMilli);
+//				printAverageMatchingTime(startMilli, queryCnt);
+//				System.out.println();
+//				
+//				writer.write("Cannot find a match for: " + queryGraph.name + "\n\n");
+//				writer.flush();
+//			} else {
+//				System.out.println("Found " + stateSet.size() + " matches for: " + queryGraph.name);
+//				printTimeFlapse(startMilli);
+//				printAverageMatchingTime(startMilli, queryCnt);
+//				System.out.println();
+//				
+//				writer.write("Matches for: " + queryGraph.name + "\n");
+//				for (State state : stateSet){
+//					writer.write("In: " + state.targetGraph.name + "\n");
+//					state.printMapping();
+//					state.writeMapping(writer);
+//				}		
+//				writer.write("\n");
+//				writer.flush();
+//			}
+//		}
+//		
+//		printTimeFlapse(startMilli);
+		
+		return  null;
 	}
 
 	@Override
 	public ArrayList<Match> match_iter(LHS lhs, int max, Model model) {
-		// TODO Auto-generated method stub
+		// TODO: Add support for match_iter
 		return null;
 	}
 }

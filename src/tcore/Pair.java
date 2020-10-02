@@ -2,6 +2,8 @@ package tcore;
 
 /**
  * Class implementing the concept of pairs for the VF2 Algorithm
+ * 
+ * VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
  *
  * @author Sebastien EHouan
  * @param <K> 

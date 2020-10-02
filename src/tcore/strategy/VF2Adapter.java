@@ -13,6 +13,8 @@ import graph.Graph;
 /**
  * Converting the data structure to adapt to tcore's and executing the algo.
  * 
+ * YET TO BE FINALIZED -- DO NOT USE
+ * 
  * @author Sebastien Ehouan
  *
  */
@@ -26,29 +28,11 @@ public class VF2Adapter {
 		
 		Path graphPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "mygraphdb.data");
 		Path queryPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "Q4.my");
-		Path outPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "results_Q4.my");
-		
-//		if (args.length == 0) {
-//			printUsage();
-//			System.out.println();
-//			System.out.println("Warning: no arguments given, using default arguments");
-//			System.out.println();
-//		}
+		Path outPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "results.my");
 		
 		for (int i = 0; i < args.length; i++){
-//			if (args[i].equals("-t")) {
-//				graphPath = Paths.get(args[i+1]);
-//				i++;
-//			} else if (args[i].equals("-q")) {
-//				queryPath = Paths.get(args[i+1]);
-//				i++;
-//			} else if (args[i].equals("-o")) {
-//				outPath = Paths.get(args[i+1]);
-//				i++;
-//			} else {
 				printUsage();
 				System.exit(1);
-//			}
 		}
 		
 		System.out.println("Target Graph Path: " + graphPath.toString());

@@ -1,7 +1,10 @@
-package jtcore.test;
+package unit.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import tcore.LHS;
@@ -14,13 +17,13 @@ import tcore.strategy.Matcher;
 import tcore.messages.Match;
 
 /**
- * Unit test for a case with no matches found.
+ * Unit test for a case with constraints.
  *
  * @author Sebastien EHouan
  * @since 2020-07-30
  */
 
-class MatcherZeroMatchTest {
+class MatcherConstraintAttribute {
 	
 	@Before
 	public void setUp() {
@@ -32,31 +35,42 @@ class MatcherZeroMatchTest {
 
         // Imports
 		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
-        MetaModel Oracle_augmented = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
+        MetaModel Oracle_ramified = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
         Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
-        
-        Pattern pre_A = new Pattern("pre_A", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/ZeroMatch_pre.xmi", Oracle_augmented); //
+     
+        Pattern ConstraintAttribute_pre = new Pattern("ConstraintAttribute_pre", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); //
+        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/ConstraintAttribute_pre.xmi", Oracle_ramified);
+        ArrayList<Pattern> oracle_NACS = new ArrayList<>();
+        oracle_NACS.add(Oracle_NAC);
 
         Packet p = new Packet(oracle);
-        LHS lhs = new LHS(pre_A, null);
+        LHS lhs = new LHS(ConstraintAttribute_pre, oracle_NACS);
         
         //Testing
-        Matcher tester = new Matcher(lhs, 5);  //max=1
+        Matcher tester = new Matcher(lhs, 5);
         
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
 		
-		@SuppressWarnings("unused")
 		Match expectedMatch = new Match();
+		
+		for(EObject o : oracle.getObjects()){
+			switch(EcoreUtil.getID(o)) {	
+				case "1" : expectedMatch.addMapping("1", o);
+					break;
+				default: break;	
+			}
+		}
 		
 		//Array of matches expected to be found
 		ArrayList<Match> expectedMatchArray = new ArrayList<Match>();
+		expectedMatchArray.add(expectedMatch);
 		
 		//Expected MatchSet to find
         MatchSet ms = new MatchSet(expectedMatchArray,lhs);
-  		
-        assertTrue(tester.isSuccess(),"Matcher failed");        
+        
+        assertTrue(tester.isSuccess(),"Matcher failed");
         assertTrue(ms.equals(p.getCurrentMatchSet()),"Wrong match found");
 	}
 }

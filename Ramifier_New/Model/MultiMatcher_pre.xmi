@@ -5,6 +5,5 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ramRoot="RamRoot"
     xsi:schemaLocation="RamRoot Oracle_augmented.ecore"
-    MT__label="4">
-  <b MT__label="3"/>
-</ramRoot:MTpre__A>
+    MT__label="1"
+    id="" name=""/>

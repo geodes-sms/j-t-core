@@ -3,8 +3,11 @@ package graph;
 import java.util.ArrayList;
 
 /**
+ * Class defining nodes
+ * 
  * @author sebastien.ehouan
  *
+ * VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
  */
 public class Node {
 	/**

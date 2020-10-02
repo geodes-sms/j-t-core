@@ -1,4 +1,4 @@
-package jtcore.test;
+package unit.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
@@ -39,13 +39,13 @@ class MatcherNACSBound {
 		        
 		        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
 		     
-		        Pattern pre_A = new Pattern("pre_A", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatch_pre2.xmi", Oracle_ramified); //
+		        Pattern NACSBound_pre = new Pattern("NACSBound_pre", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); //
 		        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/NACSBound_pre.xmi", Oracle_ramified);
 		        ArrayList<Pattern> oracle_NACS = new ArrayList<>();
 		        oracle_NACS.add(Oracle_NAC);
 
 		        Packet p = new Packet(oracle);
-		        LHS lhs = new LHS(pre_A, oracle_NACS);
+		        LHS lhs = new LHS(NACSBound_pre, oracle_NACS);
 		        
 		        //Testing
 		        Matcher tester = new Matcher(lhs, 5);  //max=1
@@ -57,9 +57,9 @@ class MatcherNACSBound {
 				
 				for(EObject o : oracle.getObjects()){
 					switch(EcoreUtil.getID(o)) {	
-						case "2" : expectedMatch.addMapping("2", o);      //NAC Unbound case
+						case "1" : expectedMatch.addMapping("1", o);      //NAC Bound case
 							break;
-						case "5" : expectedMatch.addMapping("5", o);      //NAC Unbound case
+						case "4" : expectedMatch.addMapping("4", o);      //NAC Bound case
 							break;	
 						default: break;	
 					}

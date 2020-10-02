@@ -9,6 +9,8 @@ import java.util.HashSet;
 
 /**
  * Class implementing the concept of states for the VF2 algorithm
+ * 
+ * VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
  *
  * @author Sebastien EHouan
  * @since 2020-04-25

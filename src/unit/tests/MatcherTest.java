@@ -32,12 +32,12 @@ class MatcherTest {
 		utils.Utils.initialize();
 
         // Imports
-		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
-        MetaModel Oracle_ramified = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
+		MetaModel OracleMM = new MetaModel("Oracle", "Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
+        MetaModel Oracle_ramified = new MetaModel("OracleRoot", "Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
-        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
+        Model oracle = new Model("Oracle", "Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
         
-        Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); //
+        Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified);
 
         Packet p = new Packet(oracle);
         LHS lhs = new LHS(SingleMatch_pre, null);

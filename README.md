@@ -18,15 +18,4 @@ Here is a typical workflow:
 5. Run packet through rules
 6. Save model changes
 
-## Unit Tests
-Several Unit tests are provided in `j-t-core/src/unit/tests`.
 
-To run them, you need:
-- A metamodel
-- The ramified version of the metamodel
-- A dynamic instance of the metamodel
-- A Precondition corresponding to the model
-- NACs (Optional)
-- Conditions defined to match the label IDs of the attributes. (Expected output)
-
-The resources mentioned aboved are to be predefined in `j-t-core/Ramifier_New/Model`.

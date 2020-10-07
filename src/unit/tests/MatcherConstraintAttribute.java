@@ -34,13 +34,13 @@ class MatcherConstraintAttribute {
 		utils.Utils.initialize();
 
         // Imports
-		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
-        MetaModel Oracle_ramified = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
+		MetaModel OracleMM = new MetaModel("Oracle", "Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
+        MetaModel Oracle_ramified = new MetaModel("OracleRoot", "Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
-        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
+        Model oracle = new Model("Oracle", "Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
      
-        Pattern ConstraintAttribute_pre = new Pattern("ConstraintAttribute_pre", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); //
-        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/ConstraintAttribute_pre.xmi", Oracle_ramified);
+        Pattern ConstraintAttribute_pre = new Pattern("ConstraintAttribute_pre", "Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); //precondition
+        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "Ramifier_New/Model/ConstraintAttribute_pre.xmi", Oracle_ramified); //NAC
         ArrayList<Pattern> oracle_NACS = new ArrayList<>();
         oracle_NACS.add(Oracle_NAC);
 

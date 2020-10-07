@@ -31,12 +31,12 @@ class MatcherZeroMatchTest {
 		utils.Utils.initialize();
 
         // Imports
-		MetaModel OracleMM = new MetaModel("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
-        MetaModel Oracle_augmented = new MetaModel("OracleRoot", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
+		MetaModel OracleMM = new MetaModel("Oracle", "Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
+        MetaModel Oracle_augmented = new MetaModel("OracleRoot", "Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
-        Model oracle = new Model("Oracle", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
+        Model oracle = new Model("Oracle", "Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
         
-        Pattern ZeroMatch_pre = new Pattern("ZeroMatch_pre", "/Users/sebastien.ehouan/eclipse-workspace2/jtcore/Ramifier_New/Model/ZeroMatch_pre.xmi", Oracle_augmented); //
+        Pattern ZeroMatch_pre = new Pattern("ZeroMatch_pre", "Ramifier_New/Model/ZeroMatch_pre.xmi", Oracle_augmented); //precondition
 
         Packet p = new Packet(oracle);
         LHS lhs = new LHS(ZeroMatch_pre, null);

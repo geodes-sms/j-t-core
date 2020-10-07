@@ -34,6 +34,11 @@ public class Pattern extends Model {
     private HashMap<String, EObject> labelsMapping;
 
 
+    /**
+     * @param name
+     * @param modelPath
+     * @param metaModel
+     */
     public Pattern(String name, String modelPath, MetaModel metaModel) {
         super(name, modelPath, metaModel);
         deriveSubclasses();
@@ -48,7 +53,8 @@ public class Pattern extends Model {
         labels = new ArrayList<>();
         labelsMapping = new HashMap<>();
         EStructuralFeature labelFeature = rootObject.eClass().getEStructuralFeature(Utils.MT_LABEL);
-        TreeIterator i = resource.getAllContents();
+        @SuppressWarnings("rawtypes")
+		TreeIterator i = resource.getAllContents();
         while (i.hasNext()) {
             Object o = i.next();
             if (o instanceof EObjectImpl) {
@@ -69,7 +75,8 @@ public class Pattern extends Model {
 
     private void deriveSubclasses() {
         subclassesMap = new HashMap<>();
-        TreeIterator i = metaModel.getRootPackage().eAllContents();
+        @SuppressWarnings("rawtypes")
+		TreeIterator i = metaModel.getRootPackage().eAllContents();
         while (i.hasNext()) {
             EObject o = (EObject) i.next();
             if (!(o instanceof EClassImpl)) continue;
@@ -83,14 +90,29 @@ public class Pattern extends Model {
         }
     }
 
+    /**
+     * Get subclasses map.
+     * 
+     * @return
+     */
     public HashMap<String, ArrayList<String>> getSubclassesMap() {
         return subclassesMap;
     }
 
+    /**
+     * Get labels.
+     * 
+     * @return
+     */
     public ArrayList<String> getLabels() {
         return labels;
     }
 
+    /**
+     * Get Label mappings.
+     * 
+     * @return
+     */
     public HashMap<String, EObject> getLabelsMapping() {
         return labelsMapping;
     }

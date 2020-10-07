@@ -8,10 +8,19 @@ import tcore.messages.Packet;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 
+/**
+ * Rewriter.
+ * 
+ * @author sebastien.ehouan
+ *
+ */
 public class Rewriter extends RulePrimitive {
 
     private RHS rhs;
 
+    /**
+     * @param rhs
+     */
     public Rewriter(RHS rhs) {
         super();
         this.rhs = rhs;
@@ -23,7 +32,8 @@ public class Rewriter extends RulePrimitive {
         if (p.getCurrentMatchSet().getLhs() != rhs.getLhs()) {
             throw new InputMismatchException("The RHS doesn't correspond to the correct LHS.");
         }
-        Model model = p.getModel();
+        @SuppressWarnings("unused")
+		Model model = p.getModel();
         try {
             rhs.execute(p.getCurrentMatchSet().getMatchToRewrite());
         } catch (Exception e) {

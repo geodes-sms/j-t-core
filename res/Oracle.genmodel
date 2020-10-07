@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/jtcore/src" modelPluginID="jtcore" modelName="Oracle"
+    rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="5.0" copyrightFields="false" operationReflection="true" importOrganizing="true">
+  <foreignModel>Oracle.ecore</foreignModel>
+  <genPackages prefix="OracleRoot" disposableProviderFactory="true" ecorePackage="Oracle.ecore#/">
+    <genClasses ecoreClass="Oracle.ecore#//A">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Oracle.ecore#//A/id"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Oracle.ecore#//A/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Oracle.ecore#//A/b"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Oracle.ecore#//A/c"/>
+    </genClasses>
+    <genClasses ecoreClass="Oracle.ecore#//B">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Oracle.ecore#//B/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Oracle.ecore#//B/id"/>
+    </genClasses>
+    <genClasses ecoreClass="Oracle.ecore#//C">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Oracle.ecore#//C/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Oracle.ecore#//C/id"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Oracle.ecore#//C/cb"/>
+    </genClasses>
+    <genClasses ecoreClass="Oracle.ecore#//D">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Oracle.ecore#//D/X"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

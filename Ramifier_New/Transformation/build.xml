@@ -1,0 +1,36 @@
+<project name="Ramifier_atl"  basedir="." default="execute">
+	<target name="execute" depends="load">
+		<atl.launch path="Relax.atl">
+			<option name="allowInterModelReferences" value="true"/>
+			<inModel name="IN" metaModel="inModel"/>
+			<outModel name="OUT" metaModel="Relaxed"/>
+		</atl.launch>
+	
+		<atl.launch path="Augment_pre.atl">
+			<option name="allowInterModelReferences" value="true"/>
+			<inModel name="IN" metaModel="Relaxed"/>
+			<outModel name="OUT" metaModel="Augment_pre"/>
+		</atl.launch>
+	
+		<atl.launch path="Augment_post.atl">
+			<option name="allowInterModelReferences" value="true"/>
+			<inModel name="IN" metaModel="Relaxed"/>
+			<outModel name="OUT" metaModel="Augment_post"/>
+		</atl.launch>
+			
+		<atl.launch path="Augment_compo.atl">
+			<option name="allowInterModelReferences" value="true"/>
+			<inModel name="IN_PRE" metaModel="Augment_pre"/>	
+			<inModel name="IN_POS" metaModel="Augment_post"/>
+			<outModel name="OUT" metaModel="Augmented"/>
+		</atl.launch>
+	</target>
+	
+	<target name="load">
+		<atl.loadModel modelHandler="EMF" name="inModel"		metamodel="MOF" path="Model/Oracle.ecore"/>
+		<atl.loadModel modelHandler="EMF" name="Relaxed" 		metamodel="MOF" path="Transformation/relaxed.ecore"/>
+		<atl.loadModel modelHandler="EMF" name="Augment_pre" 	metamodel="MOF" path="Transformation/augment_pre.ecore"/>
+		<atl.loadModel modelHandler="EMF" name="Augment_post" 	metamodel="MOF" path="Transformation/augment_post.ecore"/>
+		<atl.loadModel modelHandler="EMF" name="Augmented" 		metamodel="MOF" path="Transformation/augmented.ecore"/>
+	</target>
+</project>

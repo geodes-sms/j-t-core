@@ -9,9 +9,11 @@ import java.util.ArrayList;
  * Each MatchSet is associated with a single {@link LHS}.
  *
  * @author Pierre-Olivier Talbot
+ * @author Sebastien Ehouan
  * @version 0.5
  * @since 2017-12-08
  */
+
 public class MatchSet {
     /**
      * The left hand side associated with this MatchSet.
@@ -40,6 +42,27 @@ public class MatchSet {
     }
 
     /**
+     * Overriden equal function.
+     */
+    @Override
+	public boolean equals(Object o) {
+    	if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        
+        MatchSet matchSet = (MatchSet) o;
+    	
+    	//foreach i,m in this.match : isequal &= m.equals(others.match[i]);
+    	
+    	for(int i=0; i<this.matches.size(); i++) {
+    		if (!this.matches.get(i).equals(matchSet.matches.get(i))) {
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    }
+
+    /**
      * Copy constructor.
      *
      * @param ms The MatchSet to copy.
@@ -54,6 +77,11 @@ public class MatchSet {
     }
 
 
+    /**
+     * True if dirty nodes exist. 
+     * 
+     * @return
+     */
     public boolean hasDirtyMatches() {
         for (Match m : matches) {
             if (m.hasDirtyNodes()) return true;
@@ -61,18 +89,38 @@ public class MatchSet {
         return false;
     }
 
+    /**
+     * Get LHS.
+     * 
+     * @return
+     */
     public LHS getLhs() {
         return lhs;
     }
 
+    /**
+     * Get the match to rewrite.
+     * 
+     * @return
+     */
     public Match getMatchToRewrite() {
         return matchToRewrite;
     }
 
+    /**
+     * Get the matches.
+     * 
+     * @return
+     */
     public ArrayList<Match> getMatches() {
         return matches;
     }
 
+    /**
+     * Set the match to rewrite.
+     * 
+     * @param matchToRewrite
+     */
     public void setMatchToRewrite(Match matchToRewrite) {
         this.matchToRewrite = matchToRewrite;
     }

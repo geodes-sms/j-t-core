@@ -12,6 +12,12 @@ import utils.Utils;
 
 import java.util.ArrayList;
 
+/**
+ * Model.
+ * 
+ * @author sebastien.ehouan
+ *
+ */
 public class Model implements EcoreSerializable {
     protected String name;
     protected Resource resource;
@@ -21,9 +27,15 @@ public class Model implements EcoreSerializable {
     private String modelPath;
     private MetaModel metamodel;
 
+    /**
+     * @param name
+     * @param modelPath
+     * @param metaModel
+     */
     public Model(String name, String modelPath, MetaModel metaModel) {
         this.name = name;
         this.metaModel = metaModel;
+        
         resource = Utils.getResourceSet().getResource(URI.createFileURI(modelPath), true);
 
         //Registering model root package
@@ -33,44 +45,74 @@ public class Model implements EcoreSerializable {
         actualizeObjects();
     }
 
+    /**
+     * 
+     */
     public void actualizeObjects() {
         objects = new ArrayList<>(rootObject.eContents());
         objects.add(rootObject);
     }
 
 
+    /**
+     * @return
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * @param name
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * @return
+     */
     public Resource getResource() {
         return resource;
     }
 
+    /**
+     * @param resource
+     */
     public void setResource(Resource resource) {
         this.resource = resource;
     }
 
+    /**
+     * @return
+     */
     public ArrayList<EObject> getObjects() {
         return objects;
     }
 
+    /**
+     * @param objects
+     */
     public void setObjects(ArrayList<EObject> objects) {
         this.objects = objects;
     }
 
+    /**
+     * @return
+     */
     public EObject getRootObject() {
         return rootObject;
     }
 
+    /**
+     * @return
+     */
     public String getModelPath() {
         return modelPath;
     }
 
+    /**
+     * @return
+     */
     public MetaModel getMetamodel() {
         return metamodel;
     }
@@ -80,11 +122,11 @@ public class Model implements EcoreSerializable {
      * NOTE: Format follows this structure.
      * <code>
      * [Number of nodes]
-     * <p>
+     * <br>
      * N_[Node URI] [Class name] [Number of attributes]
      * [Attribute name] [Attribute type] [Attribute value]
      * ...
-     * <p>
+     * <br>
      * E_[Starting Node URI] [Number of edges]
      * [Ending Node URI] [Edge label]
      * ...
@@ -112,7 +154,8 @@ public class Model implements EcoreSerializable {
             for (EReference ref : referenceEList) {
                 Object links = node.eGet(ref);
                 if (links instanceof EList) {
-                    EList linksList = (EList) links;
+                    @SuppressWarnings("rawtypes")
+					EList linksList = (EList) links;
                     linkCounter += linksList.size();
                     for (Object o : linksList) {
                         if (o instanceof EObject) {

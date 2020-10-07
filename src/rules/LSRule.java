@@ -9,8 +9,14 @@ import tcore.LHS;
  *
  * @author Pierre-Olivier Talbot
  */
+
 public class LSRule extends LRule {
 
+    /**
+     * @param name
+     * @param innerRule
+     * @param lhs
+     */
     public LSRule(String name, Composer innerRule, LHS lhs) {
         super(name, innerRule, lhs);
     }

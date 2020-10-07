@@ -2,9 +2,9 @@ package rules;
 
 import tcore.Iterator;
 import tcore.LHS;
-import tcore.Matcher;
 import tcore.RHS;
 import tcore.messages.Packet;
+import tcore.strategy.Matcher;
 
 /**
  * Applies the transformation on all matches found.

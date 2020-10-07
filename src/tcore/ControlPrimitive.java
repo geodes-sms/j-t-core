@@ -15,16 +15,29 @@ public abstract class ControlPrimitive extends Primitive {
     protected ArrayList<Packet> successList;
     protected ArrayList<Packet> failList;
 
+    /**
+     * Success In.
+     * 
+     * @param p
+     */
     public void successIn(Packet p) {
         successList.add(p);
         isSuccess = false;
     }
 
+    /**
+     * Fail In.
+     * 
+     * @param p
+     */
     public void failIn(Packet p) {
         failList.add(p);
         isSuccess = false;
     }
 
+    /**
+     * Reset.
+     */
     public void reset() {
         successList.clear();
         failList.clear();

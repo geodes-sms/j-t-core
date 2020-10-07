@@ -1,11 +1,9 @@
 package rules;
 
 import tcore.Composer;
-import tcore.Iterator;
 import tcore.LHS;
-import tcore.Matcher;
-import tcore.messages.Match;
 import tcore.messages.Packet;
+import tcore.strategy.Matcher;
 
 /**
  * Applies an inner rule for each match of the LHS.
@@ -44,6 +42,11 @@ public class LRule extends Composer {
         return null;
     }
 
+    /**
+     * Get name.
+     * 
+     * @return
+     */
     public String getName() {
         return name;
     }

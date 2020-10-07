@@ -4,9 +4,17 @@ import tcore.messages.Packet;
 
 import java.util.ArrayList;
 
+/**
+ * @author Pierre-Olivier Talbot
+ * Basic test for defining rules
+ *
+ * Currently unstable with the new algorithm selection strategy 
+ */
 public class MainTest {
+	 
 
-    public static void main(String[] args) throws Exception {
+    @SuppressWarnings("javadoc")
+	public static void main(String[] args) throws Exception {
         utils.Utils.initialize();
 
         // Imports
@@ -34,7 +42,7 @@ public class MainTest {
         Packet p = new Packet(tables);
 
         p = fireMimi.packetIn(p);
-        if (!fireMimi.isSuccess()) throw fireMimi.getException();
+        if (fireMimi.isSuccess()) throw fireMimi.getException();
 
         assignTables.packetIn(p);
         if (!assignTables.isSuccess()) throw assignTables.getException();

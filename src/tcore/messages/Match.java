@@ -4,6 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.jetbrains.annotations.Nullable;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.HashMap;
 
@@ -11,6 +12,7 @@ import java.util.HashMap;
  * A match between a {@link tcore.Model} and a {@link tcore.LHS}.
  *
  * @author Pierre-Olivier Talbot
+ * @author Sebastien Ehouan
  * @version 0.5
  * @since 2017-12-08
  */
@@ -27,6 +29,9 @@ public class Match {
     private HashMap<EObject, Boolean> dirtyMap;
 
 
+    /**
+     * Initializing labelMappings, dirtyMap.
+     */
     public Match() {
         labelMappings = new HashMap<>();
         dirtyMap = new HashMap<>();
@@ -57,15 +62,28 @@ public class Match {
         }
     }
 
-
+    /**
+     * Set node to dirty.
+     * 
+     * @param node
+     */
     public void setNodeToDirty(EObject node) {
         dirtyMap.put(node, true);
     }
 
+    /**
+     * Check if the node is dirty.
+     * 
+     * @param node
+     * @return
+     */
     public boolean checkIfDirty(EObject node) {
         return dirtyMap.getOrDefault(node, false);
     }
 
+    /**
+     * @return
+     */
     public boolean hasDirtyNodes() {
         return dirtyMap.values().contains(true);
     }
@@ -92,6 +110,11 @@ public class Match {
     }
 
 
+    /**
+     * Get the label mappings.
+     * 
+     * @return
+     */
     public HashMap<String, EObject> getLabelMappings() {
         return labelMappings;
     }
@@ -114,7 +137,11 @@ public class Match {
         }
         return res.toString();
     }
-
+    
+    
+    /**
+     * Overriden equal function.
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,7 +149,26 @@ public class Match {
 
         Match match = (Match) o;
 
-        return labelMappings != null ? labelMappings.equals(match.labelMappings) : match.labelMappings == null;
+        /**
+         * Pseudo-code for the comparison.
+         */
+        //unique e core id for comparison
+        //for loop on the keys of label Mapping
+        //  if k not in o.labelmapping
+        //    return false
+        //  else if labelmapping.get(k).id != o.labelmapping.get(k).id
+        //    return false
+        //return true
+        
+        for (String k : match.labelMappings.keySet()) {
+            EObject o2 = this.labelMappings.get(k);
+            if (!this.labelMappings.containsKey(k))
+            	return false;
+            if (!EcoreUtil.getID(o2).equals(EcoreUtil.getID(match.labelMappings.get(k)))) //comparing eObject IDs
+            	return false;  	
+        }
+        
+        return true;
     }
 
     /**

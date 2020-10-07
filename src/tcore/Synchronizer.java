@@ -21,6 +21,10 @@ public class Synchronizer extends ControlPrimitive {
     private Method customMerge;
     private Packet mergedPacket;
 
+    /**
+     * @param numberOfThreads
+     * @param customMerge
+     */
     public Synchronizer(int numberOfThreads, @Nullable Method customMerge) {
         if (numberOfThreads < 2) {
             throw new IllegalArgumentException("The number of threads in a Synchronizer must be greater or equal than 2.");

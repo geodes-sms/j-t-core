@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<oracleRoot:A
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:oracleRoot="OracleRoot"
+    xsi:schemaLocation="OracleRoot Oracle.ecore"
+    name="">
+  <b name="BUnderA"
+      id="1"/>
+</oracleRoot:A>

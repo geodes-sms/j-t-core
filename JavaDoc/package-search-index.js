@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"rules"},{"l":"tcore"},{"l":"tcore.messages"},{"l":"tcore.messages.exceptions"},{"l":"utils"}]
+packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"graph"},{"l":"rules"},{"l":"tcore"},{"l":"tcore.messages"},{"l":"tcore.messages.exceptions"},{"l":"tcore.strategy"},{"l":"unit.tests"},{"l":"utils"}]

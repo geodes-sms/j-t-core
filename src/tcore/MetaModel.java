@@ -25,7 +25,7 @@ public class MetaModel {
 
         //Registering model root package
         rootPackage = (EPackage) resource.getContents().get(0);
-        Utils.getResourceSet().getPackageRegistry().put(name, rootPackage);
+        Utils.getResourceSet().getPackageRegistry().put(rootPackage.getNsURI(), rootPackage);
     }
 
     /**

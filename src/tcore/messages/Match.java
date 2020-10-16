@@ -164,8 +164,11 @@ public class Match {
             EObject o2 = this.labelMappings.get(k);
             if (!this.labelMappings.containsKey(k))
             	return false;
-            if (!EcoreUtil.getID(o2).equals(EcoreUtil.getID(match.labelMappings.get(k)))) //comparing eObject IDs
-            	return false;  	
+            if (!o2.equals(match.labelMappings.get(k)))
+                return false;
+            //TODO(Théo): EObject ids can be null and are not necessary unique
+//            if (EcoreUtil.getID(o2) != null && !EcoreUtil.getID(o2).equals(EcoreUtil.getID(match.labelMappings.get(k)))) //comparing eObject IDs
+//            	return false;
         }
         
         return true;

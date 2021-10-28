@@ -118,7 +118,7 @@
 		<constant value="TransientLink"/>
 		<constant value="NTransientLink;.setRule(MATL!Rule;):V"/>
 		<constant value="NTransientLink;.addSourceElement(SJ):V"/>
-		<constant value="post_c"/>
+		<constant value="c_post"/>
 		<constant value="NTransientLink;.addTargetElement(SJ):V"/>
 		<constant value="NTransientLinkSet;.addLink2(NTransientLink;B):V"/>
 		<constant value="8:5-10:3"/>

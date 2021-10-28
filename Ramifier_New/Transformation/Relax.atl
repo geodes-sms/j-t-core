@@ -23,6 +23,7 @@ rule DeAbstractClass {
 		"abstract" <- false
 	)
 }
+
 rule Attribute {
 	from a : ECore!EAttribute
 	to a2 : ECore!EAttribute (

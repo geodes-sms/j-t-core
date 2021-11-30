@@ -98,14 +98,13 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
                 toRemove.add(m);
             }
         }
-        
+
         for (Match mtr: toRemove) {
         	if (results.contains(mtr)) {
-            	results.remove(mtr);
+        		results.remove(mtr);
         	}
         }
-//        results.removeAll(toRemove);
-
+        
         ArrayList<Match> finalMatches = new ArrayList<>();
         for (Match m : results) {
             if (!finalMatches.contains(m)) {
@@ -134,7 +133,7 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
                 }
             }
             matchedNACS.removeAll(NACStoRemove);
-
+            
             ArrayList<Match> finalNACMatches = new ArrayList<>();
             for (Match m : matchedNACS) {
                 if (!finalNACMatches.contains(m)) {

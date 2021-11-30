@@ -98,7 +98,13 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
                 toRemove.add(m);
             }
         }
-        results.removeAll(toRemove);
+        
+        for (Match mtr: toRemove) {
+        	if (results.contains(mtr)) {
+            	results.remove(mtr);
+        	}
+        }
+//        results.removeAll(toRemove);
 
         ArrayList<Match> finalMatches = new ArrayList<>();
         for (Match m : results) {

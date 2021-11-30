@@ -18,19 +18,19 @@ public class MainTest {
         utils.Utils.initialize();
 
         // Imports
-        MetaModel tablesMM = new MetaModel("tables", "res/tables/tables.ecore");
-        MetaModel tables_ramified = new MetaModel("RamRoot", "res/tables/tables_ramified.ecore");
+        MetaModel tablesMM = new MetaModel("tables", "../res/tables/tables.ecore");
+        MetaModel tables_ramified = new MetaModel("RamRoot", "../res/tables/tables_ramified.ecore");
 
-        Model tables = new Model("tables", "res/tables/tables.xmi", tablesMM);
+        Model tables = new Model("tables", "../res/tables/tables.xmi", tablesMM);
 
-        Pattern fireMimi_pre = new Pattern("fireMimi_pre", "res/tables/fireMimi_pre.xmi", tables_ramified);
-        Pattern fireMimi_pos = new Pattern("fireMimi_pos", "res/tables/fireMimi_pos.xmi", tables_ramified);
+        Pattern fireMimi_pre = new Pattern("fireMimi_pre", "../res/tables/fireMimi_pre.xmi", tables_ramified);
+        Pattern fireMimi_pos = new Pattern("fireMimi_pos", "../res/tables/fireMimi_pos.xmi", tables_ramified);
 
-        Pattern assignTables_pre = new Pattern("assignTables_pre", "res/tables/assignTables_pre.xmi", tables_ramified);
-        Pattern assignTables_NAC = new Pattern("assignTables_NAC", "res/tables/assignTables_NAC.xmi", tables_ramified);
+        Pattern assignTables_pre = new Pattern("assignTables_pre", "../res/tables/assignTables_pre.xmi", tables_ramified);
+        Pattern assignTables_NAC = new Pattern("assignTables_NAC", "../res/tables/assignTables_NAC.xmi", tables_ramified);
         ArrayList<Pattern> assignTables_NACS = new ArrayList<>();
         assignTables_NACS.add(assignTables_NAC);
-        Pattern assignTables_pos = new Pattern("assignTables_pos", "res/tables/assignTables_pos.xmi", tables_ramified);
+        Pattern assignTables_pos = new Pattern("assignTables_pos", "../res/tables/assignTables_pos.xmi", tables_ramified);
 
         System.out.println(assignTables_pre.serialize());
 

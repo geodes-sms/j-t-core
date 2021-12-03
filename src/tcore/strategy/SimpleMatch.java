@@ -150,7 +150,7 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
                 boolean identical = true;
                 for (String label : mn.getLabelMappings().keySet()) {
                     if (!m.getLabelMappings().keySet().contains(label)) continue;
-                    identical = identical && m.getLabelMappings().get(label) == mn.getLabelMappings().get(label);
+                    identical = identical && m.getLabelMappings().get(label).equals(mn.getLabelMappings().get(label));
                 }
                 if (identical) keep = false;
             }

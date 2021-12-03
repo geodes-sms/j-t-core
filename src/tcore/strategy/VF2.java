@@ -28,39 +28,39 @@ import utils.Utils;
  */
 public class VF2 implements IMatchAlgo {
 	/**
-     * Maximum number of matches authorized.
-     */
-    private int max;
+	 * Maximum number of matches authorized.
+	 */
+	private int max;
 
-    /**
-     * The left hand side to match.
-     */
-    private LHS lhs;
+	/**
+	 * The left hand side to match.
+	 */
+	private LHS lhs;
 
-    /**
-     * The model in which to find a match.
-     */
-    private Model model;
+	/**
+	 * The model in which to find a match.
+	 */
+	private Model model;
 
-    /**
-     * EMF label attribute.
-     */
-    private EStructuralFeature label;
+	/**
+	 * EMF label attribute.
+	 */
+	private EStructuralFeature label;
 
-    /**
-     * @param lhs
-     * @param max
-     * @param model
-     */
-    public VF2(LHS lhs, int max, Model model) {
-        super();
-        if (max <= 0) {
-            throw new IllegalArgumentException("Matcher's maximum number of iterations must be greater than 0.");
-        }
-        this.max = max;
-        this.lhs = lhs;
-        this.model = model;
-    }
+	/**
+	 * @param lhs
+	 * @param max
+	 * @param model
+	 */
+	public VF2(LHS lhs, int max, Model model) {
+		super();
+		if (max <= 0) {
+			throw new IllegalArgumentException("Matcher's maximum number of iterations must be greater than 0.");
+		}
+		this.max = max;
+		this.lhs = lhs;
+		this.model = model;
+	}
 
 	/**
 	 * Find matches given a query graph and a set of target graphs
@@ -143,14 +143,12 @@ public class VF2 implements IMatchAlgo {
 			// Generate candidates from T1out and T2out if they are not empty
 
 			// Since every node should be matched in query graph
-			// Therefore we can only extend one node of query graph (with biggest id)
-			// instead of generate the whole Cartesian product of the target and query
-			int queryNodeIndex = -1;
-			for (int i : state.T2out) {
-				queryNodeIndex = Math.max(i, queryNodeIndex);
-			}
+			// The ID pairing may align between the two graphs, it is best to do a cartesian
+			// product to cover all cases
 			for (int i : state.T1out) {
-				pairList.add(new Pair<Integer, Integer>(i, queryNodeIndex));
+				for (int j : state.T2out) {
+					pairList.add(new Pair<Integer, Integer>(i, j));
+				}
 			}
 
 			return pairList;
@@ -158,14 +156,12 @@ public class VF2 implements IMatchAlgo {
 			// Generate candidates from T1in and T2in if they are not empty
 
 			// Since every node should be matched in query graph
-			// Therefore we can only extend one node of query graph (with biggest id)
-			// instead of generate the whole Cartesian product of the target and query
-			int queryNodeIndex = -1;
-			for (int i : state.T2in) {
-				queryNodeIndex = Math.max(i, queryNodeIndex);
-			}
+			// The ID pairing may align between the two graphs, it is best to do a cartesian
+			// product to cover all cases
 			for (int i : state.T1in) {
-				pairList.add(new Pair<Integer, Integer>(i, queryNodeIndex));
+				for (int j : state.T2in) {
+					pairList.add(new Pair<Integer, Integer>(i, j));
+				}
 			}
 
 			return pairList;
@@ -173,14 +169,12 @@ public class VF2 implements IMatchAlgo {
 			// Generate from all unmapped nodes
 
 			// Since every node should be matched in query graph
-			// Therefore we can only extend one node of query graph (with biggest id)
-			// instead of generate the whole Cartesian product of the target and query
-			int queryNodeIndex = -1;
-			for (int i : state.unmapped2) {
-				queryNodeIndex = Math.max(i, queryNodeIndex);
-			}
+			// The ID pairing may align between the two graphs, it is best to do a cartesian
+			// product to cover all cases
 			for (int i : state.unmapped1) {
-				pairList.add(new Pair<Integer, Integer>(i, queryNodeIndex));
+				for (int j : state.unmapped2) {
+					pairList.add(new Pair<Integer, Integer>(i, j));
+				}
 			}
 
 			return pairList;
@@ -205,7 +199,8 @@ public class VF2 implements IMatchAlgo {
 	 */
 	private Boolean checkFeasibility(State state, int targetNodeIndex, int queryNodeIndex) {
 		// The two nodes must have the same label
-		if (!state.targetGraph.nodes.get(targetNodeIndex).label.equals(state.queryGraph.nodes.get(queryNodeIndex).label)) {
+		if (!state.targetGraph.nodes.get(targetNodeIndex).label
+				.equals(state.queryGraph.nodes.get(queryNodeIndex).label)) {
 			return false;
 		}
 
@@ -224,7 +219,7 @@ public class VF2 implements IMatchAlgo {
 			return false;
 		}
 
-		// Adding support for checking constraints on attributes
+		// TODO: Adding support for checking constraints on attributes
 //		try {
 //			ScriptEngine js = Utils.js; 
 //			Object value, constraint;
@@ -428,20 +423,26 @@ public class VF2 implements IMatchAlgo {
 		return true;
 	}
 
+	/**
+	 * Performs matching on labels, while excluding matches on NACs TODO: In a
+	 * future iteration, implement matching on types and constraints
+	 * 
+	 * @return Set of label matches
+	 */
 	@Override
 	public ArrayList<Match> match() {
 		Graph patternGraph = lhs.getPreconditionPattern().getGraph();
-        ArrayList<Pattern> nacs = (lhs.getNacs() == null) ? new ArrayList<>() : lhs.getNacs();
-        ArrayList<Graph> nacGraphs = new ArrayList<>();
-        for (Pattern nac: nacs) {
-        	nacGraphs.add(nac.getGraph());
-        }
+		ArrayList<Pattern> nacs = (lhs.getNacs() == null) ? new ArrayList<>() : lhs.getNacs();
+		ArrayList<Graph> nacGraphs = new ArrayList<>();
+		for (Pattern nac : nacs) {
+			nacGraphs.add(nac.getGraph());
+		}
 
-        ArrayList<Match> results = new ArrayList<>();
-        
+		ArrayList<Match> results = new ArrayList<>();
+
 		State baseState = matchGraphPair(model.getGraph(), patternGraph);
 		if (baseState.matched) {
-			for (int nodeIndex: baseState.core_2) {
+			for (int nodeIndex : baseState.core_2) {
 				Node matchedNode = model.getGraph().nodes.get(nodeIndex);
 				if (matchedNode != null) {
 					if (model.getObjectsByNode().containsKey(matchedNode)) {
@@ -453,62 +454,46 @@ public class VF2 implements IMatchAlgo {
 				}
 			}
 		}
-		
-//		Path graphPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "mygraphdb.data");
-//		Path queryPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "Q4.my");
-//		Path outPath = Paths.get("/Users/sebastien.ehouan/Documents/UdeM", "results_Q4.my");
-//		
-//		System.out.println("Target Graph Path: " + graphPath.toString());
-//		System.out.println("Query Graph Path: " + queryPath.toString());
-//		System.out.println("Output Path: " + outPath.toString());
-//		System.out.println();
-//		
-//		
-//		long startMilli = System.currentTimeMillis();
-//	
-//		PrintWriter writer = new PrintWriter(outPath.toFile());
-//
-//		ArrayList<Graph> graphSet = loadGraphSetFromFile(graphPath, "Graph ");
-//		ArrayList<Graph> querySet = loadGraphSetFromFile(queryPath, "Query ");
-//
-//		VF2 vf2= new VF2();
-//		
-//		System.out.println("Loading Done!");
-//		printTimeFlapse(startMilli);
-//		startMilli = System.currentTimeMillis();
-//		System.out.println();
-//		
-//		int queryCnt = 0;
-//		for (Graph queryGraph : querySet){
-//			queryCnt++;
-//			ArrayList<State> stateSet = vf2.matchGraphSetWithQuery(graphSet, queryGraph);
-//			if (stateSet.isEmpty()){
-//				System.out.println("Cannot find a match for: " + queryGraph.name);
-//				printTimeFlapse(startMilli);
-//				printAverageMatchingTime(startMilli, queryCnt);
-//				System.out.println();
-//				
-//				writer.write("Cannot find a match for: " + queryGraph.name + "\n\n");
-//				writer.flush();
-//			} else {
-//				System.out.println("Found " + stateSet.size() + " matches for: " + queryGraph.name);
-//				printTimeFlapse(startMilli);
-//				printAverageMatchingTime(startMilli, queryCnt);
-//				System.out.println();
-//				
-//				writer.write("Matches for: " + queryGraph.name + "\n");
-//				for (State state : stateSet){
-//					writer.write("In: " + state.targetGraph.name + "\n");
-//					state.printMapping();
-//					state.writeMapping(writer);
-//				}		
-//				writer.write("\n");
-//				writer.flush();
-//			}
-//		}
-//		
-//		printTimeFlapse(startMilli);
 
+		ArrayList<Match> nacMatches = new ArrayList<>();
+		for (Graph ng : nacGraphs) {
+			State nacState = matchGraphPair(model.getGraph(), ng);
+			if (nacState.matched) {
+				for (int nodeIndex : nacState.core_2) {
+					Node matchedNode = model.getGraph().nodes.get(nodeIndex);
+					if (matchedNode != null) {
+						if (model.getObjectsByNode().containsKey(matchedNode)) {
+							EObject matchedObject = model.getObjectsByNode().get(matchedNode);
+							Match match = new Match();
+							match.addMapping(matchedNode.label, matchedObject);
+							nacMatches.add(match);
+						}
+					}
+				}
+			}
+		}
+
+		// Filtering portion is the same as in SimpleMatch
+		ArrayList<Match> toRemove = new ArrayList<>();
+		for (Match m : results) {
+			boolean keep = true;
+			for (Match nMatch : nacMatches) {
+				boolean identical = true;
+				for (String label : nMatch.getLabelMappings().keySet()) {
+					if (!m.getLabelMappings().keySet().contains(label))
+						continue;
+					identical = identical && m.getLabelMappings().get(label).equals(nMatch.getLabelMappings().get(label));
+				}
+				if (identical)
+					keep = false;
+			}
+			if (!keep) {
+				toRemove.add(m);
+			}
+		}
+		results.removeAll(toRemove);
+
+		System.out.println(results.toString());
 		return results;
 	}
 

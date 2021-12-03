@@ -15,7 +15,7 @@ public class ARule extends BasicRule {
         this.name = name;
         this.lhs = lhs;
         this.rhs = rhs;
-        matcher = new Matcher(lhs, 1);
+        matcher = new Matcher(lhs, 1, false);
         iterator = new Iterator(1);
         rewriter = new Rewriter(rhs);
         if (withResolver) resolver = new Resolver(false, null);

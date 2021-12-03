@@ -20,7 +20,7 @@ public class QRule extends Composer {
     private Matcher matcher;
 
     QRule(String name, LHS lhs) {
-        this.matcher = new Matcher(lhs, Integer.MAX_VALUE);
+        this.matcher = new Matcher(lhs, Integer.MAX_VALUE, false);
         this.name = name;
     }
 

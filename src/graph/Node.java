@@ -22,8 +22,9 @@ public class Node {
 	
 	/**
 	 * For semantic feasibility checks
+	 * Assumed to be unique
 	 */
-	public int label;
+	public String label;
 	
 	/**
 	 * Edges of which this node is the origin
@@ -40,9 +41,30 @@ public class Node {
 	 * @param id
 	 * @param label
 	 */
-	public Node(Graph g, int id, int label) {
+	public Node(Graph g, int id, String label) {
 		this.graph = g;
 		this.id = id;
 		this.label = label;
-	}	
+	}
+	
+	/**
+	 * Overridden equals method
+	 * Returns true if id and label matches, false otherwise
+	 */
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) return true;
+        if (other == null || this.getClass() != other.getClass()) return false;
+        
+        Node otherNode = (Node) other;
+		
+		if (this.id != otherNode.id) {
+			return false;
+		}
+		if (this.label.equals(otherNode.label)) {
+			return false;
+		}
+		
+		return true;
+	}
 }

@@ -27,7 +27,7 @@ public class Edge {
 	/**
 	 *  Label of the edge
 	 */
-	public int label;
+	public String label;
 	
 	/**
 	 * 
@@ -38,7 +38,7 @@ public class Edge {
 	 * @param target
 	 * @param label
 	 */
-	public Edge(Graph g, Node source, Node target, int label) {
+	public Edge(Graph g, Node source, Node target, String label) {
 		this.graph = g;
 		this.source = source; //store source
 		source.outEdges.add(this); //update edge list at source

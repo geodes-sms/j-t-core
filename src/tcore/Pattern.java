@@ -2,17 +2,24 @@ package tcore;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.impl.EClassImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+
+import graph.Graph;
+import graph.Node;
 import tcore.messages.exceptions.LabelNotUniqueException;
 import tcore.messages.exceptions.MissingLabelException;
 import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.stream.Collectors;
 
 /**
  * File:
@@ -32,7 +39,6 @@ public class Pattern extends Model {
     private HashMap<String, ArrayList<String>> subclassesMap;
     private ArrayList<String> labels;
     private HashMap<String, EObject> labelsMapping;
-
 
     /**
      * @param name
@@ -109,11 +115,46 @@ public class Pattern extends Model {
     }
 
     /**
-     * Get Label mappings.
+     * Get label mappings.
      * 
      * @return
      */
     public HashMap<String, EObject> getLabelsMapping() {
         return labelsMapping;
+    }
+    
+    /**
+     * Generate a graph representation of the model so it can be used in VF2
+     * 
+     * Every object is represented as a node with:
+     *     id = index between 0 and (number of objects - 1)
+     *     label = value of identifier attribute
+     * Every relation is represented as an edge with:
+     *     source node = source object of relation
+     *     target node = target object of relation
+     *     label = label of source object -> label of target object
+     */
+    @SuppressWarnings("unchecked")
+	@Override
+    protected void generateGraph() {    
+        graph = new Graph(name);
+    	
+        int index = 0;
+        for (EObject object: objects) {
+            EStructuralFeature labelFeature = object.eClass().getEStructuralFeature(Utils.MT_LABEL); // Get the label of object
+            Object label = ((EObjectImpl) object).eGet(labelFeature);
+            if (label != null && (label instanceof String)) { // Add a node only if the label is defined
+            	Node node = new Node(graph, index, (String) label);
+                graph.addNode(node);
+                nodesByObjectMapping.put(object, node);
+                objectsByNodeMapping.put(node, object);
+                index++;
+            }
+        }
+        
+        addEdgesToGraph();
+        
+        // Build the reverse node-to-object mapping for VF2
+        objectsByNodeMapping = (HashMap) nodesByObjectMapping.entrySet().stream().collect(Collectors.toMap(HashMap.Entry::getValue, HashMap.Entry::getKey));
     }
 }

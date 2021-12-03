@@ -17,7 +17,7 @@ public class FRule extends ARule {
     FRule(String name, LHS lhs, RHS rhs, boolean withResolver) {
         super(name, lhs, rhs, withResolver);
 
-        matcher = new Matcher(lhs, Integer.MAX_VALUE);
+        matcher = new Matcher(lhs, Integer.MAX_VALUE, false);
         iterator = new Iterator(Integer.MAX_VALUE);
     }
 

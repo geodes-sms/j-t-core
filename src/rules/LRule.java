@@ -19,7 +19,7 @@ public class LRule extends Composer {
     LRule(String name, Composer innerRule, LHS lhs) {
         this.name = name;
         this.innerRule = innerRule;
-        matcher = new Matcher(lhs, Integer.MAX_VALUE);
+        matcher = new Matcher(lhs, Integer.MAX_VALUE, false);
     }
 
     @Override

@@ -42,7 +42,7 @@ class MatcherZeroMatchTest {
         LHS lhs = new LHS(ZeroMatch_pre, null);
         
         //Testing
-        Matcher tester = new Matcher(lhs, 5);  //max=1
+        Matcher tester = new Matcher(lhs, 5, false);  //max=1
         
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);

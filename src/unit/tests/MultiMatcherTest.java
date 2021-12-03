@@ -45,7 +45,7 @@ class MultiMatcherTest {
         LHS lhs = new LHS(pre_A, null);
         
         //Testing
-        Matcher tester = new Matcher(lhs, 5); 
+        Matcher tester = new Matcher(lhs, 5, false); 
         
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
@@ -89,7 +89,7 @@ class MultiMatcherTest {
         LHS lhs = new LHS(pre_A, null);
         
         //Testing
-        Matcher tester = new Matcher(lhs, 5); 
+        Matcher tester = new Matcher(lhs, 5, false); 
         
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);

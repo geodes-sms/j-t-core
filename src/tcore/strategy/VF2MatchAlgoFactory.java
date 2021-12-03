@@ -14,6 +14,6 @@ public class VF2MatchAlgoFactory implements IMatchAlgoFactory {
 
 	@Override
 	public @NotNull IMatchAlgo createMatchAlgo(LHS lhs, int max, Model model) {
-		return new VF2();
+		return new VF2(lhs, max, model);
 	}
 }

@@ -48,7 +48,7 @@ class MatcherConstraintAttribute {
         LHS lhs = new LHS(ConstraintAttribute_pre, oracle_NACS);
         
         //Testing
-        Matcher tester = new Matcher(lhs, 5);
+        Matcher tester = new Matcher(lhs, 5, false);
         
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);

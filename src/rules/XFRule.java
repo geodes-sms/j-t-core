@@ -12,8 +12,8 @@ import tcore.messages.Packet;
  */
 public class XFRule extends FRule {
 
-    XFRule(String name, LHS lhs, RHS rhs, boolean withResolver) {
-        super(name, lhs, rhs, withResolver);
+    XFRule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
+        super(name, lhs, rhs, withResolver, useVF2);
     }
 
     @Override

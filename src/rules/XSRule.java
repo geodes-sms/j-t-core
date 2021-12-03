@@ -12,8 +12,8 @@ import tcore.messages.Packet;
  */
 public class XSRule extends SRule {
 
-    XSRule(String name, LHS lhs, RHS rhs, boolean withResolver) {
-        super(name, lhs, rhs, withResolver);
+    XSRule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
+        super(name, lhs, rhs, withResolver, useVF2);
     }
 
     @Override

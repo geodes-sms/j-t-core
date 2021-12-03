@@ -35,8 +35,8 @@ public class MainTest {
         System.out.println(assignTables_pre.serialize());
 
         // Rules definitions
-        BasicRule fireMimi = RuleFactory.createARule("FireMimi", fireMimi_pre, null, fireMimi_pos, true);
-        BasicRule assignTables = RuleFactory.createFRule("AssignTables", assignTables_pre, assignTables_NACS, assignTables_pos, true);
+        BasicRule fireMimi = RuleFactory.createARule("FireMimi", fireMimi_pre, null, fireMimi_pos, true, false);
+        BasicRule assignTables = RuleFactory.createFRule("AssignTables", assignTables_pre, assignTables_NACS, assignTables_pos, true, false);
 
         // Execution
         Packet p = new Packet(tables);

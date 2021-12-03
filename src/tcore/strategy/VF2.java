@@ -24,6 +24,7 @@ import utils.Utils;
  * YET TO BE FINALIZED -- DO NOT USE
  *
  * @author Sebastien EHouan
+ * @author An Li
  * @since 2020-04-25
  */
 public class VF2 implements IMatchAlgo {
@@ -139,44 +140,53 @@ public class VF2 implements IMatchAlgo {
 	private ArrayList<Pair<Integer, Integer>> genCandidatePairs(State state, Graph targetGraph, Graph queryGraph) {
 		ArrayList<Pair<Integer, Integer>> pairList = new ArrayList<Pair<Integer, Integer>>();
 
-		if (!state.T1out.isEmpty() && !state.T2out.isEmpty()) {
+		if (!state.T1out.isEmpty() && !state.T2out.isEmpty()){
 			// Generate candidates from T1out and T2out if they are not empty
-
+			
+			// Faster Version
 			// Since every node should be matched in query graph
-			// The ID pairing may align between the two graphs, it is best to do a cartesian
-			// product to cover all cases
+			// Therefore we can only extend one node of query graph (with biggest id)
+			// instead of generate the whole Cartesian product of the target and query 
+			int queryNodeIndex = -1;
+			for (int i : state.T2out) {
+				queryNodeIndex = Math.max(i, queryNodeIndex);
+			}
 			for (int i : state.T1out) {
-				for (int j : state.T2out) {
-					pairList.add(new Pair<Integer, Integer>(i, j));
-				}
+				pairList.add(new Pair<Integer,Integer>(i, queryNodeIndex));
 			}
-
+			
 			return pairList;
-		} else if (!state.T1in.isEmpty() && !state.T2in.isEmpty()) {
+		} else if (!state.T1in.isEmpty() && !state.T2in.isEmpty()){
 			// Generate candidates from T1in and T2in if they are not empty
-
+			
+			// Faster Version
 			// Since every node should be matched in query graph
-			// The ID pairing may align between the two graphs, it is best to do a cartesian
-			// product to cover all cases
-			for (int i : state.T1in) {
-				for (int j : state.T2in) {
-					pairList.add(new Pair<Integer, Integer>(i, j));
-				}
+			// Therefore we can only extend one node of query graph (with biggest id)
+			// instead of generate the whole Cartesian product of the target and query 
+			int queryNodeIndex = -1;
+			for (int i : state.T2in) {
+				queryNodeIndex = Math.max(i, queryNodeIndex);
 			}
-
+			for (int i : state.T1in) {
+				pairList.add(new Pair<Integer,Integer>(i, queryNodeIndex));
+			}
+			
 			return pairList;
 		} else {
 			// Generate from all unmapped nodes
-
+			
+			// Faster Version
 			// Since every node should be matched in query graph
-			// The ID pairing may align between the two graphs, it is best to do a cartesian
-			// product to cover all cases
-			for (int i : state.unmapped1) {
-				for (int j : state.unmapped2) {
-					pairList.add(new Pair<Integer, Integer>(i, j));
-				}
+			// Therefore we can only extend one node of query graph (with biggest id)
+			// instead of generate the whole Cartesian product of the target and query 
+			int queryNodeIndex = -1;
+			for (int i : state.unmapped2) {
+				queryNodeIndex = Math.max(i, queryNodeIndex);
 			}
-
+			for (int i : state.unmapped1) {
+				pairList.add(new Pair<Integer,Integer>(i, queryNodeIndex));
+			}
+			
 			return pairList;
 		}
 	}
@@ -277,7 +287,7 @@ public class VF2 implements IMatchAlgo {
 			}
 		}
 
-		// Successsor Rule
+		// Successor Rule
 		// For all mapped successors of the query node,
 		// there must exist corresponding successors of the target node
 		// Vice Versa
@@ -378,7 +388,8 @@ public class VF2 implements IMatchAlgo {
 	}
 
 	/**
-	 * Check the new rule This prunes the search tree using 2-look-ahead
+	 * Check the new rule
+	 * This prunes the search tree using 2-look-ahead
 	 * 
 	 * @param state           VF2 State
 	 * @param targetNodeIndex Target Graph Node Index
@@ -413,7 +424,7 @@ public class VF2 implements IMatchAlgo {
 		}
 		for (Edge e : queryNode.outEdges) {
 			if (state.inN2Tilde(e.target.id)) {
-				queryPredCnt++;
+				querySucCnt++;
 			}
 		}
 		if (targetPredCnt < queryPredCnt || targetSucCnt < querySucCnt) {
@@ -424,8 +435,8 @@ public class VF2 implements IMatchAlgo {
 	}
 
 	/**
-	 * Performs matching on labels, while excluding matches on NACs TODO: In a
-	 * future iteration, implement matching on types and constraints
+	 * Performs matching on labels, while excluding matches on NACs 
+	 * TODO: In a future iteration, implement matching on types and constraints
 	 * 
 	 * @return Set of label matches
 	 */

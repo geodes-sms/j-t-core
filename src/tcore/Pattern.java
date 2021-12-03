@@ -26,12 +26,13 @@ import java.util.stream.Collectors;
  * Description:
  * <p>
  * Package: tcore
- * Project: JET-Core
+ * Project: J-T-Core
  * <p>
  * Date: 2017-11-26
  *
  * @author Pierre-Olivier Talbot
- * @version 1.0
+ * @author An Li
+ * @version 1.1
  * @since 1.8.0_121
  */
 public class Pattern extends Model {
@@ -126,6 +127,7 @@ public class Pattern extends Model {
     /**
      * Generate a graph representation of the model so it can be used in VF2
      * 
+     * <p>
      * Every object is represented as a node with:
      *     id = index between 0 and (number of objects - 1)
      *     label = value of identifier attribute
@@ -133,8 +135,8 @@ public class Pattern extends Model {
      *     source node = source object of relation
      *     target node = target object of relation
      *     label = label of source object -> label of target object
+     * </p>
      */
-    @SuppressWarnings("unchecked")
 	@Override
     protected void generateGraph() {    
         graph = new Graph(name);
@@ -153,8 +155,5 @@ public class Pattern extends Model {
         }
         
         addEdgesToGraph();
-        
-        // Build the reverse node-to-object mapping for VF2
-        objectsByNodeMapping = (HashMap) nodesByObjectMapping.entrySet().stream().collect(Collectors.toMap(HashMap.Entry::getValue, HashMap.Entry::getKey));
     }
 }

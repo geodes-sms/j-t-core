@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 /**
  * Model.
  * 
- * @author sebastien.ehouan
- *
+ * @author Sebastien Ehouan
+ * @author An Li
  */
 public class Model implements EcoreSerializable {
     protected String name;
@@ -224,6 +224,7 @@ public class Model implements EcoreSerializable {
     /**
      * Generate a graph representation of the model so it can be used in VF2
      * 
+     * <p>
      * Every object is represented as a node with:
      *     id = index between 0 and (number of objects - 1)
      *     label = value of identifier attribute
@@ -231,8 +232,8 @@ public class Model implements EcoreSerializable {
      *     source node = source object of relation
      *     target node = target object of relation
      *     label = label of source object -> label of target object
+     * </p>
      */
-    @SuppressWarnings("unchecked")
 	protected void generateGraph() {
         graph = new Graph(name);
         
@@ -254,10 +255,12 @@ public class Model implements EcoreSerializable {
     /**
      * Add edges representing relations in the model to its graph representation
      * 
+     * <p>
      * Every relation is represented as an edge with:
      *     source node = source object of relation
      *     target node = target object of relation
      *     label = label of source object -> label of target object
+     * </p>
      */
     protected void addEdgesToGraph() {
         for (Node gn: graph.nodes) {

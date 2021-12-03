@@ -19,7 +19,7 @@ import tcore.messages.Match;
 /**
  * Unit test for a case with constraints.
  *
- * @author Sebastien EHouan
+ * @author Sebastien Ehouan
  * @since 2020-07-30
  */
 

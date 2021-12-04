@@ -46,25 +46,4 @@ public class Node {
 		this.id = id;
 		this.label = label;
 	}
-	
-	/**
-	 * Overridden equals method
-	 * Returns true if id and label matches, false otherwise
-	 */
-	@Override
-	public boolean equals(Object other) {
-		if (this == other) return true;
-        if (other == null || this.getClass() != other.getClass()) return false;
-        
-        Node otherNode = (Node) other;
-		
-		if (this.id != otherNode.id) {
-			return false;
-		}
-		if (this.label.equals(otherNode.label)) {
-			return false;
-		}
-		
-		return true;
-	}
 }

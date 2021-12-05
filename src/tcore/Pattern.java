@@ -130,7 +130,8 @@ public class Pattern extends Model {
      * <p>
      * Every object is represented as a node with:
      *     id = index between 0 and (number of objects - 1)
-     *     label = value of identifier attribute
+     *     label = value of label associated to object
+     *     className = name of class representing the object
      * Every relation is represented as an edge with:
      *     source node = source object of relation
      *     target node = target object of relation

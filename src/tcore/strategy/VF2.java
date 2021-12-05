@@ -213,6 +213,12 @@ public class VF2 implements IMatchAlgo {
 				.equals(state.queryGraph.nodes.get(queryNodeIndex).label)) {
 			return false;
 		}
+		
+		// The two nodes must have the same class name
+		if (!state.targetGraph.nodes.get(targetNodeIndex).className
+				.equals(state.queryGraph.nodes.get(queryNodeIndex).className)) {
+			return false;
+		}
 
 		// Predecessor Rule and Successor Rule
 		if (!checkPredAndSucc(state, targetNodeIndex, queryNodeIndex)) {
@@ -456,8 +462,8 @@ public class VF2 implements IMatchAlgo {
 			for (int nodeIndex : baseState.core_2) {
 				Node matchedNode = model.getGraph().nodes.get(nodeIndex);
 				if (matchedNode != null) {
-					if (model.getObjectsByNode().containsKey(matchedNode)) {
-						EObject matchedObject = model.getObjectsByNode().get(matchedNode);
+					EObject matchedObject = model.getObjectOfNode(matchedNode);
+					if (matchedObject != null) {
 						Match match = new Match();
 						match.addMapping(matchedNode.label, matchedObject);
 						results.add(match);
@@ -473,8 +479,8 @@ public class VF2 implements IMatchAlgo {
 				for (int nodeIndex : nacState.core_2) {
 					Node matchedNode = model.getGraph().nodes.get(nodeIndex);
 					if (matchedNode != null) {
-						if (model.getObjectsByNode().containsKey(matchedNode)) {
-							EObject matchedObject = model.getObjectsByNode().get(matchedNode);
+						EObject matchedObject = model.getObjectOfNode(matchedNode);
+						if (matchedObject != null) {
 							Match match = new Match();
 							match.addMapping(matchedNode.label, matchedObject);
 							nacMatches.add(match);

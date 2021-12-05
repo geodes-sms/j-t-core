@@ -153,11 +153,14 @@ public class Model implements EcoreSerializable {
     }
     
     /**
-     * @return List of objects associated to each node 
+     * @return Object associated to specified node, or null if node is not part of the mapping
      *     Used to build the match set in VF2
      */
-    public HashMap<Node, EObject> getObjectsByNode() {
-    	return objectsByNodeMapping;
+    public EObject getObjectOfNode(Node node) {
+    	if (objectsByNodeMapping.containsKey(node))
+    		return objectsByNodeMapping.get(node);
+    	else
+    		return null;
     }
 
     /**
@@ -228,6 +231,7 @@ public class Model implements EcoreSerializable {
      * Every object is represented as a node with:
      *     id = index between 0 and (number of objects - 1)
      *     label = value of identifier attribute
+     *     className = name of class representing the object
      * Every relation is represented as an edge with:
      *     source node = source object of relation
      *     target node = target object of relation
@@ -240,8 +244,9 @@ public class Model implements EcoreSerializable {
         int index = 0;
         for (EObject object: objects) {
             String label = EcoreUtil.getURI(object).fragment(); // Get string representation of identifier attribute
+            String className = object.eClass().getName();
             if (label != null && (label instanceof String)) { // Add a node only if the label is defined
-	            Node node = new Node(graph, index, label);
+	            Node node = new Node(graph, index, label, className);
 	            graph.addNode(node);
 	            nodesByObjectMapping.put(object, node);
 	            objectsByNodeMapping.put(node, object);

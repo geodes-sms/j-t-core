@@ -27,6 +27,11 @@ public class Node {
 	public String label;
 	
 	/**
+	 * Class name associated to EObject
+	 */
+	public String className;
+	
+	/**
 	 * Edges of which this node is the origin
 	 */
 	public ArrayList<Edge> outEdges = new ArrayList<Edge>();
@@ -40,10 +45,12 @@ public class Node {
 	 * @param g
 	 * @param id
 	 * @param label
+	 * @param className
 	 */
-	public Node(Graph g, int id, String label) {
+	public Node(Graph g, int id, String label, String className) {
 		this.graph = g;
 		this.id = id;
 		this.label = label;
+		this.className = className;
 	}
 }

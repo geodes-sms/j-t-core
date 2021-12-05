@@ -145,8 +145,9 @@ public class Pattern extends Model {
         for (EObject object: objects) {
             EStructuralFeature labelFeature = object.eClass().getEStructuralFeature(Utils.MT_LABEL); // Get the label of object
             Object label = ((EObjectImpl) object).eGet(labelFeature);
+            String className = object.eClass().getName().replaceAll(Utils.PRE_, ""); // Get the class name and remove the "MTpre__" pattern to get the 'actual' class name of object to match on
             if (label != null && (label instanceof String)) { // Add a node only if the label is defined
-            	Node node = new Node(graph, index, (String) label);
+            	Node node = new Node(graph, index, (String) label, className);
                 graph.addNode(node);
                 nodesByObjectMapping.put(object, node);
                 objectsByNodeMapping.put(node, object);

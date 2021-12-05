@@ -35,8 +35,8 @@ public class Graph {
 	 * @param id
 	 * @param label
 	 */
-	public void addNode(int id, String label) {
-		nodes.add(new Node(this, id, label));
+	public void addNode(int id, String label, String className) {
+		nodes.add(new Node(this, id, label, className));
 		this.adjacencyMatrixUpdateNeeded = true;
 	}
 	

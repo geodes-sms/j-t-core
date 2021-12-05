@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ramRoot:MTpre__A
+<ramRoot:MTpre__C
     xmi:version="2.0"
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ramRoot="RamRoot"
     xsi:schemaLocation="RamRoot Oracle_augmented.ecore"
-    MT__label="1"
-    id="" name="result=true">
-  <b MT__label="3"/>
-</ramRoot:MTpre__A>
+    MT__label="5"
+    name="result=true"
+    id="">
+  <cb MT__label="2"
+      id="result=true"/>
+</ramRoot:MTpre__C>

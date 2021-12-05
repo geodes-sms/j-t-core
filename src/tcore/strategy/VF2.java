@@ -459,16 +459,18 @@ public class VF2 implements IMatchAlgo {
 
 		State baseState = matchGraphPair(model.getGraph(), patternGraph);
 		if (baseState.matched) {
+			Match match = new Match();
 			for (int nodeIndex : baseState.core_2) {
 				Node matchedNode = model.getGraph().nodes.get(nodeIndex);
 				if (matchedNode != null) {
 					EObject matchedObject = model.getObjectOfNode(matchedNode);
 					if (matchedObject != null) {
-						Match match = new Match();
 						match.addMapping(matchedNode.label, matchedObject);
-						results.add(match);
 					}
 				}
+			}
+			if (match.getLabelMappings().size() > 0) {
+				results.add(match);
 			}
 		}
 
@@ -476,16 +478,18 @@ public class VF2 implements IMatchAlgo {
 		for (Graph ng : nacGraphs) {
 			State nacState = matchGraphPair(model.getGraph(), ng);
 			if (nacState.matched) {
+				Match match = new Match();
 				for (int nodeIndex : nacState.core_2) {
 					Node matchedNode = model.getGraph().nodes.get(nodeIndex);
 					if (matchedNode != null) {
 						EObject matchedObject = model.getObjectOfNode(matchedNode);
 						if (matchedObject != null) {
-							Match match = new Match();
 							match.addMapping(matchedNode.label, matchedObject);
-							nacMatches.add(match);
 						}
 					}
+				}
+				if (match.getLabelMappings().size() > 0) {
+					nacMatches.add(match);
 				}
 			}
 		}

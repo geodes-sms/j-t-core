@@ -5,10 +5,11 @@ import tcore.messages.Packet;
 import java.util.ArrayList;
 
 /**
- * @author Pierre-Olivier Talbot
  * Basic test for defining rules
  *
- * Currently unstable with the new algorithm selection strategy 
+ * Currently unstable with the new algorithm selection strategy
+ * 
+ * @author Pierre-Olivier Talbot
  */
 public class MainTest {
 	 

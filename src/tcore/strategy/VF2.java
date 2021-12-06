@@ -23,9 +23,9 @@ import utils.Utils;
  * 
  * YET TO BE FINALIZED -- DO NOT USE
  *
- * @author Sebastien EHouan
+ * @author Sebastien Ehouan
  * @author An Li
- * @since 2020-04-25
+ * @since 2021-12-19
  */
 public class VF2 implements IMatchAlgo {
 	/**

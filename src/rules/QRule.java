@@ -13,6 +13,7 @@ import tcore.strategy.Matcher;
  *
  * @author Pierre-Olivier Talbot
  * @author Sebastien Ehouan
+ * @author An Li
  */
 public class QRule extends Composer {
 

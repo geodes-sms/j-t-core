@@ -18,8 +18,9 @@ import tcore.messages.Match;
 /**
  * Unit test for cases with a single match.
  *
- * @author Sebastien EHouan
- * @since 2020-07-30
+ * @author Sebastien Ehouan
+ * @author An Li
+ * @since 2021-12-19
  */
 
 class MatcherTest {

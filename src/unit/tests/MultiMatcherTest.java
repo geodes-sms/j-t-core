@@ -20,7 +20,8 @@ import tcore.messages.Match;
  * Unit test for a case with multiple matches found.
  *
  * @author Sebastien Ehouan
- * @since 2020-07-30
+ * @author An Li
+ * @since 2021-12-19
  */
 
 class MultiMatcherTest {

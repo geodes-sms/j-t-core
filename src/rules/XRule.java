@@ -9,6 +9,7 @@ import tcore.messages.Packet;
  * Applies the transformation on one match with roll-back capability.
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 public class XRule extends ARule {
 

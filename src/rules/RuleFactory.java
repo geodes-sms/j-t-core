@@ -15,6 +15,7 @@ import java.util.ArrayList;
  * @author Sebastien Ehouan
  * @version 0.5
  * @since 2017-12-08
+ * @author An Li
  */
 public class RuleFactory {
 
@@ -26,6 +27,7 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
@@ -66,6 +68,7 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
@@ -107,6 +110,7 @@ public class RuleFactory {
      * @param innerRule
      * @param preConditionPattern
      * @param nacs
+     * @param useVF2
      * @return
      */
     @NotNull
@@ -136,6 +140,7 @@ public class RuleFactory {
      * @param name
      * @param preConditionPattern
      * @param nacs
+     * @param useVF2
      * @return
      */
     @NotNull
@@ -165,6 +170,7 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
@@ -183,6 +189,7 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
@@ -201,6 +208,7 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
@@ -219,6 +227,7 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull

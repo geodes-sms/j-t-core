@@ -10,6 +10,7 @@ import tcore.strategy.Matcher;
  * Applies the transformation on all matches found.
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 public class FRule extends ARule {
 

@@ -1,6 +1,6 @@
 # J-T-Core for Ecore
 
-Author: Pierre-Olivier Talbot
+Author: Pierre-Olivier Talbot \
 Editors: Sebastien Ehouan, Théo Le Calvar, An Li
 
 ## Description

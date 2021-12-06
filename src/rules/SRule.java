@@ -8,6 +8,7 @@ import tcore.messages.Packet;
  * Applies the transformation as long as matches can be found.
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 public class SRule extends ARule {
 

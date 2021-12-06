@@ -28,11 +28,11 @@ import java.util.stream.Collectors;
  * Package: tcore
  * Project: J-T-Core
  * <p>
- * Date: 2017-11-26
+ * Date: 2021-12-19
  *
  * @author Pierre-Olivier Talbot
  * @author An Li
- * @version 1.1
+ * @version 1.2
  * @since 1.8.0_121
  */
 public class Pattern extends Model {

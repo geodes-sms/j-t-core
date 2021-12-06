@@ -4,6 +4,7 @@ package graph;
  * Class initializing the edges
  * 
  * @author sebastien.ehouan
+ * @author An Li
  *
  * VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
  *

@@ -7,6 +7,7 @@ import tcore.*;
  * // FIXME: 2017-12-13 Does not work with the current "random" iterator...
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 class LFRule extends LRule {
 

@@ -25,7 +25,7 @@ import java.util.HashMap;
  * T-Core primitive meant for matching a {@link LHS} with a given {@link Model}.
  *
  * @author Pierre-Olivier Talbot
- * @author Sebastien EHouan
+ * @author Sebastien Ehouan
  * @since 2017-12-01
  */
 

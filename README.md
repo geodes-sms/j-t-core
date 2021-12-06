@@ -25,7 +25,7 @@ Here is a typical workflow:
 
 Ramifier is provided in `j-t-core/Ramifier_New` \
 An Ant build file is provided in the directory, pointing to the original, LHS, RHS and augmented metamodels. \
-To run the ramifier, run the `build.xml` file inside the directory.
+To run the ramifier, update the paths to the models in the `build.xml` file inside the directory, then execute it.
 
 ## Unit Tests
 

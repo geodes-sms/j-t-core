@@ -12,7 +12,7 @@ import java.util.HashSet;
  * 
  * VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
  *
- * @author Sebastien EHouan
+ * @author Sebastien Ehouan
  * @since 2020-04-25
  */
 

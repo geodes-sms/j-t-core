@@ -7,7 +7,7 @@ import tcore.Model;
 /**
  * Factory implementation of SimpleMatch Algorithm
  *
- * @author Sebastien EHouan
+ * @author Sebastien Ehouan
  * @since 2020-04-25
  */
 

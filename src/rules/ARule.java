@@ -8,6 +8,7 @@ import tcore.strategy.Matcher;
  * Applies the transformation on a single match.
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 public class ARule extends BasicRule {
 

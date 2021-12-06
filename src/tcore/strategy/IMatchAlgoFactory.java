@@ -6,7 +6,7 @@ import tcore.Model;
 /**
  * Interface defining the methods in the MatchAlgo Factory strategy.
  *
- * @author Sebastien EHouan
+ * @author Sebastien Ehouan
  * @since 2020-04-25
  */
 

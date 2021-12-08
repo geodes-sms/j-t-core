@@ -1,4 +1,6 @@
+<!-- FIXME: This file only produces empty XMI models instead of Ecore models on the atl.saveModel task -->
 <project name="Ramifier_atl"  basedir="." default="execute">
+    <property name="atl.launcher" value="EMF-specific VM"/>
 	<target name="execute" depends="load">
 		<atl.loadModel modelHandler="EMF" name="inModel" metamodel="ECore" path="../Model/Oracle.ecore"/>
 
@@ -7,37 +9,29 @@
 			<inModel name="IN" model="inModel"/>
 			<outModel name="OUT" model="Relaxed" metamodel="ECore"/>
 		</atl.launch>
-		<atl.saveModel model="Relaxed" path="../Model/Oracle_relaxed2.ecore"/>
-
-		<atl.loadModel modelHandler="EMF" name="Relaxed" metamodel="ECore" path="../Model/Oracle_relaxed2.ecore"/>
-
+		
 		<atl.launch path="Augment_pre.atl" refining="true">
 			<option name="allowInterModelReferences" value="true"/>
 			<inModel name="IN" model="Relaxed"/>
 			<outModel name="OUT" model="Augment_pre" metamodel="ECore"/>
 		</atl.launch>
-		<atl.saveModel model="Augment_pre" path="../Model/Oracle_augment_pre2.ecore" />
 		
 		<atl.launch path="Augment_post.atl" refining="true">
 			<option name="allowInterModelReferences" value="true"/>
 			<inModel name="IN" model="Relaxed"/>
 			<outModel name="OUT" model="Augment_post" metamodel="ECore"/>
 		</atl.launch>
-		<atl.saveModel model="Augment_post" path="../Model/Oracle_augment_post2.ecore" />
 		
-		<atl.loadModel modelHandler="EMF" name="Augment_pre" metamodel="ECore" path="../Model/Oracle_augment_pre2.ecore"/>
-		<atl.loadModel modelHandler="EMF" name="Augment_post" metamodel="ECore" path="../Model/Oracle_augment_post2.ecore"/>
-
 		<atl.launch path="Augment_compo.atl" refining="true">
 			<option name="allowInterModelReferences" value="true"/>
 			<inModel name="IN_PRE" model="Augment_pre"/>	
 			<inModel name="IN_POST" model="Augment_post"/>
 			<outModel name="OUT" model="Augmented" metamodel="ECore"/>
 		</atl.launch>
-		<atl.saveModel model="Augmented" path="../Model/Oracle_augmented2.ecore" />
+		<atl.saveModel model="Augmented" path="../Model/Oracle_augmented2.ecore"/>
 	</target>
 	
 	<target name="load">
-		<atl.loadModel modelHandler="EMF" name="ECore" metamodel="MOF" nsURI="http://www.eclipse.org/emf/2002/Ecore"/>
+		<atl.loadModel modelHandler="EMF" name="ECore" metamodel="MOF" path="../Metamodel/ecorer.ecore"/>
 	</target>
 </project>

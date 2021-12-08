@@ -24,8 +24,13 @@ Here is a typical workflow:
 ## Ramifier
 
 Ramifier is provided in `j-t-core/Ramifier_New` \
-An Ant build file is provided in the directory, pointing to the original, LHS, RHS and augmented metamodels. \
-To run the ramifier, update the paths to the models in the `build.xml` file inside the directory, then execute it.
+To run the ramifier, please run the following ATL transformations in the below order, with the paths to the models specified: 
+1. `j-t-core/Ramifier_New/Relax.atl`
+2. `j-t-core/Ramifier_New/Augment_pre.atl`
+3. `j-t-core/Ramifier_New/Augment_post.atl`
+4. `j-t-core/Ramifier_New/Augment_compo.atl`
+
+Note: To be able to run the transformations, when creating the configuration, go to the Advanced tab, select "EMF-specific VM", and check "Allow inter-model references" under "Advanced parameters".
 
 ## Unit Tests
 

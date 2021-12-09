@@ -9,9 +9,10 @@ J-T-Core for Ecore is a framework for designing model transformation languages u
 
 ## Typical usage
 
-A sample Main class is provided: `MainTest` .
+A sample Main class is provided: `MainTest`.
 
-**Important:** The `utils.initialize()` function must always be invoked before importing models.
+**Important:** The `utils.initialize()` function must always be invoked before importing models. \
+This project requires Java 11 and add all libraries in the `lib/` directory in the classpath.
 
 Here is a typical workflow:
 1. Import metamodels
@@ -24,7 +25,7 @@ Here is a typical workflow:
 ## Ramifier
 
 Ramifier is provided in `j-t-core/Ramifier_New` \
-To run the ramifier, please run the following ATL transformations in the below order, with the paths to the models specified: 
+To run the ramifier, please run the following ATL transformations in the below order, with the paths to the models specified:
 1. `j-t-core/Ramifier_New/Relax.atl`
 2. `j-t-core/Ramifier_New/Augment_pre.atl`
 3. `j-t-core/Ramifier_New/Augment_post.atl`
@@ -34,7 +35,7 @@ Note: To be able to run the transformations, when creating the configuration, go
 
 ## Unit Tests
 
-Several Unit tests are provided in `j-t-core/src/unit/tests` .
+Several Unit tests are provided in `j-t-core/src/unit/tests`.
 
 To run them, you need:
 * A metamodel

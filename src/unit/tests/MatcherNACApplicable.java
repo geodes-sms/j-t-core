@@ -17,14 +17,14 @@ import tcore.strategy.Matcher;
 import tcore.messages.Match;
 
 /**
- * Unit test for a case with Unbound NACs.
+ * Unit test for a case with an applicable NAC.
  *
  * @author Sebastien Ehouan
  * @author An Li
  * @since 2021-12-19
  */
 
-class MatcherNACSUnbound {
+class MatcherNACApplicable {
 
 	@Before
 	public void setUp() {
@@ -40,35 +40,26 @@ class MatcherNACSUnbound {
 
 		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Oracle.xmi", OracleMM); // Dynamic Instance from Oracle
 
-		Pattern NACSBound_pre = new Pattern("NACSBound_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); // precondition
-		Pattern Oracle_NAC = new Pattern("oracle_NAC", "../Ramifier_New/Model/NACSUnbound_pre.xmi", Oracle_ramified); // NAC
+		Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); // precondition same as single match
+		Pattern Oracle_NAC = new Pattern("oracle_NAC", "../Ramifier_New/Model/NACApplicable.xmi", Oracle_ramified); // NAC
 		ArrayList<Pattern> oracle_NACS = new ArrayList<>();
 		oracle_NACS.add(Oracle_NAC);
 
 		Packet p = new Packet(oracle);
-		LHS lhs = new LHS(NACSBound_pre, oracle_NACS);
+		LHS lhs = new LHS(SingleMatch_pre, oracle_NACS);
 
 		// Testing
 		Matcher tester = new Matcher(lhs, 5, false); // max=1
 
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
-
+		
+		@SuppressWarnings("unused")
 		Match expectedMatch = new Match();
 
-		for (EObject o : oracle.getObjects()) {
-			switch (EcoreUtil.getID(o)) {
-			case "1":
-				expectedMatch.addMapping("1", o); // NAC Bound case
-				break;
-			default:
-				break;
-			}
-		}
-
 		// Array of matches expected to be found
+		// This example should not return any matches, as A -> B is part of both the NAC and the input model
 		ArrayList<Match> expectedMatchArray = new ArrayList<Match>();
-		expectedMatchArray.add(expectedMatch);
 
 		// Expected MatchSet to find
 		MatchSet ms = new MatchSet(expectedMatchArray, lhs);
@@ -87,35 +78,26 @@ class MatcherNACSUnbound {
 
 		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Oracle.xmi", OracleMM); // Dynamic Instance from Oracle
 
-		Pattern NACSBound_pre = new Pattern("NACSBound_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); // precondition
-		Pattern Oracle_NAC = new Pattern("oracle_NAC", "../Ramifier_New/Model/NACSUnbound_pre.xmi", Oracle_ramified); // NAC
+		Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); // precondition same as single match
+		Pattern Oracle_NAC = new Pattern("oracle_NAC", "../Ramifier_New/Model/NACApplicable.xmi", Oracle_ramified); // NAC
 		ArrayList<Pattern> oracle_NACS = new ArrayList<>();
 		oracle_NACS.add(Oracle_NAC);
 
 		Packet p = new Packet(oracle);
-		LHS lhs = new LHS(NACSBound_pre, oracle_NACS);
+		LHS lhs = new LHS(SingleMatch_pre, oracle_NACS);
 
 		// Testing
 		Matcher tester = new Matcher(lhs, 5, true); // max=1
 
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
-
+				
+		@SuppressWarnings("unused")
 		Match expectedMatch = new Match();
 
-		for (EObject o : oracle.getObjects()) {
-			switch (EcoreUtil.getID(o)) {
-			case "1":
-				expectedMatch.addMapping("1", o); // NAC Bound case
-				break;
-			default:
-				break;
-			}
-		}
-
 		// Array of matches expected to be found
+		// This example should not return any matches, as A -> B is part of both the NAC and the input model
 		ArrayList<Match> expectedMatchArray = new ArrayList<Match>();
-		expectedMatchArray.add(expectedMatch);
 
 		// Expected MatchSet to find
 		MatchSet ms = new MatchSet(expectedMatchArray, lhs);

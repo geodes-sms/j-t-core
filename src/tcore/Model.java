@@ -268,11 +268,12 @@ public class Model implements EcoreSerializable {
      * </p>
      */
     protected void addEdgesToGraph() {
+    	// Iterating through the nodes again once all of them are created to avoid the situation that the target node does not exist in the graph when iterating through the EReferences to attempt to add the edge
         for (Node gn: graph.nodes) {
-        	EObject node = objects.get(gn.id);
-            EList<EReference> referenceEList = node.eClass().getEReferences();
+        	EObject object = objects.get(gn.id);
+            EList<EReference> referenceEList = object.eClass().getEReferences();
             for (EReference ref : referenceEList) {
-                Object links = node.eGet(ref);
+                Object links = object.eGet(ref);
                 
                 // The link can either be an EList (it has more references under it) or an EObject (it is the only linked object)
                 if (links instanceof EList) {

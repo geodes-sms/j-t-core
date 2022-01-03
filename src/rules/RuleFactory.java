@@ -15,6 +15,7 @@ import java.util.ArrayList;
  * @author Sebastien Ehouan
  * @version 0.5
  * @since 2017-12-08
+ * @author An Li
  */
 public class RuleFactory {
 
@@ -26,14 +27,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
-    public static ARule createARule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver) {
+    public static ARule createARule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new ARule(name, lhs, rhs, withResolver);
+        return new ARule(name, lhs, rhs, withResolver, useVF2);
     }
 
     /**
@@ -66,14 +68,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
-    public static FRule createFRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver) {
+    public static FRule createFRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new FRule(name, lhs, rhs, withResolver);
+        return new FRule(name, lhs, rhs, withResolver, useVF2);
     }
 
     // TODO: 2017-12-08 Not implemented (see class).
@@ -107,13 +110,14 @@ public class RuleFactory {
      * @param innerRule
      * @param preConditionPattern
      * @param nacs
+     * @param useVF2
      * @return
      */
     @NotNull
-    public static LRule createLRule(String name, Composer innerRule, Pattern preConditionPattern, ArrayList<Pattern> nacs) {
+    public static LRule createLRule(String name, Composer innerRule, Pattern preConditionPattern, ArrayList<Pattern> nacs, boolean useVF2) {
         LHS lhs = new LHS(preConditionPattern, nacs);
 
-        return new LRule(name, innerRule, lhs);
+        return new LRule(name, innerRule, lhs, useVF2);
     }
 
     /**
@@ -136,13 +140,14 @@ public class RuleFactory {
      * @param name
      * @param preConditionPattern
      * @param nacs
+     * @param useVF2
      * @return
      */
     @NotNull
-    public static QRule createQRule(String name, Pattern preConditionPattern, ArrayList<Pattern> nacs) {
+    public static QRule createQRule(String name, Pattern preConditionPattern, ArrayList<Pattern> nacs, boolean useVF2) {
         LHS lhs = new LHS(preConditionPattern, nacs);
 
-        return new QRule(name, lhs);
+        return new QRule(name, lhs, useVF2);
     }
 
     /**
@@ -165,14 +170,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
-    public static SRule createSRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver) {
+    public static SRule createSRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new SRule(name, lhs, rhs, withResolver);
+        return new SRule(name, lhs, rhs, withResolver, useVF2);
     }
 
     /**
@@ -183,14 +189,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
-    public static XFRule createXFRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver) {
+    public static XFRule createXFRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new XFRule(name, lhs, rhs, withResolver);
+        return new XFRule(name, lhs, rhs, withResolver, useVF2);
     }
 
     /**
@@ -201,14 +208,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
-    public static XRule createXRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver) {
+    public static XRule createXRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new XRule(name, lhs, rhs, withResolver);
+        return new XRule(name, lhs, rhs, withResolver, useVF2);
     }
 
     /**
@@ -219,13 +227,14 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
+     * @param useVF2
      * @return
      */
     @NotNull
-    public static XSRule createXSRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver) {
+    public static XSRule createXSRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new XSRule(name, lhs, rhs, withResolver);
+        return new XSRule(name, lhs, rhs, withResolver, useVF2);
     }
 }

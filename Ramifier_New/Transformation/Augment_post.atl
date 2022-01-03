@@ -5,15 +5,7 @@ create OUT : ECore  refining IN : ECore;
 
 rule Post_Class {
 	from c : ECore!EClass
-	to post_c : ECore!EClass (
+	to c_post : ECore!EClass (
 		name <- 'MTpos__'+c.name
 	)
 }
-
--- This rule changes attributes to EString to allow filling them with constraints
---rule Post_Attribute {
---	from a : ECore!EAttribute
---	to post_a : ECore!EAttribute (
---		eType <- ECore!EClassifier.allInstancesFrom('IN')->select(c | c.name = 'EString').first()
---	)
---}

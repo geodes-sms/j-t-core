@@ -1,36 +1,37 @@
+<!-- FIXME: This file only produces empty XMI models instead of Ecore models on the atl.saveModel task -->
 <project name="Ramifier_atl"  basedir="." default="execute">
+    <property name="atl.launcher" value="EMF-specific VM"/>
 	<target name="execute" depends="load">
-		<atl.launch path="Relax.atl">
+		<atl.loadModel modelHandler="EMF" name="inModel" metamodel="ECore" path="../Model/Oracle.ecore"/>
+
+		<atl.launch path="Relax.atl" refining="true">
 			<option name="allowInterModelReferences" value="true"/>
-			<inModel name="IN" metaModel="inModel"/>
-			<outModel name="OUT" metaModel="Relaxed"/>
+			<inModel name="IN" model="inModel"/>
+			<outModel name="OUT" model="Relaxed" metamodel="ECore"/>
 		</atl.launch>
-	
-		<atl.launch path="Augment_pre.atl">
+		
+		<atl.launch path="Augment_pre.atl" refining="true">
 			<option name="allowInterModelReferences" value="true"/>
-			<inModel name="IN" metaModel="Relaxed"/>
-			<outModel name="OUT" metaModel="Augment_pre"/>
+			<inModel name="IN" model="Relaxed"/>
+			<outModel name="OUT" model="Augment_pre" metamodel="ECore"/>
 		</atl.launch>
-	
-		<atl.launch path="Augment_post.atl">
+		
+		<atl.launch path="Augment_post.atl" refining="true">
 			<option name="allowInterModelReferences" value="true"/>
-			<inModel name="IN" metaModel="Relaxed"/>
-			<outModel name="OUT" metaModel="Augment_post"/>
+			<inModel name="IN" model="Relaxed"/>
+			<outModel name="OUT" model="Augment_post" metamodel="ECore"/>
 		</atl.launch>
-			
-		<atl.launch path="Augment_compo.atl">
+		
+		<atl.launch path="Augment_compo.atl" refining="true">
 			<option name="allowInterModelReferences" value="true"/>
-			<inModel name="IN_PRE" metaModel="Augment_pre"/>	
-			<inModel name="IN_POS" metaModel="Augment_post"/>
-			<outModel name="OUT" metaModel="Augmented"/>
+			<inModel name="IN_PRE" model="Augment_pre"/>	
+			<inModel name="IN_POST" model="Augment_post"/>
+			<outModel name="OUT" model="Augmented" metamodel="ECore"/>
 		</atl.launch>
+		<atl.saveModel model="Augmented" path="../Model/Oracle_augmented2.ecore"/>
 	</target>
 	
 	<target name="load">
-		<atl.loadModel modelHandler="EMF" name="inModel"		metamodel="MOF" path="Model/Oracle.ecore"/>
-		<atl.loadModel modelHandler="EMF" name="Relaxed" 		metamodel="MOF" path="Transformation/relaxed.ecore"/>
-		<atl.loadModel modelHandler="EMF" name="Augment_pre" 	metamodel="MOF" path="Transformation/augment_pre.ecore"/>
-		<atl.loadModel modelHandler="EMF" name="Augment_post" 	metamodel="MOF" path="Transformation/augment_post.ecore"/>
-		<atl.loadModel modelHandler="EMF" name="Augmented" 		metamodel="MOF" path="Transformation/augmented.ecore"/>
+		<atl.loadModel modelHandler="EMF" name="ECore" metamodel="MOF" path="../Metamodel/ecorer.ecore"/>
 	</target>
 </project>

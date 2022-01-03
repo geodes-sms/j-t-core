@@ -13,14 +13,15 @@ import tcore.strategy.Matcher;
  *
  * @author Pierre-Olivier Talbot
  * @author Sebastien Ehouan
+ * @author An Li
  */
 public class QRule extends Composer {
 
     private String name;
     private Matcher matcher;
 
-    QRule(String name, LHS lhs) {
-        this.matcher = new Matcher(lhs, Integer.MAX_VALUE);
+    QRule(String name, LHS lhs, boolean useVF2) {
+        this.matcher = new Matcher(lhs, Integer.MAX_VALUE, useVF2);
         this.name = name;
     }
 

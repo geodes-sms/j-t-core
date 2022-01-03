@@ -8,6 +8,8 @@ import tcore.messages.MatchSet;
 import tcore.messages.Packet;
 import java.util.ArrayList;
 
+import graph.Graph;
+
 /**
  * T-Core primitive meant for matching a {@link LHS} with a given {@link Model}.
  *
@@ -37,16 +39,16 @@ public class Matcher extends RulePrimitive {
     /**
      * @param lhs
      * @param max
+     * @param useVF2 True if VF2 is used, False otherwise
      */
-    public Matcher(LHS lhs, int max) {
+    public Matcher(LHS lhs, int max, boolean useVF2) {
         super();
         if (max <= 0) {
             throw new IllegalArgumentException("Matcher's maximum number of iterations must be greater than 0.");
         }
         this.max = max;
         this.lhs = lhs;
-        this.matchAlgoFactory = new SimpleMatchFactory();   //To access the SimpleMatcher algorithm
-//      this.matchAlgoFactory = new VF2MatchAlgoFactory();  //To access the VF2 algorithm
+        this.matchAlgoFactory = useVF2 ? new VF2MatchAlgoFactory() : new SimpleMatchFactory();
     }
 
     /**
@@ -63,6 +65,8 @@ public class Matcher extends RulePrimitive {
         }
         
         model = p.getModel();
+        Graph mg = model.getGraph(); 
+        Graph precGraph = lhs.getPreconditionPattern().getGraph();
 
         ArrayList<Match> allMatches = match();
         ArrayList<Match> chosenMatches = new ArrayList<>();

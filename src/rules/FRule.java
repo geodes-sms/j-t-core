@@ -10,14 +10,15 @@ import tcore.strategy.Matcher;
  * Applies the transformation on all matches found.
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 public class FRule extends ARule {
 
 
-    FRule(String name, LHS lhs, RHS rhs, boolean withResolver) {
-        super(name, lhs, rhs, withResolver);
+    FRule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
+        super(name, lhs, rhs, withResolver, useVF2);
 
-        matcher = new Matcher(lhs, Integer.MAX_VALUE);
+        matcher = new Matcher(lhs, Integer.MAX_VALUE, useVF2);
         iterator = new Iterator(Integer.MAX_VALUE);
     }
 

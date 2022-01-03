@@ -9,12 +9,3 @@ rule Pre_Class {
 		name <- 'MTpre__'+c.name
 	)
 }
-
--- This rule changes attributes to EString to allow filling them with constraints
---rule Post_Attribute {
---	from a : ECore!EAttribute
---	to post_a : ECore!EAttribute (
---		eType <- ECore!EClassifier.allInstancesFrom('IN')->select(c | c.name = 'EString').first()
---		
---	)
---}

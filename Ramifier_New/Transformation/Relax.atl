@@ -23,7 +23,9 @@ rule DeAbstractClass {
 		"abstract" <- false
 	)
 }
-rule Attribute {
+
+-- This rule changes attributes to EString to allow filling them with constraints
+rule StringifyAttribute {
 	from a : ECore!EAttribute
 	to a2 : ECore!EAttribute (
 		lowerBound <- 0,

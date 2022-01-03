@@ -25,7 +25,7 @@ import java.util.HashMap;
  * T-Core primitive meant for matching a {@link LHS} with a given {@link Model}.
  *
  * @author Pierre-Olivier Talbot
- * @author Sebastien EHouan
+ * @author Sebastien Ehouan
  * @since 2017-12-01
  */
 
@@ -98,8 +98,13 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
                 toRemove.add(m);
             }
         }
-        results.removeAll(toRemove);
 
+        for (Match mtr: toRemove) {
+        	if (results.contains(mtr)) {
+        		results.remove(mtr);
+        	}
+        }
+        
         ArrayList<Match> finalMatches = new ArrayList<>();
         for (Match m : results) {
             if (!finalMatches.contains(m)) {
@@ -128,7 +133,7 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
                 }
             }
             matchedNACS.removeAll(NACStoRemove);
-
+            
             ArrayList<Match> finalNACMatches = new ArrayList<>();
             for (Match m : matchedNACS) {
                 if (!finalNACMatches.contains(m)) {
@@ -145,7 +150,7 @@ public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
                 boolean identical = true;
                 for (String label : mn.getLabelMappings().keySet()) {
                     if (!m.getLabelMappings().keySet().contains(label)) continue;
-                    identical = identical && m.getLabelMappings().get(label) == mn.getLabelMappings().get(label);
+                    identical = identical && m.getLabelMappings().get(label).equals(mn.getLabelMappings().get(label));
                 }
                 if (identical) keep = false;
             }

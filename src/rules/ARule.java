@@ -8,14 +8,15 @@ import tcore.strategy.Matcher;
  * Applies the transformation on a single match.
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 public class ARule extends BasicRule {
 
-    ARule(String name, LHS lhs, RHS rhs, boolean withResolver) {
+    ARule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
         this.name = name;
         this.lhs = lhs;
         this.rhs = rhs;
-        matcher = new Matcher(lhs, 1);
+        matcher = new Matcher(lhs, 1, useVF2);
         iterator = new Iterator(1);
         rewriter = new Rewriter(rhs);
         if (withResolver) resolver = new Resolver(false, null);

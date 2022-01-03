@@ -19,7 +19,7 @@ import tcore.messages.Match;
 /**
  * Unit test for a case with constraints.
  *
- * @author Sebastien EHouan
+ * @author Sebastien Ehouan
  * @since 2020-07-30
  */
 
@@ -34,13 +34,13 @@ class MatcherConstraintAttribute {
 		utils.Utils.initialize();
 
         // Imports
-		MetaModel OracleMM = new MetaModel("Oracle", "Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
-        MetaModel Oracle_ramified = new MetaModel("OracleRoot", "Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
+		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Oracle.ecore"); //Oracle MetaModel
+        MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Oracle_augmented.ecore"); //Ramified Oracle
         
-        Model oracle = new Model("Oracle", "Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
+        Model oracle = new Model("Oracle", "../Ramifier_New/Model/Oracle.xmi", OracleMM); //Dynamic Instance from Oracle
      
-        Pattern ConstraintAttribute_pre = new Pattern("ConstraintAttribute_pre", "Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); //precondition
-        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "Ramifier_New/Model/ConstraintAttribute_pre.xmi", Oracle_ramified); //NAC
+        Pattern ConstraintAttribute_pre = new Pattern("ConstraintAttribute_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); //precondition
+        Pattern Oracle_NAC = new Pattern("assignTables_NAC", "../Ramifier_New/Model/ConstraintAttribute_pre.xmi", Oracle_ramified); //NAC
         ArrayList<Pattern> oracle_NACS = new ArrayList<>();
         oracle_NACS.add(Oracle_NAC);
 
@@ -48,7 +48,7 @@ class MatcherConstraintAttribute {
         LHS lhs = new LHS(ConstraintAttribute_pre, oracle_NACS);
         
         //Testing
-        Matcher tester = new Matcher(lhs, 5);
+        Matcher tester = new Matcher(lhs, 5, false);
         
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);

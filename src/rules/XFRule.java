@@ -9,11 +9,12 @@ import tcore.messages.Packet;
  * Applies the transformation on all matches found with roll-back capability.
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 public class XFRule extends FRule {
 
-    XFRule(String name, LHS lhs, RHS rhs, boolean withResolver) {
-        super(name, lhs, rhs, withResolver);
+    XFRule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
+        super(name, lhs, rhs, withResolver, useVF2);
     }
 
     @Override

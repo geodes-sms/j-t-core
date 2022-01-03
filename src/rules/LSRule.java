@@ -8,6 +8,7 @@ import tcore.LHS;
  * // FIXME: 2017-12-13 Does not work with current "random" iterator...
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 
 public class LSRule extends LRule {
@@ -17,7 +18,7 @@ public class LSRule extends LRule {
      * @param innerRule
      * @param lhs
      */
-    public LSRule(String name, Composer innerRule, LHS lhs) {
-        super(name, innerRule, lhs);
+    public LSRule(String name, Composer innerRule, LHS lhs, boolean useVF2) {
+        super(name, innerRule, lhs, useVF2);
     }
 }

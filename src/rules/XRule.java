@@ -9,12 +9,13 @@ import tcore.messages.Packet;
  * Applies the transformation on one match with roll-back capability.
  *
  * @author Pierre-Olivier Talbot
+ * @author An Li
  */
 public class XRule extends ARule {
 
 
-    XRule(String name, LHS lhs, RHS rhs, boolean withResolver) {
-        super(name, lhs, rhs, withResolver);
+    XRule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
+        super(name, lhs, rhs, withResolver, useVF2);
     }
 
 

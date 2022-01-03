@@ -52,15 +52,15 @@
 		<constant value="__matcher__"/>
 		<constant value="A.__matchRelaxReference():V"/>
 		<constant value="A.__matchDeAbstractClass():V"/>
-		<constant value="A.__matchAttribute():V"/>
+		<constant value="A.__matchStringifyAttribute():V"/>
 		<constant value="__exec__"/>
 		<constant value="RelaxReference"/>
 		<constant value="NTransientLinkSet;.getLinksByRule(S):QNTransientLink;"/>
 		<constant value="A.__applyRelaxReference(NTransientLink;):V"/>
 		<constant value="DeAbstractClass"/>
 		<constant value="A.__applyDeAbstractClass(NTransientLink;):V"/>
-		<constant value="Attribute"/>
-		<constant value="A.__applyAttribute(NTransientLink;):V"/>
+		<constant value="StringifyAttribute"/>
+		<constant value="A.__applyStringifyAttribute(NTransientLink;):V"/>
 		<constant value="setProperty"/>
 		<constant value="MRefiningTrace!Element;"/>
 		<constant value="3"/>
@@ -151,12 +151,12 @@
 		<constant value="__applyDeAbstractClass"/>
 		<constant value="23:17-23:22"/>
 		<constant value="23:3-23:22"/>
-		<constant value="__matchAttribute"/>
+		<constant value="__matchStringifyAttribute"/>
 		<constant value="EAttribute"/>
 		<constant value="a"/>
 		<constant value="a2"/>
-		<constant value="28:5-31:3"/>
-		<constant value="__applyAttribute"/>
+		<constant value="30:5-33:3"/>
+		<constant value="__applyStringifyAttribute"/>
 		<constant value="eType"/>
 		<constant value="EClassifier"/>
 		<constant value="J.allInstances():J"/>
@@ -165,17 +165,17 @@
 		<constant value="J.=(J):J"/>
 		<constant value="CJ.including(J):CJ"/>
 		<constant value="J.first():J"/>
-		<constant value="29:17-29:18"/>
-		<constant value="29:3-29:18"/>
-		<constant value="30:12-30:29"/>
-		<constant value="30:12-30:44"/>
-		<constant value="30:57-30:58"/>
-		<constant value="30:57-30:63"/>
-		<constant value="30:66-30:75"/>
-		<constant value="30:57-30:75"/>
-		<constant value="30:12-30:76"/>
-		<constant value="30:12-30:84"/>
-		<constant value="30:3-30:84"/>
+		<constant value="31:17-31:18"/>
+		<constant value="31:3-31:18"/>
+		<constant value="32:12-32:29"/>
+		<constant value="32:12-32:44"/>
+		<constant value="32:57-32:58"/>
+		<constant value="32:57-32:63"/>
+		<constant value="32:66-32:75"/>
+		<constant value="32:57-32:75"/>
+		<constant value="32:12-32:76"/>
+		<constant value="32:12-32:84"/>
+		<constant value="32:3-32:84"/>
 	</cp>
 	<field name="1" type="2"/>
 	<field name="3" type="4"/>

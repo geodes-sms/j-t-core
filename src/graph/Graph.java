@@ -21,7 +21,7 @@ public class Graph {
 	@SuppressWarnings("javadoc")
 	public ArrayList<Edge> edges = new ArrayList<Edge>();
 	
-	private int[][] adjacencyMatrix; //stores graph structure as adjacency matrix (-1: not adjacent, >=0: the edge label)
+	private String[][] adjacencyMatrix; //stores graph structure as adjacency matrix (-1: not adjacent, >=0: the edge label)
 	private boolean adjacencyMatrixUpdateNeeded = true; //indicates if the adjacency matrix needs an update
 	
 	/**
@@ -35,8 +35,16 @@ public class Graph {
 	 * @param id
 	 * @param label
 	 */
-	public void addNode(int id, int label) {
-		nodes.add(new Node(this, id, label));
+	public void addNode(int id, String label, String className) {
+		nodes.add(new Node(this, id, label, className));
+		this.adjacencyMatrixUpdateNeeded = true;
+	}
+	
+	/**
+	 * @param node
+	 */
+	public void addNode(Node node) {
+		nodes.add(node);
 		this.adjacencyMatrixUpdateNeeded = true;
 	}
 	
@@ -45,7 +53,7 @@ public class Graph {
 	 * @param target
 	 * @param label
 	 */
-	public void addEdge(Node source, Node target, int label) {
+	public void addEdge(Node source, Node target, String label) {
 		edges.add(new Edge(this, source, target, label));
 		this.adjacencyMatrixUpdateNeeded = true;
 	}
@@ -55,7 +63,7 @@ public class Graph {
 	 * @param targetId
 	 * @param label
 	 */
-	public void addEdge(int sourceId, int targetId, int label) {
+	public void addEdge(int sourceId, int targetId, String label) {
 		this.addEdge(this.nodes.get(sourceId), this.nodes.get(targetId), label);
 	}
 	
@@ -65,18 +73,15 @@ public class Graph {
 	 * Reconstruct it if it needs an update
 	 * @return Adjacency Matrix
 	 */
-	public int[][] getAdjacencyMatrix() {
+	public String[][] getAdjacencyMatrix() {
 		
 		if (this.adjacencyMatrixUpdateNeeded) {
 			
 			int k = this.nodes.size();
-			this.adjacencyMatrix = new int[k][k];	//node size may have changed
-			for (int i = 0 ; i < k ; i++)			//initialize entries to -1	
-				for (int j = 0 ; j < k ; j++)
-					this.adjacencyMatrix[i][j] = -1; 
-			
+			this.adjacencyMatrix = new String[k][k];	// node size may have changed
+						
 			for (Edge e : this.edges) {
-				this.adjacencyMatrix[e.source.id][e.target.id] = e.label; //label must bigger than -1
+				this.adjacencyMatrix[e.source.id][e.target.id] = e.label; // label must not be null
 			}
 			this.adjacencyMatrixUpdateNeeded = false;
 		}
@@ -87,7 +92,7 @@ public class Graph {
 	 *  Prints adjacency matrix to console
 	 */
 	public void printGraph() {
-		int[][] a = this.getAdjacencyMatrix();
+		String[][] a = this.getAdjacencyMatrix();
 		int k = a.length;
 		
 		System.out.print(this.name + " - Nodes: ");

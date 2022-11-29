@@ -15,10 +15,10 @@ import tcore.strategy.Matcher;
 public class FRule extends ARule {
 
 
-    FRule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
-        super(name, lhs, rhs, withResolver, useVF2);
+    FRule(String name, LHS lhs, RHS rhs, boolean withResolver, String nameAlgo) {
+        super(name, lhs, rhs, withResolver, nameAlgo);
 
-        matcher = new Matcher(lhs, Integer.MAX_VALUE, useVF2);
+        matcher = new Matcher(lhs, Integer.MAX_VALUE, nameAlgo);
         iterator = new Iterator(Integer.MAX_VALUE);
     }
 

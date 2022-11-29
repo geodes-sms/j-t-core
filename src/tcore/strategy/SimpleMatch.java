@@ -29,7 +29,7 @@ import java.util.HashMap;
  * @since 2017-12-01
  */
 
-public class SimpleMatch extends RulePrimitive implements IMatchAlgo {
+public class SimpleMatch extends RulePrimitive implements IMatchAlgo{
     /**
      * Maximum number of matches authorized.
      */

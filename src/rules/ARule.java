@@ -12,11 +12,11 @@ import tcore.strategy.Matcher;
  */
 public class ARule extends BasicRule {
 
-    ARule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
+    ARule(String name, LHS lhs, RHS rhs, boolean withResolver, String nameAlgo) {
         this.name = name;
         this.lhs = lhs;
         this.rhs = rhs;
-        matcher = new Matcher(lhs, 1, useVF2);
+        matcher = new Matcher(lhs, 1, nameAlgo);
         iterator = new Iterator(1);
         rewriter = new Rewriter(rhs);
         if (withResolver) resolver = new Resolver(false, null);

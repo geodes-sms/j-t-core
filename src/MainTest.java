@@ -1,5 +1,6 @@
 import rules.*;
 import tcore.*;
+import tcore.constant.JTCoreConstant;
 import tcore.messages.Packet;
 
 import java.util.ArrayList;
@@ -36,8 +37,8 @@ public class MainTest {
         System.out.println(assignTables_pre.serialize());
 
         // Rules definitions
-        BasicRule fireMimi = RuleFactory.createARule("FireMimi", fireMimi_pre, null, fireMimi_pos, true, false);
-        BasicRule assignTables = RuleFactory.createFRule("AssignTables", assignTables_pre, assignTables_NACS, assignTables_pos, true, false);
+        BasicRule fireMimi = RuleFactory.createARule("FireMimi", fireMimi_pre, null, fireMimi_pos, true, JTCoreConstant.SIMPLEMATCH_ALGORITHM);
+        BasicRule assignTables = RuleFactory.createFRule("AssignTables", assignTables_pre, assignTables_NACS, assignTables_pos, true, JTCoreConstant.SIMPLEMATCH_ALGORITHM);
 
         // Execution
         Packet p = new Packet(tables);

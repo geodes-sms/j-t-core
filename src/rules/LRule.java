@@ -16,10 +16,10 @@ public class LRule extends Composer {
     protected Composer innerRule;
     protected Matcher matcher;
 
-    LRule(String name, Composer innerRule, LHS lhs, boolean useVF2) {
+    LRule(String name, Composer innerRule, LHS lhs, String nameAlgo) {
         this.name = name;
         this.innerRule = innerRule;
-        matcher = new Matcher(lhs, Integer.MAX_VALUE, useVF2);
+        matcher = new Matcher(lhs, Integer.MAX_VALUE, nameAlgo);
     }
 
     @Override

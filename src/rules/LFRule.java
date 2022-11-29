@@ -20,8 +20,8 @@ class LFRule extends LRule {
     @SuppressWarnings("unused")
 	private Rewriter rewriter;
 
-    public LFRule(String name, Composer innerRule, LHS lhs, RHS rhs, boolean outerFirst, boolean useVF2) {
-        super(name, innerRule, lhs, useVF2);
+    public LFRule(String name, Composer innerRule, LHS lhs, RHS rhs, boolean outerFirst, String nameAlgo) {
+        super(name, innerRule, lhs, nameAlgo);
         this.outerFirst = outerFirst;
         rewriter = new Rewriter(rhs);
         iterator = new Iterator(Integer.MAX_VALUE);

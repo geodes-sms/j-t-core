@@ -11,6 +11,7 @@ import tcore.LHS;
 import tcore.MetaModel;
 import tcore.Model;
 import tcore.Pattern;
+import tcore.constant.JTCoreConstant;
 import tcore.messages.MatchSet;
 import tcore.messages.Packet;
 import tcore.strategy.Matcher;
@@ -46,7 +47,7 @@ class MultiMatcherTest {
 		LHS lhs = new LHS(pre_A, null);
 
 		// Testing
-		Matcher tester = new Matcher(lhs, 5, false);
+		Matcher tester = new Matcher(lhs, 5, JTCoreConstant.SIMPLEMATCH_ALGORITHM);
 
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
@@ -94,7 +95,7 @@ class MultiMatcherTest {
 		LHS lhs = new LHS(pre_A, null);
 
 		// Testing
-		Matcher tester = new Matcher(lhs, 5, true);
+		Matcher tester = new Matcher(lhs, 5, JTCoreConstant.VF2_ALGORITHM);
 
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);

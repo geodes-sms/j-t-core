@@ -18,7 +18,7 @@ public class LSRule extends LRule {
      * @param innerRule
      * @param lhs
      */
-    public LSRule(String name, Composer innerRule, LHS lhs, boolean useVF2) {
-        super(name, innerRule, lhs, useVF2);
+    public LSRule(String name, Composer innerRule, LHS lhs, String nameAlgo) {
+        super(name, innerRule, lhs, nameAlgo);
     }
 }

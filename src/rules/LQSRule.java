@@ -17,7 +17,7 @@ public class LQSRule extends LRule {
      * @param innerRule
      * @param lhs
      */
-    public LQSRule(String name, Composer innerRule, LHS lhs, boolean useVF2) {
-        super(name, innerRule, lhs, useVF2);
+    public LQSRule(String name, Composer innerRule, LHS lhs, String nameAlgo) {
+        super(name, innerRule, lhs, nameAlgo);
     }
 }

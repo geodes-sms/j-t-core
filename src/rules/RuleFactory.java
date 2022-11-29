@@ -27,15 +27,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
-     * @param useVF2
+     * @param nameAlgo
      * @return
      */
     @NotNull
-    public static ARule createARule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
+    public static ARule createARule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, String nameAlgo) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new ARule(name, lhs, rhs, withResolver, useVF2);
+        return new ARule(name, lhs, rhs, withResolver, nameAlgo);
     }
 
     /**
@@ -68,15 +68,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
-     * @param useVF2
+     * @param nameAlgo
      * @return
      */
     @NotNull
-    public static FRule createFRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
+    public static FRule createFRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, String nameAlgo) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new FRule(name, lhs, rhs, withResolver, useVF2);
+        return new FRule(name, lhs, rhs, withResolver, nameAlgo);
     }
 
     // TODO: 2017-12-08 Not implemented (see class).
@@ -110,14 +110,14 @@ public class RuleFactory {
      * @param innerRule
      * @param preConditionPattern
      * @param nacs
-     * @param useVF2
+     * @param nameAlgo
      * @return
      */
     @NotNull
-    public static LRule createLRule(String name, Composer innerRule, Pattern preConditionPattern, ArrayList<Pattern> nacs, boolean useVF2) {
+    public static LRule createLRule(String name, Composer innerRule, Pattern preConditionPattern, ArrayList<Pattern> nacs, String nameAlgo) {
         LHS lhs = new LHS(preConditionPattern, nacs);
 
-        return new LRule(name, innerRule, lhs, useVF2);
+        return new LRule(name, innerRule, lhs, nameAlgo);
     }
 
     /**
@@ -140,14 +140,14 @@ public class RuleFactory {
      * @param name
      * @param preConditionPattern
      * @param nacs
-     * @param useVF2
+     * @param nameAlgo
      * @return
      */
     @NotNull
-    public static QRule createQRule(String name, Pattern preConditionPattern, ArrayList<Pattern> nacs, boolean useVF2) {
+    public static QRule createQRule(String name, Pattern preConditionPattern, ArrayList<Pattern> nacs, String nameAlgo) {
         LHS lhs = new LHS(preConditionPattern, nacs);
 
-        return new QRule(name, lhs, useVF2);
+        return new QRule(name, lhs, nameAlgo);
     }
 
     /**
@@ -170,15 +170,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
-     * @param useVF2
+     * @param nameAlgo
      * @return
      */
     @NotNull
-    public static SRule createSRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
+    public static SRule createSRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, String nameAlgo) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new SRule(name, lhs, rhs, withResolver, useVF2);
+        return new SRule(name, lhs, rhs, withResolver, nameAlgo);
     }
 
     /**
@@ -189,15 +189,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
-     * @param useVF2
+     * @param nameAlgo
      * @return
      */
     @NotNull
-    public static XFRule createXFRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
+    public static XFRule createXFRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, String nameAlgo) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new XFRule(name, lhs, rhs, withResolver, useVF2);
+        return new XFRule(name, lhs, rhs, withResolver, nameAlgo);
     }
 
     /**
@@ -208,15 +208,15 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
-     * @param useVF2
+     * @param nameAlgo
      * @return
      */
     @NotNull
-    public static XRule createXRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
+    public static XRule createXRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, String nameAlgo) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new XRule(name, lhs, rhs, withResolver, useVF2);
+        return new XRule(name, lhs, rhs, withResolver, nameAlgo);
     }
 
     /**
@@ -227,14 +227,14 @@ public class RuleFactory {
      * @param nacs
      * @param postconditionPattern
      * @param withResolver
-     * @param useVF2
+     * @param nameAlgo
      * @return
      */
     @NotNull
-    public static XSRule createXSRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, boolean useVF2) {
+    public static XSRule createXSRule(String name, Pattern preconditionPattern, ArrayList<Pattern> nacs, Pattern postconditionPattern, boolean withResolver, String nameAlgo) {
         LHS lhs = new LHS(preconditionPattern, nacs);
         RHS rhs = new RHS(lhs, postconditionPattern);
 
-        return new XSRule(name, lhs, rhs, withResolver, useVF2);
+        return new XSRule(name, lhs, rhs, withResolver, nameAlgo);
     }
 }

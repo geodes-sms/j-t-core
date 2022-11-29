@@ -3,6 +3,7 @@ package tcore.strategy;
 import tcore.LHS;
 import tcore.Model;
 import tcore.RulePrimitive;
+import tcore.constant.JTCoreConstant;
 import tcore.messages.Match;
 import tcore.messages.MatchSet;
 import tcore.messages.Packet;
@@ -19,7 +20,8 @@ import graph.Graph;
  */
 
 public class Matcher extends RulePrimitive {
-	private IMatchAlgoFactory matchAlgoFactory;
+	
+	private IMatchAlgo iMatchAlgo;
 	
     /**
      * Maximum number of matches authorized.
@@ -35,20 +37,23 @@ public class Matcher extends RulePrimitive {
      * The model in which to find a match.
      */
     private Model model;
+    
+    private String nameAlgo;
 
     /**
      * @param lhs
      * @param max
      * @param useVF2 True if VF2 is used, False otherwise
      */
-    public Matcher(LHS lhs, int max, boolean useVF2) {
+    public Matcher(LHS lhs, int max, String nameAlgo) {
         super();
         if (max <= 0) {
             throw new IllegalArgumentException("Matcher's maximum number of iterations must be greater than 0.");
         }
         this.max = max;
         this.lhs = lhs;
-        this.matchAlgoFactory = useVF2 ? new VF2MatchAlgoFactory() : new SimpleMatchFactory();
+        this.nameAlgo = nameAlgo;
+        this.iMatchAlgo = AlgorithmFactory.createMatchAlgo(lhs, max, model, nameAlgo);
     }
 
     /**
@@ -89,7 +94,7 @@ public class Matcher extends RulePrimitive {
      */
     public ArrayList<Match> match() { 
 
-        IMatchAlgo lhsMatcher = matchAlgoFactory.createMatchAlgo(lhs, max, model);
+        IMatchAlgo lhsMatcher = AlgorithmFactory.createMatchAlgo(lhs, max, model, nameAlgo);
 		
         ArrayList<Match> results = lhsMatcher.match();
         

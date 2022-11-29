@@ -12,8 +12,8 @@ import tcore.messages.Packet;
  */
 public class SRule extends ARule {
 
-    SRule(String name, LHS lhs, RHS rhs, boolean withResolver, boolean useVF2) {
-        super(name, lhs, rhs, withResolver, useVF2);
+    SRule(String name, LHS lhs, RHS rhs, boolean withResolver, String nameAlgo) {
+        super(name, lhs, rhs, withResolver, nameAlgo);
     }
 
     @Override

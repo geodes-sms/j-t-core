@@ -17,10 +17,10 @@ import tcore.constant.JTCoreConstant;
 public class AlgorithmFactory {
 
 	public static @NotNull IMatchAlgo createMatchAlgo(LHS lhs, int max, Model model, String name) {
-		return switch (name) {
-		case JTCoreConstant.SIMPLEMATCH_ALGORITHM -> new SimpleMatch(lhs, max, model);
-		case JTCoreConstant.VF2_ALGORITHM -> new VF2(lhs, max, model);
-		default -> throw new IllegalArgumentException("Unexpected value: " + name);
-		};
+		switch (name) {
+		case JTCoreConstant.SIMPLEMATCH_ALGORITHM: return new SimpleMatch(lhs, max, model);
+		case JTCoreConstant.VF2_ALGORITHM: return new VF2(lhs, max, model);
+		default: throw new IllegalArgumentException("Unexpected value: " + name);
+		}
 	}
 }

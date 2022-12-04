@@ -218,15 +218,23 @@ public class VF2 implements IMatchAlgo {
 		System.out.println("Noeud traité queryGraph : " + state.queryGraph.nodes.get(queryNodeIndex).className);
 		System.out.println("Noeud traité targetGraph : " + state.targetGraph.nodes.get(targetNodeIndex).className);
 		
-		System.out.println("Subclasses de " + state.targetGraph.nodes.get(targetNodeIndex).className +
-				" dans queryGraph = Subclasses de " + state.queryGraph.nodes.get(queryNodeIndex).className + " targetGraph ? : " + 
-				state.targetGraph.nodes.get(targetNodeIndex).className.equals(state.queryGraph.nodes.get(queryNodeIndex).className));
 		
 		// The two nodes must have the same class name
 		if (!state.targetGraph.nodes.get(targetNodeIndex).className
 				.equals(state.queryGraph.nodes.get(queryNodeIndex).className)) {
 			return false;
 		}
+		
+		System.out.println("Subclasses de " + state.targetGraph.nodes.get(targetNodeIndex).className +
+				" dans queryGraph = Subclasses de " + state.queryGraph.nodes.get(queryNodeIndex).className + " targetGraph ? : " + 
+				state.targetGraph.nodes.get(targetNodeIndex).className.equals(state.queryGraph.nodes.get(queryNodeIndex).className));
+		
+		
+		if (!state.targetGraph.nodes.get(targetNodeIndex).subClasses
+				.equals(state.queryGraph.nodes.get(queryNodeIndex).subClasses)) {
+			return false;
+		}
+
 
 		// Predecessor Rule and Successor Rule
 		if (!checkPredAndSucc(state, targetNodeIndex, queryNodeIndex)) {

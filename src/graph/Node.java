@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Class defining nodes
@@ -32,6 +33,8 @@ public class Node {
 	 */
 	public String className;
 	
+	public HashMap<String, ArrayList<String>> subClasses;
+	
 	/**
 	 * Edges of which this node is the origin
 	 */
@@ -48,10 +51,11 @@ public class Node {
 	 * @param label
 	 * @param className
 	 */
-	public Node(Graph g, int id, String label, String className) {
+	public Node(Graph g, int id, String label, String className, HashMap<String, ArrayList<String>> subClasses) {
 		this.graph = g;
 		this.id = id;
 		this.label = label;
 		this.className = className;
+		this.subClasses = subClasses;
 	}
 }

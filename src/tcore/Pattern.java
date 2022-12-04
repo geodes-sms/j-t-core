@@ -147,15 +147,30 @@ public class Pattern extends Model {
             EStructuralFeature labelFeature = object.eClass().getEStructuralFeature(Utils.MT_LABEL); // Get the label of object
             Object label = ((EObjectImpl) object).eGet(labelFeature);
             String className = object.eClass().getName().replaceAll(Utils.PRE_, ""); // Get the class name and remove the "MTpre__" pattern to get the 'actual' class name of object to match on
+            HashMap<String, ArrayList<String>> subclassesMapped = new HashMap<String, ArrayList<String>>();
+            ArrayList<String> subClasses = new ArrayList<String>();
+
+            for (EObject object2 : objects) { 
+            	if (object.eClass().isSuperTypeOf(object2.eClass())) { 
+            		if (!object.eClass().getName().equals(object2.eClass().getName())){
+            			subClasses.add(object2.eClass().getName().replaceAll(Utils.PRE_,  "")); 
+            		} 
+            	} 
+            }
+            
+        	subclassesMapped.put(className, subClasses);
+            
             if (label != null && (label instanceof String)) { // Add a node only if the label is defined
-            	Node node = new Node(graph, index, (String) label, className);
+            	Node node = new Node(graph, index, (String) label, className, subclassesMapped);
                 graph.addNode(node);
                 nodesByObjectMapping.put(object, node);
                 objectsByNodeMapping.put(node, object);
                 index++;
             }
+            System.out.println("Subclasses in Pattern : " + subclassesMapped);
+
         }
-        
+               
         addEdgesToGraph();
     }
 }

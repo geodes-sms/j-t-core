@@ -245,13 +245,28 @@ public class Model implements EcoreSerializable {
         for (EObject object: objects) {
             String label = EcoreUtil.getURI(object).fragment(); // Get string representation of identifier attribute
             String className = object.eClass().getName();
+            HashMap<String, ArrayList<String>> subclassesMapped = new HashMap<String, ArrayList<String>>();
+            ArrayList<String> subClasses = new ArrayList<String>();
+
+            for (EObject object2 : objects) { 
+            	if (object.eClass().isSuperTypeOf(object2.eClass())) { 
+            		if (!object.eClass().getName().equals(object2.eClass().getName())){
+            			subClasses.add(object2.eClass().getName().replaceAll(Utils.PRE_,  "")); 
+            		} 
+            	} 
+            }
+            
+        	subclassesMapped.put(className, subClasses);
+            
+            
             if (label != null && (label instanceof String)) { // Add a node only if the label is defined
-	            Node node = new Node(graph, index, label, className);
+	            Node node = new Node(graph, index, label, className, subclassesMapped);
 	            graph.addNode(node);
 	            nodesByObjectMapping.put(object, node);
 	            objectsByNodeMapping.put(node, object);
 	            index++;
             }
+            System.out.println("Subclasses in Model : " + subclassesMapped);
         }
         
         addEdgesToGraph();

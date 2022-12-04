@@ -1,6 +1,7 @@
 package graph;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Class defining graphs
@@ -35,8 +36,8 @@ public class Graph {
 	 * @param id
 	 * @param label
 	 */
-	public void addNode(int id, String label, String className) {
-		nodes.add(new Node(this, id, label, className));
+	public void addNode(int id, String label, String className, HashMap<String, ArrayList<String>> subClasses) {
+		nodes.add(new Node(this, id, label, className, subClasses));
 		this.adjacencyMatrixUpdateNeeded = true;
 	}
 	

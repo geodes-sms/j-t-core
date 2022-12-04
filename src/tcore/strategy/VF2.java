@@ -227,8 +227,9 @@ public class VF2 implements IMatchAlgo {
 		
 		System.out.println("Subclasses de " + state.targetGraph.nodes.get(targetNodeIndex).className +
 				" dans queryGraph = Subclasses de " + state.queryGraph.nodes.get(queryNodeIndex).className + " targetGraph ? : " + 
-				state.targetGraph.nodes.get(targetNodeIndex).className.equals(state.queryGraph.nodes.get(queryNodeIndex).className));
-		
+				state.targetGraph.nodes.get(targetNodeIndex).subClasses.equals(state.queryGraph.nodes.get(queryNodeIndex).subClasses));
+		System.out.println(state.queryGraph.nodes.get(queryNodeIndex).subClasses);
+		System.out.println(state.targetGraph.nodes.get(targetNodeIndex).subClasses);
 		
 		if (!state.targetGraph.nodes.get(targetNodeIndex).subClasses
 				.equals(state.queryGraph.nodes.get(queryNodeIndex).subClasses)) {

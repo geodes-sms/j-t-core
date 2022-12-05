@@ -4,9 +4,9 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ramRoot="RamRoot"
-    xsi:schemaLocation="RamRoot Oracle_augmented.ecore"
-    MT__label="1"
-    id="" name="">
+    xsi:schemaLocation="RamRoot OracleV3_augmented.ecore"
+    MT__label="1">
   <b MT__label="3"/>
-  <c MT__label="2"/>
+  <b xsi:type="ramRoot:MTpre__C"
+      MT__label="2"/>
 </ramRoot:MTpre__A>

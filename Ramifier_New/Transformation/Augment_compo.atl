@@ -20,18 +20,12 @@ rule Start {
 			name <- 'MT__Element',
 			"abstract" <- true,
 			eAttributes <- Set{label_attr,
-						pivot_attr,
 						isProcessed_attr}
 		),
 		label_attr: ECore!EAttribute (
 			name <- 'MT__label',
 			eType <- ECore!EClassifier.allInstances() -> select(ccc | ccc.name =
 					'EString').first()
-		),
-		pivot_attr: ECore!EAttribute (
-			name <- 'MT__pivot',
-			eType <- ECore!EClassifier.allInstances() -> select(ccc | ccc.name =
-					'MT__Element').first()
 		),
 		isProcessed_attr: ECore!EAttribute (
 			name <- 'MT__isProcessed',
@@ -128,7 +122,7 @@ rule JoinPost {
 			eGenericSuperTypes <- c.eGenericSuperTypes,
 			eIDAttribute <- c.eIDAttribute,
 			eOperations <- c.eOperations,
-			ePackage <- c.ePackage,
+			--ePackage <- c.ePackage,
 			eReferences <- c.eReferences,
 			eStructuralFeatures <- c.eStructuralFeatures,
 			eTypeParameters <- c.eTypeParameters
@@ -153,7 +147,7 @@ rule JoinPre {
 			eGenericSuperTypes <- c.eGenericSuperTypes,
 			eIDAttribute <- c.eIDAttribute,
 			eOperations <- c.eOperations,
-			ePackage <- c.ePackage,
+			--ePackage <- c.ePackage,
 			eReferences <- c.eReferences,
 			eStructuralFeatures <- c.eStructuralFeatures,
 			eTypeParameters <- c.eTypeParameters

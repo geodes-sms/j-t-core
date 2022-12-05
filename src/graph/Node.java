@@ -33,6 +33,9 @@ public class Node {
 	 */
 	public String className;
 	
+	/**
+	 * Subclasses names associated to an EObject
+	 */
 	public HashMap<String, ArrayList<String>> subClasses;
 	
 	/**

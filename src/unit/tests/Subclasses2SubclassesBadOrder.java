@@ -59,6 +59,12 @@ class Subclasses2SubclassesBadOrder {
 		  case "3":
 			  expectedMatch.addMapping("3", o); 
 			  break; 
+		  case "2":
+			  expectedMatch.addMapping("2", o); 
+			  break; 
+		  case "4":
+			  expectedMatch.addMapping("4", o); 
+			  break; 
 		  default: 
 			  break; 
 		  } 
@@ -76,6 +82,9 @@ class Subclasses2SubclassesBadOrder {
 
 	@Test
 	public void isSuccessVF2() throws Exception {
+		
+		System.out.println("------------------------VF2------------------------");
+
 		// Same as previous one, but using VF2 instead
 		utils.Utils.initialize();
 
@@ -100,14 +109,20 @@ class Subclasses2SubclassesBadOrder {
 
 		for (EObject o : oracle.getObjects()) {
 			switch (EcoreUtil.getID(o)) {
-			case "1":
-				expectedMatch.addMapping("1", o);
-				break;
-			case "3":
-				expectedMatch.addMapping("3", o);
-				break;
-			default:
-				break;
+			  case "1": 
+				  expectedMatch.addMapping("1", o); 
+				  break; 
+			  case "3":
+				  expectedMatch.addMapping("3", o); 
+				  break; 
+			  case "2":
+				  expectedMatch.addMapping("2", o); 
+				  break; 
+			  case "4":
+				  expectedMatch.addMapping("4", o); 
+				  break; 
+			  default: 
+				  break; 
 			}
 		}
 
@@ -117,8 +132,13 @@ class Subclasses2SubclassesBadOrder {
 
 		// Expected MatchSet to find
 		MatchSet ms = new MatchSet(expectedMatchArray, lhs);
+		
+		System.out.println("------------------------FIN VF2------------------------");
+
 
 		assertTrue(tester.isSuccess(), "Matcher failed");
 		assertTrue(ms.equals(p.getCurrentMatchSet()), "Wrong match found");
+		
+
 	}
 }

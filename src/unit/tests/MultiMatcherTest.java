@@ -59,6 +59,9 @@ class MultiMatcherTest {
 		  case "3":
 			  expectedMatch.addMapping("3", o); 
 			  break; 
+		  case "2":
+			  expectedMatch.addMapping("2", o); 
+			  break;   
 		  default: 
 			  break; 
 		  } 
@@ -76,6 +79,8 @@ class MultiMatcherTest {
 
 	@Test
 	public void isSuccessVF2() throws Exception {
+		
+		System.out.println("------------------------VF2------------------------");
 		// Same as previous one, but using VF2 instead
 		utils.Utils.initialize();
 
@@ -106,6 +111,9 @@ class MultiMatcherTest {
 			case "3":
 				expectedMatch.addMapping("3", o);
 				break;
+			case "2":
+				  expectedMatch.addMapping("2", o); 
+				  break;
 			default:
 				break;
 			}
@@ -120,5 +128,8 @@ class MultiMatcherTest {
 
 		assertTrue(tester.isSuccess(), "Matcher failed");
 		assertTrue(ms.equals(p.getCurrentMatchSet()), "Wrong match found");
+		
+		System.out.println("------------------------FIN VF2------------------------");
+
 	}
 }

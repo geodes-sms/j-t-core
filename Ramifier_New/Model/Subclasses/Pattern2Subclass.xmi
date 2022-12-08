@@ -4,11 +4,10 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ramRoot="RamRoot"
-    xsi:schemaLocation="RamRoot OracleV3_augmented.ecore"
+    xsi:schemaLocation="RamRoot OracleV2_augmented.ecore"
     MT__label="1">
-  <b MT__label="3"/>
-  <b xsi:type="ramRoot:MTpre__D"
-      MT__label="4"/>
-  <b xsi:type="ramRoot:MTpre__C"
+  <E MT__label="5"/>
+  <B MT__label="4"/>
+  <B xsi:type="ramRoot:MTpre__C"
       MT__label="2"/>
 </ramRoot:MTpre__A>

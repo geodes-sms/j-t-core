@@ -4,10 +4,13 @@ import java.io.PrintWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.script.ScriptEngine;
 import javax.script.ScriptException;
 
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -214,29 +217,24 @@ public class VF2 implements IMatchAlgo {
 			return false;
 		}
 		
-		System.out.println("——— Noeuds traités (feasibility) par VF2 ————");
-		System.out.println("Noeud traité queryGraph : " + state.queryGraph.nodes.get(queryNodeIndex).className);
-		System.out.println("Noeud traité targetGraph : " + state.targetGraph.nodes.get(targetNodeIndex).className);
+
+		HashMap<String, ArrayList<String>> subclasses = model.getMetamodel().getSubclasses(state, targetNodeIndex, queryNodeIndex);		
+		ArrayList<String> abstracts = model.getMetamodel().Abstracts(state, targetNodeIndex, queryNodeIndex);
 		
-		
-		// The two nodes must have the same class name
-		if (!state.targetGraph.nodes.get(targetNodeIndex).className
-				.equals(state.queryGraph.nodes.get(queryNodeIndex).className)) {
-			return false;
+		if (!abstracts.contains(state.queryGraph.nodes.get(queryNodeIndex).className)) {
+			if (!state.targetGraph.nodes.get(targetNodeIndex).className.equals(state.queryGraph.nodes.get(queryNodeIndex).className) && 
+					(!subclasses.values().iterator().next().contains(state.targetGraph.nodes.get(targetNodeIndex).className))) {
+				return false;
+			} 
+		}
+		else {
+			if (!subclasses.values().iterator().next().contains(state.targetGraph.nodes.get(targetNodeIndex).className)){
+				return false;
+			}
 		}
 		
-		System.out.println("Subclasses de " + state.targetGraph.nodes.get(targetNodeIndex).className +
-				" dans queryGraph = Subclasses de " + state.queryGraph.nodes.get(queryNodeIndex).className + " targetGraph ? : " + 
-				state.targetGraph.nodes.get(targetNodeIndex).subClasses.equals(state.queryGraph.nodes.get(queryNodeIndex).subClasses));
-		System.out.println(state.queryGraph.nodes.get(queryNodeIndex).subClasses);
-		System.out.println(state.targetGraph.nodes.get(targetNodeIndex).subClasses);
+
 		
-		if (!state.targetGraph.nodes.get(targetNodeIndex).subClasses
-				.equals(state.queryGraph.nodes.get(queryNodeIndex).subClasses)) {
-			return false;
-		}
-
-
 		// Predecessor Rule and Successor Rule
 		if (!checkPredAndSucc(state, targetNodeIndex, queryNodeIndex)) {
 			return false;

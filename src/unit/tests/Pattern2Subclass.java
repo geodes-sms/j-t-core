@@ -25,7 +25,7 @@ import tcore.messages.Match;
  * @since 2021-12-19
  */
 
-class Subclasses2SubclassesBadOrder {
+class Pattern2Subclass {
 
 	@Before
 	public void setUp() {
@@ -35,12 +35,12 @@ class Subclasses2SubclassesBadOrder {
 	  @Test public void isSuccess() throws Exception { utils.Utils.initialize();
 	  
 	  // Imports 
-	  MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Subclasses/OracleV3.ecore"); // Oracle MetaModel 
-	  MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Subclasses/OracleV3_augmented.ecore"); // Ramified Oracle
+	  MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.ecore"); // Oracle MetaModel 
+	  MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Subclasses/OracleV2_augmented.ecore"); // Ramified Oracle
 	  
-	  Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV3.xmi", OracleMM); // Dynamic Instance from Oracle
+	  Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.xmi", OracleMM); // Dynamic Instance from Oracle
 	  
-	  Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Subclasses2SubclassesBadOrder.xmi", Oracle_ramified);
+	  Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Pattern2Subclass.xmi", Oracle_ramified);
 	  
 	  Packet p = new Packet(oracle); LHS lhs = new LHS(pre_A, null);
 	  
@@ -57,13 +57,10 @@ class Subclasses2SubclassesBadOrder {
 			  expectedMatch.addMapping("1", o); 
 			  break; 
 		  case "3":
-			  expectedMatch.addMapping("3", o); 
+			  expectedMatch.addMapping("5", o); 
 			  break; 
 		  case "2":
 			  expectedMatch.addMapping("2", o); 
-			  break; 
-		  case "4":
-			  expectedMatch.addMapping("4", o); 
 			  break; 
 		  default: 
 			  break; 
@@ -89,12 +86,12 @@ class Subclasses2SubclassesBadOrder {
 		utils.Utils.initialize();
 
 		// Imports
-		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Subclasses/OracleV3.ecore"); // Oracle MetaModel
-		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Subclasses/OracleV3_augmented.ecore"); // Ramified Oracle
+		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.ecore"); // Oracle MetaModel
+		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Subclasses/OracleV2_augmented.ecore"); // Ramified Oracle
 
-		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV3.xmi", OracleMM); // Dynamic Instance from Oracle
+		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.xmi", OracleMM); // Dynamic Instance from Oracle
 
-		Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Subclasses2SubclassesBadOrder.xmi", Oracle_ramified);
+		Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Pattern2Subclass.xmi", Oracle_ramified);
 
 		Packet p = new Packet(oracle);
 		LHS lhs = new LHS(pre_A, null);
@@ -113,13 +110,10 @@ class Subclasses2SubclassesBadOrder {
 				  expectedMatch.addMapping("1", o); 
 				  break; 
 			  case "3":
-				  expectedMatch.addMapping("3", o); 
+				  expectedMatch.addMapping("5", o); 
 				  break; 
 			  case "2":
 				  expectedMatch.addMapping("2", o); 
-				  break; 
-			  case "4":
-				  expectedMatch.addMapping("4", o); 
 				  break; 
 			  default: 
 				  break; 

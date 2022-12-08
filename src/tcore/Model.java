@@ -238,6 +238,13 @@ public class Model implements EcoreSerializable {
      *     label = label of source object -> label of target object
      * </p>
      */
+    
+	/*
+	 * public HashMap<String, ArrayList<String>> getSubClasses(){
+	 * System.out.println(this.metaModel); }
+	 */
+
+    
 	protected void generateGraph() {
         graph = new Graph(name);
         
@@ -247,6 +254,7 @@ public class Model implements EcoreSerializable {
             String className = object.eClass().getName();
             HashMap<String, ArrayList<String>> subclassesMapped = new HashMap<String, ArrayList<String>>();
             ArrayList<String> subClasses = new ArrayList<String>();
+            Boolean isAbstract = object.eClass().isAbstract();
 
             for (EObject object2 : objects) { 
             	if (object.eClass().isSuperTypeOf(object2.eClass())) { 
@@ -256,8 +264,7 @@ public class Model implements EcoreSerializable {
             	} 
             }
             
-        	subclassesMapped.put(className, subClasses);
-            
+        	subclassesMapped.put(className, subClasses);            
             
             if (label != null && (label instanceof String)) { // Add a node only if the label is defined
 	            Node node = new Node(graph, index, label, className, subclassesMapped);
@@ -271,6 +278,7 @@ public class Model implements EcoreSerializable {
         
         addEdgesToGraph();
     }
+	
     
     /**
      * Add edges representing relations in the model to its graph representation

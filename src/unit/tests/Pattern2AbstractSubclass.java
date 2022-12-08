@@ -25,7 +25,7 @@ import tcore.messages.Match;
  * @since 2021-12-19
  */
 
-class Subclass2Subclasses {
+class Pattern2AbstractSubclass {
 
 	@Before
 	public void setUp() {
@@ -40,7 +40,7 @@ class Subclass2Subclasses {
 	  
 	  Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV3.xmi", OracleMM); // Dynamic Instance from Oracle
 	  
-	  Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Subclass2Subclasses.xmi", Oracle_ramified);
+	  Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Pattern2AbstractSubclass.xmi", Oracle_ramified);
 	  
 	  Packet p = new Packet(oracle); LHS lhs = new LHS(pre_A, null);
 	  
@@ -57,13 +57,10 @@ class Subclass2Subclasses {
 			  expectedMatch.addMapping("1", o); 
 			  break; 
 		  case "3":
-			  expectedMatch.addMapping("3", o); 
+			  expectedMatch.addMapping("5", o); 
 			  break; 
 		  case "2":
 			  expectedMatch.addMapping("2", o); 
-			  break; 
-		  case "4":
-			  expectedMatch.addMapping("4", o); 
 			  break; 
 		  default: 
 			  break; 
@@ -94,7 +91,7 @@ class Subclass2Subclasses {
 
 		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV3.xmi", OracleMM); // Dynamic Instance from Oracle
 
-		Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Subclass2Subclasses.xmi", Oracle_ramified);
+		Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Pattern2AbstractSubclass.xmi", Oracle_ramified);
 
 		Packet p = new Packet(oracle);
 		LHS lhs = new LHS(pre_A, null);
@@ -113,13 +110,10 @@ class Subclass2Subclasses {
 				  expectedMatch.addMapping("1", o); 
 				  break; 
 			  case "3":
-				  expectedMatch.addMapping("3", o); 
+				  expectedMatch.addMapping("5", o); 
 				  break; 
 			  case "2":
 				  expectedMatch.addMapping("2", o); 
-				  break; 
-			  case "4":
-				  expectedMatch.addMapping("4", o); 
 				  break; 
 			  default: 
 				  break; 

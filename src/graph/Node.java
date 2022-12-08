@@ -37,7 +37,7 @@ public class Node {
 	 * Subclasses names associated to an EObject
 	 */
 	public HashMap<String, ArrayList<String>> subClasses;
-	
+		
 	/**
 	 * Edges of which this node is the origin
 	 */

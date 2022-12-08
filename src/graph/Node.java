@@ -38,6 +38,9 @@ public class Node {
 	 */
 	public HashMap<String, ArrayList<String>> subClasses;
 		
+	
+	public HashMap<String, HashMap<String, String>> attributes;
+	
 	/**
 	 * Edges of which this node is the origin
 	 */
@@ -54,11 +57,12 @@ public class Node {
 	 * @param label
 	 * @param className
 	 */
-	public Node(Graph g, int id, String label, String className, HashMap<String, ArrayList<String>> subClasses) {
+	public Node(Graph g, int id, String label, String className, HashMap<String, ArrayList<String>> subClasses, HashMap<String, HashMap<String, String>> attributes) {
 		this.graph = g;
 		this.id = id;
 		this.label = label;
 		this.className = className;
 		this.subClasses = subClasses;
+		this.attributes = attributes;
 	}
 }

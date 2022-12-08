@@ -19,6 +19,7 @@ import utils.Utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -149,7 +150,18 @@ public class Pattern extends Model {
             String className = object.eClass().getName().replaceAll(Utils.PRE_, ""); // Get the class name and remove the "MTpre__" pattern to get the 'actual' class name of object to match on
             HashMap<String, ArrayList<String>> subclassesMapped = new HashMap<String, ArrayList<String>>();
             ArrayList<String> subClasses = new ArrayList<String>();
-
+            HashMap<String, String> attributesMapped = new HashMap<String, String>();
+            List<EAttribute> attributes = object.eClass().getEAllAttributes();
+            HashMap<String, HashMap<String, String>> classAttributes = new HashMap<String, HashMap<String, String>>();
+            
+            for (EAttribute attribute : attributes) {
+                if (!attribute.getName().equals("MT__isProcessed") && !attribute.getName().equals("MT__matchSubtype") && !attribute.getName().equals("MT__label") ) {
+                	attributesMapped.put(attribute.getName(), attribute.getEAttributeType().getInstanceTypeName().replaceAll("java.lang.", ""));
+                }
+            }
+            
+            classAttributes.put(className, attributesMapped);
+            
             for (EObject object2 : objects) { 
             	if (object.eClass().isSuperTypeOf(object2.eClass())) { 
             		if (!object.eClass().getName().equals(object2.eClass().getName())){
@@ -161,7 +173,7 @@ public class Pattern extends Model {
         	subclassesMapped.put(className, subClasses);
             
             if (label != null && (label instanceof String)) { // Add a node only if the label is defined
-            	Node node = new Node(graph, index, (String) label, className, subclassesMapped);
+            	Node node = new Node(graph, index, (String) label, className, subclassesMapped, classAttributes);
                 graph.addNode(node);
                 nodesByObjectMapping.put(object, node);
                 objectsByNodeMapping.put(node, object);

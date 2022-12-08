@@ -7,7 +7,8 @@
     xsi:schemaLocation="RamRoot OracleV2_augmented.ecore"
     MT__label="1"
     id="">
-  <E MT__label="5"/>
+  <E MT__label="5"
+      id=""/>
   <B MT__label="3"/>
   <B xsi:type="ramRoot:MTpre__C"
       MT__label="2"/>

@@ -233,6 +233,20 @@ public class VF2 implements IMatchAlgo {
 			}
 		}
 		
+		System.out.println("Attributes of TARGET " + state.targetGraph.nodes.get(targetNodeIndex).className + " equal to QUERY " 
+		+  state.queryGraph.nodes.get(queryNodeIndex).className + " ? : "
+		+ state.targetGraph.nodes.get(targetNodeIndex).attributes.equals(state.queryGraph.nodes.get(queryNodeIndex).attributes));
+
+		
+		System.out.println(state.targetGraph.nodes.get(targetNodeIndex).attributes);
+		System.out.println(state.queryGraph.nodes.get(queryNodeIndex).attributes);
+		/*
+		 * // The two nodes must have the same attributes if
+		 * (!state.targetGraph.nodes.get(targetNodeIndex).attributes
+		 * .equals(state.queryGraph.nodes.get(queryNodeIndex).attributes)) { return
+		 * false; }
+		 */
+		
 
 		
 		// Predecessor Rule and Successor Rule

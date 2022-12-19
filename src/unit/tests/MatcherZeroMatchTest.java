@@ -161,6 +161,6 @@ class MatcherZeroMatchTest {
         MatchSet ms = new MatchSet(expectedMatchArray,lhs);
   		
         assertTrue(tester.isSuccess(),"Matcher failed");        
-        assertTrue(ms.equals(p.getCurrentMatchSet()),"Wrong match found");
+		assertTrue(ms.equals(p.getCurrentMatchSet()), "Wrong match found");
 	}
 }

@@ -31,20 +31,23 @@ class Pattern2Subclass {
 	public void setUp() {
 	}
 
-
 	@Test
 	public void isSuccessVF2() throws Exception {
-		
+
 		System.out.println("------------------------VF2------------------------");
 
 		// Same as previous one, but using VF2 instead
 		utils.Utils.initialize();
 
 		// Imports
-		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.ecore"); // Oracle MetaModel
-		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Subclasses/OracleV2_augmented.ecore"); // Ramified Oracle
+		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.ecore"); // Oracle
+																											// MetaModel
+		MetaModel Oracle_ramified = new MetaModel("OracleRoot",
+				"../Ramifier_New/Model/Subclasses/OracleV2_augmented.ecore"); // Ramified Oracle
 
-		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.xmi", OracleMM); // Dynamic Instance from Oracle
+		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.xmi", OracleMM); // Dynamic
+																										// Instance from
+																										// Oracle
 
 		Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Pattern2Subclass.xmi", Oracle_ramified);
 
@@ -61,17 +64,17 @@ class Pattern2Subclass {
 
 		for (EObject o : oracle.getObjects()) {
 			switch (EcoreUtil.getID(o)) {
-			  case "1": 
-				  expectedMatch.addMapping("1", o); 
-				  break; 
-			  case "3":
-				  expectedMatch.addMapping("5", o); 
-				  break; 
-			  case "2":
-				  expectedMatch.addMapping("2", o); 
-				  break; 
-			  default: 
-				  break; 
+			case "1":
+				expectedMatch.addMapping("1", o);
+				break;
+			case "3":
+				expectedMatch.addMapping("5", o);
+				break;
+			case "2":
+				expectedMatch.addMapping("2", o);
+				break;
+			default:
+				break;
 			}
 		}
 
@@ -81,12 +84,10 @@ class Pattern2Subclass {
 
 		// Expected MatchSet to find
 		MatchSet ms = new MatchSet(expectedMatchArray, lhs);
-		
+
 		System.out.println("------------------------FIN VF2------------------------");
 
-
 		assertTrue(tester.isSuccess(), "Matcher failed");
-		
 
 	}
 }

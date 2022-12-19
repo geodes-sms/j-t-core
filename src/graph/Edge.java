@@ -6,30 +6,30 @@ package graph;
  * @author sebastien.ehouan
  * @author An Li
  *
- * VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
+ *         VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
  *
  */
 public class Edge {
 	/**
-	 *  Graph to which the edge belongs
+	 * Graph to which the edge belongs
 	 */
 	public Graph graph;
-	
+
 	/**
-	 *  Source/origin of the edge
+	 * Source/origin of the edge
 	 */
-	public Node source; 	
-	
+	public Node source;
+
 	/**
-	 *  Target/destination of the edge 
+	 * Target/destination of the edge
 	 */
 	public Node target;
-	
+
 	/**
-	 *  Label of the edge
+	 * Label of the edge
 	 */
 	public String label;
-	
+
 	/**
 	 * 
 	 * Creates a new edge.
@@ -41,10 +41,10 @@ public class Edge {
 	 */
 	public Edge(Graph g, Node source, Node target, String label) {
 		this.graph = g;
-		this.source = source; //store source
-		source.outEdges.add(this); //update edge list at source
-		this.target = target; //store target
-		target.inEdges.add(this); //update edge list at target
+		this.source = source; // store source
+		source.outEdges.add(this); // update edge list at source
+		this.target = target; // store target
+		target.inEdges.add(this); // update edge list at target
 		this.label = label;
 	}
 }

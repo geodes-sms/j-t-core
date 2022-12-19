@@ -145,274 +145,284 @@ public class VF2 implements IMatchAlgo {
 	private ArrayList<Pair<Integer, Integer>> genCandidatePairs(State state, Graph targetGraph, Graph queryGraph) {
 		ArrayList<Pair<Integer, Integer>> pairList = new ArrayList<Pair<Integer, Integer>>();
 
-		if (!state.T1out.isEmpty() && !state.T2out.isEmpty()){
+		if (!state.T1out.isEmpty() && !state.T2out.isEmpty()) {
 			// Generate candidates from T1out and T2out if they are not empty
-			
+
 			// Faster Version
 			// Since every node should be matched in query graph
 			// Therefore we can only extend one node of query graph (with biggest id)
-			// instead of generate the whole Cartesian product of the target and query 
+			// instead of generate the whole Cartesian product of the target and query
 			int queryNodeIndex = -1;
 			for (int i : state.T2out) {
 				queryNodeIndex = Math.max(i, queryNodeIndex);
 			}
 			for (int i : state.T1out) {
-				pairList.add(new Pair<Integer,Integer>(i, queryNodeIndex));
+				pairList.add(new Pair<Integer, Integer>(i, queryNodeIndex));
 			}
-			
+
 			return pairList;
-		} else if (!state.T1in.isEmpty() && !state.T2in.isEmpty()){
+		} else if (!state.T1in.isEmpty() && !state.T2in.isEmpty()) {
 			// Generate candidates from T1in and T2in if they are not empty
-			
+
 			// Faster Version
 			// Since every node should be matched in query graph
 			// Therefore we can only extend one node of query graph (with biggest id)
-			// instead of generate the whole Cartesian product of the target and query 
+			// instead of generate the whole Cartesian product of the target and query
 			int queryNodeIndex = -1;
 			for (int i : state.T2in) {
 				queryNodeIndex = Math.max(i, queryNodeIndex);
 			}
 			for (int i : state.T1in) {
-				pairList.add(new Pair<Integer,Integer>(i, queryNodeIndex));
+				pairList.add(new Pair<Integer, Integer>(i, queryNodeIndex));
 			}
-			
+
 			return pairList;
 		} else {
 			// Generate from all unmapped nodes
-			
+
 			// Faster Version
 			// Since every node should be matched in query graph
 			// Therefore we can only extend one node of query graph (with biggest id)
-			// instead of generate the whole Cartesian product of the target and query 
+			// instead of generate the whole Cartesian product of the target and query
 			int queryNodeIndex = -1;
 			for (int i : state.unmapped2) {
 				queryNodeIndex = Math.max(i, queryNodeIndex);
 			}
 			for (int i : state.unmapped1) {
-				pairList.add(new Pair<Integer,Integer>(i, queryNodeIndex));
+				pairList.add(new Pair<Integer, Integer>(i, queryNodeIndex));
 			}
-			
+
 			return pairList;
 		}
 	}
-	
+
 	/**
 	 * Evaluates if a value respects a given constraint on it
 	 * 
 	 * @param state           VF2 State
 	 * @param targetNodeIndex Target Graph Node Index
 	 * @param queryNodeIndex  Query Graph Node Index
-	 * @param sign            Sign used in the constraint (<= | >= | < | > | == | !=)
-	 * @param constraint 	  The whole constraint
-	 * @param value			  Value of the model's attribute on which the constraint must be evaluated
-	 * @return A boolean, true if the model's attribute value respect the sub-constraint set by the pattern, false otherwise
+	 * @param sign            Sign used in the constraint (<= | >= | < | > | == |
+	 *                        !=)
+	 * @param constraint      The whole constraint
+	 * @param value           Value of the model's attribute on which the constraint
+	 *                        must be evaluated
+	 * @return A boolean, true if the model's attribute value respect the
+	 *         sub-constraint set by the pattern, false otherwise
 	 */
-	public Boolean evaluateConstraint(State state, int targetNodeIndex, int queryNodeIndex, String sign, Object constraint, Object value){
-        ScriptEngine js = Utils.js;
+	public Boolean evaluateConstraint(State state, int targetNodeIndex, int queryNodeIndex, String sign,
+			Object constraint, Object value) {
+		ScriptEngine js = Utils.js;
 		String rhs = new String();
-		
-		//If the sign is <= | >= | == | != : 
+
+		// If the sign is <= | >= | == | != :
 
 		if (sign.length() == 2) {
-			rhs = constraint.toString().substring(constraint.toString().indexOf(sign)+2);	
+			rhs = constraint.toString().substring(constraint.toString().indexOf(sign) + 2);
 		}
-		//If the sign is > | < : 
+		// If the sign is > | < :
 		else {
-			rhs = constraint.toString().substring(constraint.toString().indexOf(sign)+1);	
+			rhs = constraint.toString().substring(constraint.toString().indexOf(sign) + 1);
 		}
-		//If the constraint involves a .length statement
+		// If the constraint involves a .length statement
 		if (constraint.toString().contains(".length")) {
-			value = "\"" + value+ "\"" +".length" ;
+			value = "\"" + value + "\"" + ".length";
 		}
 
-		//We create the script that will be evaluated with the value of the model's attribute and the constraint.
+		// We create the script that will be evaluated with the value of the model's
+		// attribute and the constraint.
 		String script = value + sign + rhs;
 		if (sign.matches(">|<|==|>=|<=|!=")) {
 			try {
 				return (Boolean) js.eval(script);
-			}	
-			catch (ScriptException e) {
+			} catch (ScriptException e) {
 				e.printStackTrace();
 			}
 		}
 		return false;
 	}
 
-
 	/**
-	 * Checks, for a tested target node, if the constraints from the query node on its attributes' values are respected or not
+	 * Checks, for a tested target node, if the constraints from the query node on
+	 * its attributes' values are respected or not
 	 * 
 	 * @param state           VF2 State
 	 * @param targetNodeIndex Target Graph Node Index
 	 * @param queryNodeIndex  Query Graph Node Index
-	 * @return A boolean, true if the model's attributes values respect the pattern's constraint, false otherwise
+	 * @return A boolean, true if the model's attributes values respect the
+	 *         pattern's constraint, false otherwise
 	 */
-	public Boolean checkConstraint (State state, int targetNodeIndex, int queryNodeIndex) {
-        ScriptEngine js = Utils.js;
+	public Boolean checkConstraint(State state, int targetNodeIndex, int queryNodeIndex) {
+		ScriptEngine js = Utils.js;
 
-		Object constraints = state.queryGraph.nodes.get(queryNodeIndex).attributes.values().iterator().next().get("ram_constraint");
+		Object constraints = state.queryGraph.nodes.get(queryNodeIndex).attributes.values().iterator().next()
+				.get("ram_constraint");
 		ArrayList<String> constraintsList = new ArrayList<String>();
 		ArrayList<String> operatorList = new ArrayList<String>();
 		String sign = new String();
 		Object valueModel = new Object();
 		ArrayList<String> res = new ArrayList<String>();
 
-		//If the ram_constraint attribute is not null or empty
-		if (constraints != null && !constraints.equals("")){
-			
-			//We parse each constraint between the || and && operators, if there are any
-			//We create two lists : operatorList with the operators, and constraintsList a list with all the constraints to be evaluated
-		
+		// If the ram_constraint attribute is not null or empty
+		if (constraints != null && !constraints.equals("")) {
+
+			// We parse each constraint between the || and && operators, if there are any
+			// We create two lists : operatorList with the operators, and constraintsList a
+			// list with all the constraints to be evaluated
+
 			while (constraints.toString().contains("||") || constraints.toString().contains("&&")) {
 				if (constraints.toString().contains("||")) {
 					if (constraints.toString().contains("&&")) {
-						if (constraints.toString().indexOf("||") < constraints.toString().indexOf("&&")){
+						if (constraints.toString().indexOf("||") < constraints.toString().indexOf("&&")) {
 							operatorList.add("||");
-							constraintsList.add(constraints.toString().substring(0, constraints.toString().indexOf("||")));
-							constraints = constraints.toString().substring(constraints.toString().indexOf("||")+2);
-						}
-						else {
+							constraintsList
+									.add(constraints.toString().substring(0, constraints.toString().indexOf("||")));
+							constraints = constraints.toString().substring(constraints.toString().indexOf("||") + 2);
+						} else {
 							operatorList.add("&&");
-							constraintsList.add(constraints.toString().substring(0, constraints.toString().indexOf("&&")));
-							constraints = constraints.toString().substring(constraints.toString().indexOf("&&")+2);
+							constraintsList
+									.add(constraints.toString().substring(0, constraints.toString().indexOf("&&")));
+							constraints = constraints.toString().substring(constraints.toString().indexOf("&&") + 2);
 						}
-					}
-					else {
+					} else {
 						operatorList.add("||");
 						constraintsList.add(constraints.toString().substring(0, constraints.toString().indexOf("||")));
-						constraints = constraints.toString().substring(constraints.toString().indexOf("||")+2);
+						constraints = constraints.toString().substring(constraints.toString().indexOf("||") + 2);
 					}
-				}
-				else {
+				} else {
 					operatorList.add("&&");
 					constraintsList.add(constraints.toString().substring(0, constraints.toString().indexOf("&&")));
-					constraints = constraints.toString().substring(constraints.toString().indexOf("&&")+2);
+					constraints = constraints.toString().substring(constraints.toString().indexOf("&&") + 2);
 				}
 			}
-			
+
 			constraintsList.add(constraints.toString());
-			
+
 			/*
 			 * For each constraint we parse to get : the sign, (optional) the function used,
 			 * the value of the attribute in the model that should be evaluated
-			 */			
-			
-			System.out.println("Liste des contraintes : "+constraintsList);
+			 */
+
+			System.out.println("Liste des contraintes : " + constraintsList);
 			for (String cons : constraintsList) {
 				cons = cons.strip();
 
-				if (cons.contains(">=")){
-					sign = cons.substring(cons.indexOf(">"), cons.indexOf("=")+1);
-					if (cons.contains(".")){
-							valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
-					}
-					else {
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(">")));
-					}
-				}
-
-				else if (cons.contains("<=")){
-					sign = cons.substring(cons.indexOf("<"), cons.indexOf("=")+1);
-					if (cons.contains(".")){
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
-					}
-					else {
-					valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf("<")));
+				if (cons.contains(">=")) {
+					sign = cons.substring(cons.indexOf(">"), cons.indexOf("=") + 1);
+					if (cons.contains(".")) {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf(".")));
+					} else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf(">")));
 					}
 				}
 
-				else if (cons.contains(">") && (!cons.substring(cons.indexOf(">")+1).contains("="))){
-					sign = cons.substring(cons.indexOf(">"), cons.indexOf(">")+1);
-					if (cons.contains(".")){
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
-					}
-					else {
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(">")));
-					}
-				}
-
-				else if (cons.contains("<") && (!cons.substring(cons.indexOf("<")+1).contains("="))){
-					sign = cons.substring(cons.indexOf("<"), cons.indexOf("<")+1);
-					if (cons.contains(".")){
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
-					}
-					else {
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf("<")));
+				else if (cons.contains("<=")) {
+					sign = cons.substring(cons.indexOf("<"), cons.indexOf("=") + 1);
+					if (cons.contains(".")) {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf(".")));
+					} else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf("<")));
 					}
 				}
 
-				else if (cons.contains("==")){
-					sign = cons.substring(cons.indexOf("="), cons.indexOf("=")+2);
-					if (cons.contains(".")){
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
-					}
-					else {
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf("=")));	
-					}
-				}
-				
-				else if (cons.contains("!=")){
-					sign = cons.substring(cons.indexOf("!"), cons.indexOf("=")+1);
-					if (cons.contains(".")){
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
-					}
-					else {
-						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf("!")));
+				else if (cons.contains(">") && (!cons.substring(cons.indexOf(">") + 1).contains("="))) {
+					sign = cons.substring(cons.indexOf(">"), cons.indexOf(">") + 1);
+					if (cons.contains(".")) {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf(".")));
+					} else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf(">")));
 					}
 				}
-								
+
+				else if (cons.contains("<") && (!cons.substring(cons.indexOf("<") + 1).contains("="))) {
+					sign = cons.substring(cons.indexOf("<"), cons.indexOf("<") + 1);
+					if (cons.contains(".")) {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf(".")));
+					} else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf("<")));
+					}
+				}
+
+				else if (cons.contains("==")) {
+					sign = cons.substring(cons.indexOf("="), cons.indexOf("=") + 2);
+					if (cons.contains(".")) {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf(".")));
+					} else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf("=")));
+					}
+				}
+
+				else if (cons.contains("!=")) {
+					sign = cons.substring(cons.indexOf("!"), cons.indexOf("=") + 1);
+					if (cons.contains(".")) {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf(".")));
+					} else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next()
+								.get(cons.substring(0, cons.indexOf("!")));
+					}
+				}
+
 				else {
 					return false;
 				}
-				
+
 				/*
 				 * If the model's attribute value that has to be evaluated is null or empty we
 				 * return false, otherwise we test the constraint on the given value and add the
 				 * result to an array of booleans.
-				 */		
-				
-				if(valueModel == null || valueModel.equals("")) {
+				 */
+
+				if (valueModel == null || valueModel.equals("")) {
 					return false;
-				}
-				else {
-					res.add(evaluateConstraint(state, targetNodeIndex, queryNodeIndex, sign, cons, valueModel).toString());	
+				} else {
+					res.add(evaluateConstraint(state, targetNodeIndex, queryNodeIndex, sign, cons, valueModel)
+							.toString());
 				}
 			}
-			
 
 			String checkingRes = res.get(0);
 
-			for (int i = 0 ; i < res.size()-1; i++) {
+			for (int i = 0; i < res.size() - 1; i++) {
 
-				checkingRes += operatorList.get(i) + res.get(i+1) ;
+				checkingRes += operatorList.get(i) + res.get(i + 1);
 
 			}
-			
-			// We evaluate the results of each constraint with the operators between each result. 
-			// If the overall constraint (ram_constraint) is respected : true, false otherwise
-			System.out.println("Script après évaluations séparées : " +checkingRes);
+
+			// We evaluate the results of each constraint with the operators between each
+			// result.
+			// If the overall constraint (ram_constraint) is respected : true, false
+			// otherwise
+			System.out.println("Script après évaluations séparées : " + checkingRes);
 			try {
-				System.out.println("Résultat évaluation : " +js.eval(checkingRes));
+				System.out.println("Résultat évaluation : " + js.eval(checkingRes));
 				return (Boolean) js.eval(checkingRes);
-				}	
-			catch (ScriptException e){
+			} catch (ScriptException e) {
 				e.printStackTrace();
 				return false;
 			}
-		}
-		else {
+		} else {
 			return true;
 		}
 	}
-	
+
 	/**
 	 * Verify the (syntactic and semantic) feasibility of adding this match based on
 	 * the formulas below
 	 * 
 	 * F(s,n,m) = F_sync(s,n,m) ∧ F_sem(s,n,m)
 	 * 
-	 * F_sync(s,n,m) = R_pred ∧ R_succ ∧ R_in ∧ R_out ∧ R_new F_sem(s,n,m)
-	 * ⇔ n ≈ m
+	 * F_sync(s,n,m) = R_pred ∧ R_succ ∧ R_in ∧ R_out ∧ R_new F_sem(s,n,m) ⇔ n ≈ m
 	 * 
 	 * Node Label Rule ≈ F_sem
 	 * 
@@ -421,44 +431,46 @@ public class VF2 implements IMatchAlgo {
 	 * @param queryNodeIndex  Query Graph Node Index
 	 * @return Feasible or not
 	 */
-	
+
 	private Boolean checkFeasibility(State state, int targetNodeIndex, int queryNodeIndex) {
 		// We get the subclasses and abstract classes from the Metamodel
-		HashMap<String, ArrayList<String>> subclasses = model.getMetamodel().getSubclasses();		
+		HashMap<String, ArrayList<String>> subclasses = model.getMetamodel().getSubclasses();
 		ArrayList<String> abstracts = model.getMetamodel().Abstracts();
-		
+
 		// The two nodes must have the same label
 		if (!state.targetGraph.nodes.get(targetNodeIndex).label
 				.equals(state.queryGraph.nodes.get(queryNodeIndex).label)) {
 			return false;
 		}
-		
+
 		/*
-		 * If a queryNode is not abstract according to the Metamodel, checks if there
-		 * is a match on the className between the queryNode and the targetNode,
-		 * otherwise it checks if the targetNode is a subclass of the queryNode
-		 * according to the MetaModel. 
-		 * If the queryNode is abstract, we only check if the targetNode is a subclass of 
-		 * the queryNode according to the MetaModel.
+		 * If a queryNode is not abstract according to the Metamodel, checks if there is
+		 * a match on the className between the queryNode and the targetNode, otherwise
+		 * it checks if the targetNode is a subclass of the queryNode according to the
+		 * MetaModel. If the queryNode is abstract, we only check if the targetNode is a
+		 * subclass of the queryNode according to the MetaModel.
 		 */
-		 		
+
 		if (!abstracts.contains(state.queryGraph.nodes.get(queryNodeIndex).className)) {
-			if (!state.targetGraph.nodes.get(targetNodeIndex).className.equals(state.queryGraph.nodes.get(queryNodeIndex).className) && 
-					(!subclasses.values().iterator().next().contains(state.targetGraph.nodes.get(targetNodeIndex).className))) {
+			if (!state.targetGraph.nodes.get(targetNodeIndex).className
+					.equals(state.queryGraph.nodes.get(queryNodeIndex).className)
+					&& (!subclasses.values().iterator().next()
+							.contains(state.targetGraph.nodes.get(targetNodeIndex).className))) {
+				return false;
+			}
+		} else {
+			if (!subclasses.values().iterator().next()
+					.contains(state.targetGraph.nodes.get(targetNodeIndex).className)) {
 				return false;
 			}
 		}
-		else {
-			if (!subclasses.values().iterator().next().contains(state.targetGraph.nodes.get(targetNodeIndex).className)){
-				return false;
-			}
-		}
-		
-		//We check the (optional) constraints applied by the queryNode on the targetNode
+
+		// We check the (optional) constraints applied by the queryNode on the
+		// targetNode
 		if (!checkConstraint(state, targetNodeIndex, queryNodeIndex)) {
 			return false;
 		}
-		
+
 		// Predecessor Rule and Successor Rule
 		if (!checkPredAndSucc(state, targetNodeIndex, queryNodeIndex)) {
 			return false;
@@ -618,8 +630,7 @@ public class VF2 implements IMatchAlgo {
 	}
 
 	/**
-	 * Check the new rule
-	 * This prunes the search tree using 2-look-ahead
+	 * Check the new rule This prunes the search tree using 2-look-ahead
 	 * 
 	 * @param state           VF2 State
 	 * @param targetNodeIndex Target Graph Node Index
@@ -665,8 +676,8 @@ public class VF2 implements IMatchAlgo {
 	}
 
 	/**
-	 * Performs matching on labels, while excluding matches on NACs 
-	 * TODO: In a future iteration, implement matching on types and constraints
+	 * Performs matching on labels, while excluding matches on NACs TODO: In a
+	 * future iteration, implement matching on types and constraints
 	 * 
 	 * @return Set of label matches
 	 */
@@ -727,7 +738,8 @@ public class VF2 implements IMatchAlgo {
 				for (String label : nMatch.getLabelMappings().keySet()) {
 					if (!m.getLabelMappings().keySet().contains(label))
 						continue;
-					identical = identical && m.getLabelMappings().get(label).equals(nMatch.getLabelMappings().get(label));
+					identical = identical
+							&& m.getLabelMappings().get(label).equals(nMatch.getLabelMappings().get(label));
 				}
 				if (identical)
 					keep = false;

@@ -11,19 +11,19 @@ import tcore.messages.Packet;
  */
 public abstract class CompositionPrimitive extends Primitive {
 
-    /**
-     * Receives, processes then returns an initial packet.
-     *
-     * @param p The input packet.
-     * @return The output packet.
-     */
-    public abstract Packet packetIn(Packet p);
+	/**
+	 * Receives, processes then returns an initial packet.
+	 *
+	 * @param p The input packet.
+	 * @return The output packet.
+	 */
+	public abstract Packet packetIn(Packet p);
 
-    /**
-     * Receives, processes then returns a subsequent packet.
-     *
-     * @param p The input packet.
-     * @return The output packet.
-     */
-    public abstract Packet nextIn(Packet p);
+	/**
+	 * Receives, processes then returns a subsequent packet.
+	 *
+	 * @param p The input packet.
+	 * @return The output packet.
+	 */
+	public abstract Packet nextIn(Packet p);
 }

@@ -14,5 +14,5 @@ public abstract class RulePrimitive extends Primitive {
 	 * @return
 	 */
 	public abstract Packet packetIn(Packet p);
-	
+
 }

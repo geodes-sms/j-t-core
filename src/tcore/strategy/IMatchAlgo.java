@@ -20,14 +20,14 @@ import tcore.messages.Match;
  *
  */
 public interface IMatchAlgo {
-	
+
 	/**
 	 * Access match for the different algorithms.
 	 * 
 	 * @return
 	 */
 	public ArrayList<Match> match();
-	
+
 	/**
 	 * Iterate through the matches.
 	 * 
@@ -37,5 +37,5 @@ public interface IMatchAlgo {
 	 * @return
 	 */
 	public ArrayList<Match> match_iter(LHS lhs, int max, Model model);
-	
+
 }

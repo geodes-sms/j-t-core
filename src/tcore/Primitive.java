@@ -8,24 +8,24 @@ package tcore;
  * @since 2017-12-08
  */
 public abstract class Primitive {
-    protected boolean isSuccess = false;
-    protected Exception exception;
+	protected boolean isSuccess = false;
+	protected Exception exception;
 
-    // TODO: 2017-12-08 Implement this.
-    //public void cancelIn(Cancel c);
+	// TODO: 2017-12-08 Implement this.
+	// public void cancelIn(Cancel c);
 
-    /**
-     * @return
-     */
-    public boolean isSuccess() {
-        return isSuccess;
-    }
+	/**
+	 * @return
+	 */
+	public boolean isSuccess() {
+		return isSuccess;
+	}
 
-    /**
-     * @return
-     */
-    public Exception getException() {
-        return exception;
-    }
+	/**
+	 * @return
+	 */
+	public Exception getException() {
+		return exception;
+	}
 
 }

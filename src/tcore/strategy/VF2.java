@@ -269,7 +269,8 @@ public class VF2 implements IMatchAlgo {
 			// We parse each constraint between the || and && operators, if there are any
 			// We create two lists : operatorList with the operators, and constraintsList a
 			// list with all the constraints to be evaluated
-
+			
+			//COULD BE REPLACED BY SPLIT() FUNCTION ... Learned about it about 1 hour before the handing in of the assignment.
 			while (constraints.toString().contains("||") || constraints.toString().contains("&&")) {
 				if (constraints.toString().contains("||")) {
 					if (constraints.toString().contains("&&")) {
@@ -307,6 +308,7 @@ public class VF2 implements IMatchAlgo {
 			for (String cons : constraintsList) {
 				cons = cons.strip();
 
+				//COULD BE REPLACED BY SPLIT() FUNCTION ...
 				if (cons.contains(">=")) {
 					sign = cons.substring(cons.indexOf(">"), cons.indexOf("=") + 1);
 					if (cons.contains(".")) {

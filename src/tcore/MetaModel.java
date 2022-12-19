@@ -54,7 +54,13 @@ public class MetaModel {
         return resource;
     }
     
-    public HashMap<String,ArrayList<String>> getContainers(State state, int targetNodeIndex, int queryNodeIndex){
+	/**
+	 * Gets the components of a given Object, from the Metamodel.
+	 * 
+	 * @param targetNodeIndex	targetNode
+	 * @return An HashMap of the className (key) with an ArrayList of the classes with a composition link, uses parsing
+	 **/
+    public HashMap<String,ArrayList<String>> getComposed(int targetNodeIndex){
    	 EObject MMContent = resource.getContents().get(0).eContents().get(targetNodeIndex);
    	 HashMap<String,ArrayList<String>> MMContains = new HashMap<String,ArrayList<String>>();
    	 ArrayList<String> contained = new ArrayList<String>();
@@ -70,7 +76,12 @@ public class MetaModel {
    	 return MMContains;
     }
     
-    public HashMap<String,ArrayList<String>> getSubclasses(State state, int targetNodeIndex, int queryNodeIndex){
+	/**
+	 * Gets the subclasses of a given Object, from the Metamodel.
+	 * 
+	 * @return An HashMap of the className (key) with an ArrayList of its subclasses, uses parsing
+	 **/
+    public HashMap<String,ArrayList<String>> getSubclasses(){
    	 List<EObject> MMContent = resource.getContents().get(0).eContents();
    	 HashMap<String,ArrayList<String>> MMSubclasses = new HashMap<String,ArrayList<String>>();
    	 ArrayList<String> subclasses = new ArrayList<String>();   	
@@ -83,7 +94,12 @@ public class MetaModel {
    	 return MMSubclasses;
     }
     
-    public ArrayList<String> Abstracts(State state, int targetNodeIndex, int queryNodeIndex) {
+	/**
+	 * Gets the abstracts classes, from the Metamodel.
+	 * 
+	 * @return An ArrayList of the abstract classes, from the MetaModel.
+	 **/
+    public ArrayList<String> Abstracts() {
     	List<EObject> MMContent = resource.getContents().get(0).eContents();
       	 ArrayList<String> abstracts = new ArrayList<String>();   	
       	 for (EObject object : MMContent) {

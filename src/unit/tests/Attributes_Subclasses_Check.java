@@ -25,7 +25,7 @@ import tcore.messages.Match;
  * @since 2021-12-19
  */
 
-class Pattern2Subclass {
+class Attributes_Subclasses_Check {
 
 	@Before
 	public void setUp() {
@@ -41,12 +41,12 @@ class Pattern2Subclass {
 		utils.Utils.initialize();
 
 		// Imports
-		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.ecore"); // Oracle MetaModel
-		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Subclasses/OracleV2_augmented.ecore"); // Ramified Oracle
+		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Attributes_Subclasses/OracleV5.ecore"); // Oracle MetaModel
+		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Attributes_Subclasses/OracleV5_augmented.ecore"); // Ramified Oracle
 
-		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Subclasses/OracleV2.xmi", OracleMM); // Dynamic Instance from Oracle
+		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Attributes_Subclasses/OracleV5.xmi", OracleMM); // Dynamic Instance from Oracle
 
-		Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Subclasses/Pattern2Subclass.xmi", Oracle_ramified);
+		Pattern pre_A = new Pattern("pre_A", "../Ramifier_New/Model/Attributes_Subclasses/Attributes_Subclasses_Check.xmi", Oracle_ramified);
 
 		Packet p = new Packet(oracle);
 		LHS lhs = new LHS(pre_A, null);

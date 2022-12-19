@@ -125,6 +125,63 @@ public class Pattern extends Model {
         return labelsMapping;
     }
     
+	/**
+	 * Gets the attributes of a given Object.
+	 * 
+	 * @param object           Class used
+	 * @param className		   Name of the class
+	 * @return An HashMap of the className (key) with its HashMap of the attributeName (key) and its attributeValue (value) , ex : {A = {name = null, id = 3,...}}
+	 */
+    @Override
+    public HashMap<String, HashMap<String, Object>> getAttributes(EObject object, String className){
+        HashMap<String, Object> attributesMapped = new HashMap<String, Object>();
+        HashMap<String, HashMap<String, Object>> classAttributes = new HashMap<String, HashMap<String, Object>>();
+
+        //If the given object is a superclass
+        if (resource.getContents().get(0).eClass().getName().replaceAll(Utils.PRE_,  "").equals(className)) {
+                for (EAttribute attribute : resource.getContents().get(0).eClass().getEAttributes()) {
+                	attributesMapped.put(attribute.getName(), resource.getContents().get(0).eGet(attribute));
+                }
+                classAttributes.put(className, attributesMapped); 
+        }
+        //If the given object is a subclass
+        else {
+            for (EObject object2 : resource.getContents().get(0).eContents()) {
+            	if (object2.eClass().getName().replaceAll(Utils.PRE_,  "").equals(className)) {
+                    for (EAttribute attribute : object2.eClass().getEAttributes()) {
+                    	attributesMapped.put(attribute.getName(), object2.eGet(attribute));
+                    }
+                    classAttributes.put(className, attributesMapped);            
+            	}
+            }
+        }
+        return classAttributes;
+    }
+    
+	/**
+	 * Gets the Subclasses of a given Object.
+	 * 
+	 * @param object           Class used
+	 * @param className		   Name of the class
+	 * @return An HashMap of the className and a list of its subclasses , ex : {A = [B, C, D..]}
+	 */
+    @Override
+    public HashMap<String, ArrayList<String>> getSubclasses(EObject object, String className){
+    	 HashMap<String, ArrayList<String>> subclassesMapped = new HashMap<String, ArrayList<String>>();
+         ArrayList<String> subClasses = new ArrayList<String>();
+         
+         for (EObject object2 : objects) { 
+         	if (object.eClass().isSuperTypeOf(object2.eClass())) { 
+         		if (!object.eClass().getName().equals(object2.eClass().getName())){
+         			subClasses.add(object2.eClass().getName().replaceAll(Utils.PRE_,  "")); 
+         		} 
+         	} 
+         }
+         
+     	subclassesMapped.put(className, subClasses);
+     	return subclassesMapped;
+    }
+    
     /**
      * Generate a graph representation of the model so it can be used in VF2
      * 
@@ -142,35 +199,16 @@ public class Pattern extends Model {
 	@Override
     protected void generateGraph() {    
         graph = new Graph(name);
-    	
+  
         int index = 0;
         for (EObject object: objects) {
             EStructuralFeature labelFeature = object.eClass().getEStructuralFeature(Utils.MT_LABEL); // Get the label of object
             Object label = ((EObjectImpl) object).eGet(labelFeature);
             String className = object.eClass().getName().replaceAll(Utils.PRE_, ""); // Get the class name and remove the "MTpre__" pattern to get the 'actual' class name of object to match on
-            HashMap<String, ArrayList<String>> subclassesMapped = new HashMap<String, ArrayList<String>>();
-            ArrayList<String> subClasses = new ArrayList<String>();
-            HashMap<String, String> attributesMapped = new HashMap<String, String>();
-            List<EAttribute> attributes = object.eClass().getEAllAttributes();
-            HashMap<String, HashMap<String, String>> classAttributes = new HashMap<String, HashMap<String, String>>();
+           
+            HashMap<String, HashMap<String, Object>> classAttributes = getAttributes(object, className);
+            HashMap<String, ArrayList<String>> subclassesMapped = getSubclasses(object, className);
             
-            for (EAttribute attribute : attributes) {
-                if (!attribute.getName().equals("MT__isProcessed") && !attribute.getName().equals("MT__matchSubtype") && !attribute.getName().equals("MT__label") ) {
-                	attributesMapped.put(attribute.getName(), attribute.getEAttributeType().getInstanceTypeName().replaceAll("java.lang.", ""));
-                }
-            }
-            
-            classAttributes.put(className, attributesMapped);
-            
-            for (EObject object2 : objects) { 
-            	if (object.eClass().isSuperTypeOf(object2.eClass())) { 
-            		if (!object.eClass().getName().equals(object2.eClass().getName())){
-            			subClasses.add(object2.eClass().getName().replaceAll(Utils.PRE_,  "")); 
-            		} 
-            	} 
-            }
-            
-        	subclassesMapped.put(className, subClasses);
             
             if (label != null && (label instanceof String)) { // Add a node only if the label is defined
             	Node node = new Node(graph, index, (String) label, className, subclassesMapped, classAttributes);
@@ -179,8 +217,6 @@ public class Pattern extends Model {
                 objectsByNodeMapping.put(node, object);
                 index++;
             }
-            System.out.println("Subclasses in Pattern : " + subclassesMapped);
-
         }
                
         addEdgesToGraph();

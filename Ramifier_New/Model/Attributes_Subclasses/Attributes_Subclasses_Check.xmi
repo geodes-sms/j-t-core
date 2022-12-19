@@ -4,8 +4,10 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ramRoot="RamRoot"
-    xsi:schemaLocation="RamRoot OracleV2_augmented.ecore"
-    MT__label="1">
+    xsi:schemaLocation="RamRoot Oraclev5_augmented.ecore"
+    MT__label="1"
+    id="">
   <E MT__label="5"/>
-  <B MT__label="2"/>
+  <B MT__label="2"
+      ram_constraint="x>=0 ||      y>2 &amp;&amp; y==     5 || x&lt;2 &amp;&amp; x==1 &amp;&amp; name.length>2"/>
 </ramRoot:MTpre__A>

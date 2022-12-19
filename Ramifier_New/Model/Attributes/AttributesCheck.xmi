@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ramRoot:MTpre__A
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ramRoot="RamRoot"
+    xsi:schemaLocation="RamRoot OracleV4_augmented.ecore"
+    MT__label="1"
+    id="">
+  <b MT__label="3"
+      id=""
+      ram_constraint="x>=0 ||      y>2 &amp;&amp; y==     5 || x&lt;2 &amp;&amp; x==1 &amp;&amp; name.length>2"/>
+</ramRoot:MTpre__A>

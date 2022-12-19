@@ -11,3 +11,7 @@
 /OracleV2_augment_pre.ecore
 /OracleV2_augment_post.ecore
 /OracleV2_augmented.ecore
+/TestExample_relaxed.ecore
+/TestExample_augment_pre.ecore
+/TestExample_augment_post.ecore
+/TestExample_augmented.ecore

@@ -14,7 +14,7 @@ import tcore.constant.JTCoreConstant;
  * @since 2020-04-25
  */
 
-public class AlgorithmFactory {
+public class VF2MatchAlgoFactory {
 
 	public static @NotNull IMatchAlgo createMatchAlgo(LHS lhs, int max, Model model, String name) {
 		switch (name) {

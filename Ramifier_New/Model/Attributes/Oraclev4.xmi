@@ -3,9 +3,10 @@
     xmlns:xmi="http://www.omg.org/XMI"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:or="jtcore.oracle.org"
-    xsi:schemaLocation="jtcore.oracle.org OracleV2.ecore"
+    xsi:schemaLocation="jtcore.oracle.org Oraclev4.ecore"
     id="1">
-  <E id="5"/>
-  <B xsi:type="or:C"
-      id="2"/>
+  <b name="maximetesting"
+      id="3"
+      y="5"/>
+  <c id="2"/>
 </or:A>

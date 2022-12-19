@@ -53,7 +53,7 @@ public class Matcher extends RulePrimitive {
         this.max = max;
         this.lhs = lhs;
         this.nameAlgo = nameAlgo;
-        this.iMatchAlgo = AlgorithmFactory.createMatchAlgo(lhs, max, model, nameAlgo);
+        this.iMatchAlgo = VF2MatchAlgoFactory.createMatchAlgo(lhs, max, model, nameAlgo);
     }
 
     /**
@@ -94,7 +94,7 @@ public class Matcher extends RulePrimitive {
      */
     public ArrayList<Match> match() { 
 
-        IMatchAlgo lhsMatcher = AlgorithmFactory.createMatchAlgo(lhs, max, model, nameAlgo);
+        IMatchAlgo lhsMatcher = VF2MatchAlgoFactory.createMatchAlgo(lhs, max, model, nameAlgo);
 		
         ArrayList<Match> results = lhsMatcher.match();
         

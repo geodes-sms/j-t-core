@@ -3,6 +3,7 @@ package tcore;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -225,6 +226,72 @@ public class Model implements EcoreSerializable {
         return s.toString();
     }
     
+	/**
+	 * Gets the attributes of a given Object.
+	 * 
+	 * @param object           Class used
+	 * @param className		   Name of the class
+	 * @return An HashMap of the className (key) with its HashMap of the attributeName (key) and its attributeValue (value) , ex : {A = {name = null, id = 3,...}}
+	 */
+    public HashMap<String, HashMap<String, Object>> getAttributes(EObject object, String className) {
+        HashMap<String, Object> attributesMapped = new HashMap<String, Object>();
+        HashMap<String, HashMap<String, Object>> classAttributes = new HashMap<String, HashMap<String, Object>>();
+
+        //If the given object is the mother class
+        if (resource.getContents().get(0).eClass().getName().equals(className)) {
+                for (EAttribute attribute : resource.getContents().get(0).eClass().getEAttributes()) {
+                	attributesMapped.put(attribute.getName(), resource.getContents().get(0).eGet(attribute));
+                }
+                classAttributes.put(className, attributesMapped);            
+        }
+        
+        //If the given object is not the motherclass        
+        else {
+            for (EObject object2 : resource.getContents().get(0).eContents()) {
+            	// if the given object is a component of the motherclass
+            	if (object2.eClass().getName().equals(className) && !object2.eClass().getEAttributes().isEmpty()) {
+                    for (EAttribute attribute : object2.eClass().getEAttributes()) {
+                    	attributesMapped.put(attribute.getName(), object2.eGet(attribute));
+                    }
+
+            	}
+            	// if the given object is a subclass of a component, we get its superclass attributes in the metamodel
+            	else if (object2.eClass().getName().equals(className) && object2.eClass().getEAttributes().isEmpty()) {
+            		for (EAttribute attribute : object.eClass().getESuperTypes().get(0).getEAttributes()) {
+                    	attributesMapped.put(attribute.getName(), object2.eGet(attribute));
+                    }
+
+            	}
+                classAttributes.put(className, attributesMapped);            
+
+            }
+        }
+        return classAttributes;
+    }
+    
+	/**
+	 * Gets the Subclasses of a given Object.
+	 * 
+	 * @param object           Class used
+	 * @param className		   Name of the class
+	 * @return An HashMap of the className and a list of its subclasses , ex : {A = [B, C, D..]}
+	 */
+    public HashMap<String, ArrayList<String>> getSubclasses(EObject object, String className) {
+        HashMap<String, ArrayList<String>> subclassesMapped = new HashMap<String, ArrayList<String>>();
+        ArrayList<String> subClasses = new ArrayList<String>();
+        
+        for (EObject object2 : objects) { 
+        	if (object.eClass().isSuperTypeOf(object2.eClass())) { 
+        		if (!object.eClass().getName().equals(object2.eClass().getName())){
+        			subClasses.add(object2.eClass().getName().replaceAll(Utils.PRE_,  "")); 
+        		} 
+        	} 
+        }
+        
+    	subclassesMapped.put(className, subClasses); 
+    	return subclassesMapped;
+    }
+
     /**
      * Generate a graph representation of the model so it can be used in VF2
      * 
@@ -239,13 +306,6 @@ public class Model implements EcoreSerializable {
      *     label = label of source object -> label of target object
      * </p>
      */
-    
-	/*
-	 * public HashMap<String, ArrayList<String>> getSubClasses(){
-	 * System.out.println(this.metaModel); }
-	 */
-
-    
 	protected void generateGraph() {
         graph = new Graph(name);
         
@@ -253,28 +313,10 @@ public class Model implements EcoreSerializable {
         for (EObject object: objects) {
             String label = EcoreUtil.getURI(object).fragment(); // Get string representation of identifier attribute
             String className = object.eClass().getName();
-            HashMap<String, ArrayList<String>> subclassesMapped = new HashMap<String, ArrayList<String>>();
-            ArrayList<String> subClasses = new ArrayList<String>();
-            Boolean isAbstract = object.eClass().isAbstract();
-            HashMap<String, String> attributesMapped = new HashMap<String, String>();
-            List<EAttribute> attributes = object.eClass().getEAllAttributes();
-            HashMap<String, HashMap<String, String>> classAttributes = new HashMap<String, HashMap<String, String>>();
-            
-            for (EAttribute attribute : attributes) {
-                attributesMapped.put(attribute.getName(), attribute.getEAttributeType().getInstanceTypeName().replaceAll("java.lang.", ""));
-            }
-            
-            classAttributes.put(className, attributesMapped);
 
-            for (EObject object2 : objects) { 
-            	if (object.eClass().isSuperTypeOf(object2.eClass())) { 
-            		if (!object.eClass().getName().equals(object2.eClass().getName())){
-            			subClasses.add(object2.eClass().getName().replaceAll(Utils.PRE_,  "")); 
-            		} 
-            	} 
-            }
-            
-        	subclassesMapped.put(className, subClasses);            
+            //The attributes and subclasses of the given object
+            HashMap<String, HashMap<String, Object>> classAttributes = getAttributes(object, className);
+            HashMap<String, ArrayList<String>> subclassesMapped = getSubclasses(object, className);
             
             if (label != null && (label instanceof String)) { // Add a node only if the label is defined
 	            Node node = new Node(graph, index, label, className, subclassesMapped, classAttributes);
@@ -283,7 +325,6 @@ public class Model implements EcoreSerializable {
 	            objectsByNodeMapping.put(node, object);
 	            index++;
             }
-            System.out.println("Subclasses in Model : " + subclassesMapped);
         }
         
         addEdgesToGraph();

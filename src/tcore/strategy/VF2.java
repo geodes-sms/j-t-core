@@ -11,6 +11,7 @@ import javax.script.ScriptException;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -18,6 +19,7 @@ import graph.Edge;
 import graph.Graph;
 import graph.Node;
 import tcore.*;
+import tcore.constant.JTCoreConstant;
 import tcore.messages.Match;
 import utils.Utils;
 
@@ -193,7 +195,216 @@ public class VF2 implements IMatchAlgo {
 			return pairList;
 		}
 	}
+	
+	/**
+	 * Evaluates if a value respects a given constraint on it
+	 * 
+	 * @param state           VF2 State
+	 * @param targetNodeIndex Target Graph Node Index
+	 * @param queryNodeIndex  Query Graph Node Index
+	 * @param sign            Sign used in the constraint (<= | >= | < | > | == | !=)
+	 * @param constraint 	  The whole constraint
+	 * @param value			  Value of the model's attribute on which the constraint must be evaluated
+	 * @return A boolean, true if the model's attribute value respect the sub-constraint set by the pattern, false otherwise
+	 */
+	public Boolean evaluateConstraint(State state, int targetNodeIndex, int queryNodeIndex, String sign, Object constraint, Object value){
+        ScriptEngine js = Utils.js;
+		String rhs = new String();
+		
+		//If the sign is <= | >= | == | != : 
 
+		if (sign.length() == 2) {
+			rhs = constraint.toString().substring(constraint.toString().indexOf(sign)+2);	
+		}
+		//If the sign is > | < : 
+		else {
+			rhs = constraint.toString().substring(constraint.toString().indexOf(sign)+1);	
+		}
+		//If the constraint involves a .length statement
+		if (constraint.toString().contains(".length")) {
+			value = "\"" + value+ "\"" +".length" ;
+		}
+
+		//We create the script that will be evaluated with the value of the model's attribute and the constraint.
+		String script = value + sign + rhs;
+		if (sign.matches(">|<|==|>=|<=|!=")) {
+			try {
+				return (Boolean) js.eval(script);
+			}	
+			catch (ScriptException e) {
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
+
+
+	/**
+	 * Checks, for a tested target node, if the constraints from the query node on its attributes' values are respected or not
+	 * 
+	 * @param state           VF2 State
+	 * @param targetNodeIndex Target Graph Node Index
+	 * @param queryNodeIndex  Query Graph Node Index
+	 * @return A boolean, true if the model's attributes values respect the pattern's constraint, false otherwise
+	 */
+	public Boolean checkConstraint (State state, int targetNodeIndex, int queryNodeIndex) {
+        ScriptEngine js = Utils.js;
+
+		Object constraints = state.queryGraph.nodes.get(queryNodeIndex).attributes.values().iterator().next().get("ram_constraint");
+		ArrayList<String> constraintsList = new ArrayList<String>();
+		ArrayList<String> operatorList = new ArrayList<String>();
+		String sign = new String();
+		Object valueModel = new Object();
+		ArrayList<String> res = new ArrayList<String>();
+
+		//If the ram_constraint attribute is not null or empty
+		if (constraints != null && !constraints.equals("")){
+			
+			//We parse each constraint between the || and && operators, if there are any
+			//We create two lists : operatorList with the operators, and constraintsList a list with all the constraints to be evaluated
+		
+			while (constraints.toString().contains("||") || constraints.toString().contains("&&")) {
+				if (constraints.toString().contains("||")) {
+					if (constraints.toString().contains("&&")) {
+						if (constraints.toString().indexOf("||") < constraints.toString().indexOf("&&")){
+							operatorList.add("||");
+							constraintsList.add(constraints.toString().substring(0, constraints.toString().indexOf("||")));
+							constraints = constraints.toString().substring(constraints.toString().indexOf("||")+2);
+						}
+						else {
+							operatorList.add("&&");
+							constraintsList.add(constraints.toString().substring(0, constraints.toString().indexOf("&&")));
+							constraints = constraints.toString().substring(constraints.toString().indexOf("&&")+2);
+						}
+					}
+					else {
+						operatorList.add("||");
+						constraintsList.add(constraints.toString().substring(0, constraints.toString().indexOf("||")));
+						constraints = constraints.toString().substring(constraints.toString().indexOf("||")+2);
+					}
+				}
+				else {
+					operatorList.add("&&");
+					constraintsList.add(constraints.toString().substring(0, constraints.toString().indexOf("&&")));
+					constraints = constraints.toString().substring(constraints.toString().indexOf("&&")+2);
+				}
+			}
+			
+			constraintsList.add(constraints.toString());
+			
+			/*
+			 * For each constraint we parse to get : the sign, (optional) the function used,
+			 * the value of the attribute in the model that should be evaluated
+			 */			
+			
+			System.out.println("Liste des contraintes : "+constraintsList);
+			for (String cons : constraintsList) {
+				cons = cons.strip();
+
+				if (cons.contains(">=")){
+					sign = cons.substring(cons.indexOf(">"), cons.indexOf("=")+1);
+					if (cons.contains(".")){
+							valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
+					}
+					else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(">")));
+					}
+				}
+
+				else if (cons.contains("<=")){
+					sign = cons.substring(cons.indexOf("<"), cons.indexOf("=")+1);
+					if (cons.contains(".")){
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
+					}
+					else {
+					valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf("<")));
+					}
+				}
+
+				else if (cons.contains(">") && (!cons.substring(cons.indexOf(">")+1).contains("="))){
+					sign = cons.substring(cons.indexOf(">"), cons.indexOf(">")+1);
+					if (cons.contains(".")){
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
+					}
+					else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(">")));
+					}
+				}
+
+				else if (cons.contains("<") && (!cons.substring(cons.indexOf("<")+1).contains("="))){
+					sign = cons.substring(cons.indexOf("<"), cons.indexOf("<")+1);
+					if (cons.contains(".")){
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
+					}
+					else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf("<")));
+					}
+				}
+
+				else if (cons.contains("==")){
+					sign = cons.substring(cons.indexOf("="), cons.indexOf("=")+2);
+					if (cons.contains(".")){
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
+					}
+					else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf("=")));	
+					}
+				}
+				
+				else if (cons.contains("!=")){
+					sign = cons.substring(cons.indexOf("!"), cons.indexOf("=")+1);
+					if (cons.contains(".")){
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf(".")));
+					}
+					else {
+						valueModel = state.targetGraph.nodes.get(targetNodeIndex).attributes.values().iterator().next().get(cons.substring(0, cons.indexOf("!")));
+					}
+				}
+								
+				else {
+					return false;
+				}
+				
+				/*
+				 * If the model's attribute value that has to be evaluated is null or empty we
+				 * return false, otherwise we test the constraint on the given value and add the
+				 * result to an array of booleans.
+				 */		
+				
+				if(valueModel == null || valueModel.equals("")) {
+					return false;
+				}
+				else {
+					res.add(evaluateConstraint(state, targetNodeIndex, queryNodeIndex, sign, cons, valueModel).toString());	
+				}
+			}
+			
+
+			String checkingRes = res.get(0);
+
+			for (int i = 0 ; i < res.size()-1; i++) {
+
+				checkingRes += operatorList.get(i) + res.get(i+1) ;
+
+			}
+			
+			// We evaluate the results of each constraint with the operators between each result. 
+			// If the overall constraint (ram_constraint) is respected : true, false otherwise
+			System.out.println("Script après évaluations séparées : " +checkingRes);
+			try {
+				System.out.println("Résultat évaluation : " +js.eval(checkingRes));
+				return (Boolean) js.eval(checkingRes);
+				}	
+			catch (ScriptException e){
+				e.printStackTrace();
+				return false;
+			}
+		}
+		else {
+			return true;
+		}
+	}
+	
 	/**
 	 * Verify the (syntactic and semantic) feasibility of adding this match based on
 	 * the formulas below
@@ -210,22 +421,32 @@ public class VF2 implements IMatchAlgo {
 	 * @param queryNodeIndex  Query Graph Node Index
 	 * @return Feasible or not
 	 */
+	
 	private Boolean checkFeasibility(State state, int targetNodeIndex, int queryNodeIndex) {
+		// We get the subclasses and abstract classes from the Metamodel
+		HashMap<String, ArrayList<String>> subclasses = model.getMetamodel().getSubclasses();		
+		ArrayList<String> abstracts = model.getMetamodel().Abstracts();
+		
 		// The two nodes must have the same label
 		if (!state.targetGraph.nodes.get(targetNodeIndex).label
 				.equals(state.queryGraph.nodes.get(queryNodeIndex).label)) {
 			return false;
 		}
 		
-
-		HashMap<String, ArrayList<String>> subclasses = model.getMetamodel().getSubclasses(state, targetNodeIndex, queryNodeIndex);		
-		ArrayList<String> abstracts = model.getMetamodel().Abstracts(state, targetNodeIndex, queryNodeIndex);
-		
+		/*
+		 * If a queryNode is not abstract according to the Metamodel, checks if there
+		 * is a match on the className between the queryNode and the targetNode,
+		 * otherwise it checks if the targetNode is a subclass of the queryNode
+		 * according to the MetaModel. 
+		 * If the queryNode is abstract, we only check if the targetNode is a subclass of 
+		 * the queryNode according to the MetaModel.
+		 */
+		 		
 		if (!abstracts.contains(state.queryGraph.nodes.get(queryNodeIndex).className)) {
 			if (!state.targetGraph.nodes.get(targetNodeIndex).className.equals(state.queryGraph.nodes.get(queryNodeIndex).className) && 
 					(!subclasses.values().iterator().next().contains(state.targetGraph.nodes.get(targetNodeIndex).className))) {
 				return false;
-			} 
+			}
 		}
 		else {
 			if (!subclasses.values().iterator().next().contains(state.targetGraph.nodes.get(targetNodeIndex).className)){
@@ -233,21 +454,10 @@ public class VF2 implements IMatchAlgo {
 			}
 		}
 		
-		System.out.println("Attributes of TARGET " + state.targetGraph.nodes.get(targetNodeIndex).className + " equal to QUERY " 
-		+  state.queryGraph.nodes.get(queryNodeIndex).className + " ? : "
-		+ state.targetGraph.nodes.get(targetNodeIndex).attributes.equals(state.queryGraph.nodes.get(queryNodeIndex).attributes));
-
-		
-		System.out.println(state.targetGraph.nodes.get(targetNodeIndex).attributes);
-		System.out.println(state.queryGraph.nodes.get(queryNodeIndex).attributes);
-		/*
-		 * // The two nodes must have the same attributes if
-		 * (!state.targetGraph.nodes.get(targetNodeIndex).attributes
-		 * .equals(state.queryGraph.nodes.get(queryNodeIndex).attributes)) { return
-		 * false; }
-		 */
-		
-
+		//We check the (optional) constraints applied by the queryNode on the targetNode
+		if (!checkConstraint(state, targetNodeIndex, queryNodeIndex)) {
+			return false;
+		}
 		
 		// Predecessor Rule and Successor Rule
 		if (!checkPredAndSucc(state, targetNodeIndex, queryNodeIndex)) {
@@ -263,21 +473,6 @@ public class VF2 implements IMatchAlgo {
 		if (!checkNew(state, targetNodeIndex, queryNodeIndex)) {
 			return false;
 		}
-
-		// TODO: Adding support for checking constraints on attributes
-//		try {
-//			ScriptEngine js = Utils.js; 
-//			Object value, constraint;
-//			String script = constraint.toString().replaceAll("getAttr\\(\\)", "\"" + (value == null ? "" : value).toString() + "\"");
-//			js.eval(script);
-//			if (js.get("result").toString().equals("false")) {
-//				return false;
-//            }
-//			
-//		} catch (ScriptException e) {
-//            e.printStackTrace();
-//            return false;
-//		}
 
 		return true;
 	}

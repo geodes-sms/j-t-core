@@ -72,3 +72,7 @@ The resources mentioned above are to be predefined in `j-t-core/Ramifier_New/Mod
 ## Video example
 
 For a better understanding, here's a complete of how a Unit Test should be created :
+
+
+https://user-images.githubusercontent.com/80822665/209014464-e956e2ac-d28c-44a3-a8a0-a8847f363d31.mp4
+

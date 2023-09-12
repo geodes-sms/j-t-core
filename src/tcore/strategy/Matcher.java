@@ -3,10 +3,13 @@ package tcore.strategy;
 import tcore.LHS;
 import tcore.Model;
 import tcore.RulePrimitive;
+import tcore.constant.JTCoreConstant;
 import tcore.messages.Match;
 import tcore.messages.MatchSet;
 import tcore.messages.Packet;
 import java.util.ArrayList;
+
+import org.eclipse.xsd.XSDSimpleTypeDefinition;
 
 import graph.Graph;
 
@@ -19,84 +22,114 @@ import graph.Graph;
  */
 
 public class Matcher extends RulePrimitive {
-	private IMatchAlgoFactory matchAlgoFactory;
-	
-    /**
-     * Maximum number of matches authorized.
-     */
-    private int max;
 
-    /**
-     * The left hand side to match.
-     */
-    private LHS lhs;
+	private IMatchAlgo iMatchAlgo;
 
-    /**
-     * The model in which to find a match.
-     */
-    private Model model;
+	/**
+	 * Maximum number of matches authorized.
+	 */
+	private int max;
 
-    /**
-     * @param lhs
-     * @param max
-     * @param useVF2 True if VF2 is used, False otherwise
-     */
-    public Matcher(LHS lhs, int max, boolean useVF2) {
-        super();
-        if (max <= 0) {
-            throw new IllegalArgumentException("Matcher's maximum number of iterations must be greater than 0.");
-        }
-        this.max = max;
-        this.lhs = lhs;
-        this.matchAlgoFactory = useVF2 ? new VF2MatchAlgoFactory() : new SimpleMatchFactory();
-    }
+	/**
+	 * The left hand side to match.
+	 */
+	private LHS lhs;
 
-    /**
-     * Receives and processes a packet for matching procedure.
-     *
-     * @param p The packet.
-     * @return The resulting packet.
-     */
-    @Override
-    public Packet packetIn(Packet p) {
-        isSuccess = false;
-        if (p.getModel() == null) {
-            throw new IllegalArgumentException("The packet sent to the Matcher must contain a valid model.");
-        }
-        
-        model = p.getModel();
-        Graph mg = model.getGraph(); 
-        Graph precGraph = lhs.getPreconditionPattern().getGraph();
+	/**
+	 * The model in which to find a match.
+	 */
+	private Model model;
 
-        ArrayList<Match> allMatches = match();
-        ArrayList<Match> chosenMatches = new ArrayList<>();
-        for (int i = 0; i < allMatches.size() && i < max; i++) {
-            chosenMatches.add(allMatches.get(i));
-        }
-        MatchSet ms = new MatchSet(chosenMatches, lhs);
-        p.setCurrentMatchSet(ms);
-        p.setLhs(lhs);
-        isSuccess = true;
-        exception = null;
+	private String nameAlgo;
 
-        return p;
-    }
+	/**
+	 * @param lhs
+	 * @param max
+	 * @param useVF2 True if VF2 is used, False otherwise
+	 */
+	public Matcher(LHS lhs, int max, String nameAlgo) {
+		super();
+		if (max <= 0) {
+			throw new IllegalArgumentException("Matcher's maximum number of iterations must be greater than 0.");
+		}
+		this.max = max;
+		this.lhs = lhs;
+		this.nameAlgo = nameAlgo;
+		switch (nameAlgo) {
+		case JTCoreConstant.SIMPLEMATCH_ALGORITHM:
+			SimpleMatchFactory simpleMatchFactory = new SimpleMatchFactory();
+			this.iMatchAlgo = simpleMatchFactory.createMatchAlgo(lhs, max, model);
+			break;
+		case JTCoreConstant.VF2_ALGORITHM:
+			VF2MatchAlgoFactory VF2Factory = new VF2MatchAlgoFactory();
+			this.iMatchAlgo = VF2Factory.createMatchAlgo(lhs, max, model);
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + nameAlgo);
+		}
+		// this.iMatchAlgo = SimpleMatchFactory.createMatchAlgo(lhs, max, model,
+		// nameAlgo);
+	}
 
-    /**
-     * Tries to match the {@link LHS} to the {@link Model}.
-     * 
-     * @return A list of matches. 
-     */
-    public ArrayList<Match> match() { 
+	/**
+	 * Receives and processes a packet for matching procedure.
+	 *
+	 * @param p The packet.
+	 * @return The resulting packet.
+	 */
+	@Override
+	public Packet packetIn(Packet p) {
+		isSuccess = false;
+		if (p.getModel() == null) {
+			throw new IllegalArgumentException("The packet sent to the Matcher must contain a valid model.");
+		}
 
-        IMatchAlgo lhsMatcher = matchAlgoFactory.createMatchAlgo(lhs, max, model);
-		
-        ArrayList<Match> results = lhsMatcher.match();
-        
-        /**
-         * Code implementation from the Python version for reference 
-         */ 
-        
+		model = p.getModel();
+		Graph mg = model.getGraph();
+		Graph precGraph = lhs.getPreconditionPattern().getGraph();
+
+		ArrayList<Match> allMatches = match();
+		ArrayList<Match> chosenMatches = new ArrayList<>();
+		for (int i = 0; i < allMatches.size() && i < max; i++) {
+			chosenMatches.add(allMatches.get(i));
+		}
+		MatchSet ms = new MatchSet(chosenMatches, lhs);
+		p.setCurrentMatchSet(ms);
+		p.setLhs(lhs);
+		isSuccess = true;
+		exception = null;
+
+		return p;
+	}
+
+	/**
+	 * Tries to match the {@link LHS} to the {@link Model}.
+	 * 
+	 * @return A list of matches.
+	 */
+	public ArrayList<Match> match() {
+
+		IMatchAlgo lhsMatcher;
+
+		switch (nameAlgo) {
+		case JTCoreConstant.SIMPLEMATCH_ALGORITHM:
+			SimpleMatchFactory simpleMatchFactory = new SimpleMatchFactory();
+			lhsMatcher = simpleMatchFactory.createMatchAlgo(lhs, max, model);
+			break;
+		case JTCoreConstant.VF2_ALGORITHM:
+			VF2MatchAlgoFactory VF2Factory = new VF2MatchAlgoFactory();
+			lhsMatcher = VF2Factory.createMatchAlgo(lhs, max, model);
+			break;
+		default:
+			throw new IllegalArgumentException("Unexpected value: " + nameAlgo);
+		}
+
+		ArrayList<Match> results = lhsMatcher.match();
+
+		/**
+		 * Code implementation from the Python version for reference
+		 */
+
 //        # Either there are no NACs, or there were only unbound NACs that do not match, so match the LHS now
 //        bound_NACs.sort(key=lambda nac: nac.bridge.vcount(), reverse=True)
 //        if not bound_NACs:
@@ -144,16 +177,14 @@ public class Matcher extends RulePrimitive {
 //                        yield mapping
 //        except: raise
 //        finally: lhsMatcher.reset_recursion_limit()
-        /** END */
-		
-        
-        
-		//Using lhsMatcher to implement the VF2 matching algorithm
-        /** YET TO FINALIZE -- DO NOT USE */
+		/** END */
+
+		// Using lhsMatcher to implement the VF2 matching algorithm
+		/** YET TO FINALIZE -- DO NOT USE */
 //      IMatchAlgo lhsMatcher = matchAlgoFactory.createMatchAlgo(lhs, max, model);
 //		ArrayList<Match> results = lhsMatcher.match();
-        
-        return results;
-		
-    }
+
+		return results;
+
+	}
 }

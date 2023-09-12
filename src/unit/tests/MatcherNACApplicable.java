@@ -11,6 +11,7 @@ import tcore.LHS;
 import tcore.MetaModel;
 import tcore.Model;
 import tcore.Pattern;
+import tcore.constant.JTCoreConstant;
 import tcore.messages.MatchSet;
 import tcore.messages.Packet;
 import tcore.strategy.Matcher;
@@ -36,11 +37,14 @@ class MatcherNACApplicable {
 
 		// Imports
 		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Oracle.ecore"); // Oracle MetaModel
-		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Oracle_augmented.ecore"); // Ramified Oracle
+		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Oracle_augmented.ecore"); // Ramified
+																													// Oracle
 
-		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Oracle.xmi", OracleMM); // Dynamic Instance from Oracle
+		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Oracle.xmi", OracleMM); // Dynamic Instance from
+																							// Oracle
 
-		Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); // precondition same as single match
+		Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi",
+				Oracle_ramified); // precondition same as single match
 		Pattern Oracle_NAC = new Pattern("oracle_NAC", "../Ramifier_New/Model/NACApplicable.xmi", Oracle_ramified); // NAC
 		ArrayList<Pattern> oracle_NACS = new ArrayList<>();
 		oracle_NACS.add(Oracle_NAC);
@@ -49,16 +53,17 @@ class MatcherNACApplicable {
 		LHS lhs = new LHS(SingleMatch_pre, oracle_NACS);
 
 		// Testing
-		Matcher tester = new Matcher(lhs, 5, false); // max=1
+		Matcher tester = new Matcher(lhs, 5, JTCoreConstant.SIMPLEMATCH_ALGORITHM); // max=1
 
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
-		
+
 		@SuppressWarnings("unused")
 		Match expectedMatch = new Match();
 
 		// Array of matches expected to be found
-		// This example should not return any matches, as A -> B is part of both the NAC and the input model
+		// This example should not return any matches, as A -> B is part of both the NAC
+		// and the input model
 		ArrayList<Match> expectedMatchArray = new ArrayList<Match>();
 
 		// Expected MatchSet to find
@@ -67,18 +72,21 @@ class MatcherNACApplicable {
 		assertTrue(tester.isSuccess(), "Matcher failed");
 		assertTrue(ms.equals(p.getCurrentMatchSet()), "Wrong match found");
 	}
-	
+
 	@Test
 	public void isSuccessVF2() throws Exception {
 		utils.Utils.initialize();
 
 		// Imports
 		MetaModel OracleMM = new MetaModel("Oracle", "../Ramifier_New/Model/Oracle.ecore"); // Oracle MetaModel
-		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Oracle_augmented.ecore"); // Ramified Oracle
+		MetaModel Oracle_ramified = new MetaModel("OracleRoot", "../Ramifier_New/Model/Oracle_augmented.ecore"); // Ramified
+																													// Oracle
 
-		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Oracle.xmi", OracleMM); // Dynamic Instance from Oracle
+		Model oracle = new Model("Oracle", "../Ramifier_New/Model/Oracle.xmi", OracleMM); // Dynamic Instance from
+																							// Oracle
 
-		Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi", Oracle_ramified); // precondition same as single match
+		Pattern SingleMatch_pre = new Pattern("SingleMatch_pre", "../Ramifier_New/Model/SingleMatch_pre.xmi",
+				Oracle_ramified); // precondition same as single match
 		Pattern Oracle_NAC = new Pattern("oracle_NAC", "../Ramifier_New/Model/NACApplicable.xmi", Oracle_ramified); // NAC
 		ArrayList<Pattern> oracle_NACS = new ArrayList<>();
 		oracle_NACS.add(Oracle_NAC);
@@ -87,16 +95,17 @@ class MatcherNACApplicable {
 		LHS lhs = new LHS(SingleMatch_pre, oracle_NACS);
 
 		// Testing
-		Matcher tester = new Matcher(lhs, 5, true); // max=1
+		Matcher tester = new Matcher(lhs, 5, JTCoreConstant.VF2_ALGORITHM); // max=1
 
 		@SuppressWarnings("unused")
 		Packet result = tester.packetIn(p);
-				
+
 		@SuppressWarnings("unused")
 		Match expectedMatch = new Match();
 
 		// Array of matches expected to be found
-		// This example should not return any matches, as A -> B is part of both the NAC and the input model
+		// This example should not return any matches, as A -> B is part of both the NAC
+		// and the input model
 		ArrayList<Match> expectedMatchArray = new ArrayList<Match>();
 
 		// Expected MatchSet to find

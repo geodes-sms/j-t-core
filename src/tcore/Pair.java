@@ -6,24 +6,24 @@ package tcore;
  * VF2 REFERENCE -- YET TO FINALIZE -- DO NOT USE
  *
  * @author Sebastien Ehouan
- * @param <K> 
- * @param <V> 
+ * @param <K>
+ * @param <V>
  * @since 2020-04-25
  */
 
-public class Pair <K, V> {
+public class Pair<K, V> {
 	private K key;
 	private V value;
-	
+
 	/**
 	 * @param key
 	 * @param value
 	 */
-	public Pair(K key, V value){
+	public Pair(K key, V value) {
 		this.key = key;
 		this.value = value;
 	}
-	
+
 	/**
 	 * Get key.
 	 * 
@@ -32,7 +32,7 @@ public class Pair <K, V> {
 	public K getKey() {
 		return key;
 	}
-	
+
 	/**
 	 * Set key.
 	 * 
@@ -41,7 +41,7 @@ public class Pair <K, V> {
 	public void setKey(K key) {
 		this.key = key;
 	}
-	
+
 	/**
 	 * Get value.
 	 * 
@@ -50,7 +50,7 @@ public class Pair <K, V> {
 	public V getValue() {
 		return value;
 	}
-	
+
 	/**
 	 * Set value.
 	 * 

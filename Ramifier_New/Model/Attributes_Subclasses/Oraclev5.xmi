@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<or:A xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:or="jtcore.oracle.org"
+    xsi:schemaLocation="jtcore.oracle.org OracleV5.ecore"
+    id="1">
+  <E id="5"/>
+  <B xsi:type="or:C"
+      id="2"
+      name="maxime"
+      y="5"/>
+</or:A>

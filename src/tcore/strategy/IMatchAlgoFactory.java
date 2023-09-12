@@ -11,11 +11,11 @@ import tcore.Model;
  */
 
 public interface IMatchAlgoFactory {
-    /**
-     * @param lhs
-     * @param max
-     * @param model
-     * @return
-     */
-    public IMatchAlgo createMatchAlgo(LHS lhs, int max, Model model);
+	/**
+	 * @param lhs
+	 * @param max
+	 * @param model
+	 * @return
+	 */
+	public IMatchAlgo createMatchAlgo(LHS lhs, int max, Model model);
 }
